@@ -51,37 +51,36 @@ function Header() {
           <span className="navbar-toggler-bar burger-lines"></span>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="nav ml-auto" navbar>
-            <Dropdown as={Nav.Item}>
-              <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-                <i className="nc-icon nc-planet"></i>
-                <span className="notification">1</span>
-                <span className="d-lg-none ml-1"> New Memo</span>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  1 New Memo
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  See All Memo
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Nav>
-
           <Nav className="ml-auto" navbar>
+            <Nav.Item>
+              <Dropdown as={Nav.Item}>
+                <Dropdown.Toggle
+                  as={Nav.Link}
+                  data-toggle="dropdown"
+                  id="dropdown-67443507"
+                  variant="default"
+                  className="m-0"
+                >
+                  <i className="nc-icon nc-planet"></i>
+                  <span className="notification">1</span>
+                  <span className="d-lg-none ml-1"> New Memo</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    href="#pablo"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    1 New Memo
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    href="#pablo"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    See All Memo
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 className="m-0"
