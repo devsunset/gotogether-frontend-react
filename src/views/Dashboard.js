@@ -27,7 +27,7 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-chart text-warning"></i>
+                      <i className="nc-icon nc-chat-round text-warning"></i>
                     </div>
                   </Col>
                   <Col xs="7">
@@ -57,7 +57,7 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-light-3 text-success"></i>
+                      <i className="nc-icon nc-circle-09 text-success"></i>
                     </div>
                   </Col>
                   <Col xs="7">
@@ -87,7 +87,7 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-vector text-danger"></i>
+                      <i className="nc-icon nc-notes text-danger"></i>
                     </div>
                   </Col>
                   <Col xs="7">
@@ -117,7 +117,7 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-favourite-28 text-primary"></i>
+                      <i className="nc-icon nc-zoom-split text-primary"></i>
                     </div>
                   </Col>
                   <Col xs="7">

@@ -10,14 +10,14 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Home",
-    icon: "nc-icon nc-chart-pie-35",
+    icon: "nc-icon nc-atom",
     component: Dashboard,
     layout: "/admin",
   },
   {
     path: "/typography",
     name: "Together ",
-    icon: "nc-icon nc-paper-2",
+    icon: "nc-icon nc-chat-round",
     component: Typography,
     layout: "/admin",
   },
@@ -38,14 +38,14 @@ const dashboardRoutes = [
   {
     path: "/notifications",
     name: "Memo",
-    icon: "nc-icon nc-bell-55",
+    icon: "nc-icon nc-email-85",
     component: Notifications,
     layout: "/admin",
   },
   {
     path: "/user",
     name: "Profile",
-    icon: "nc-icon nc-circle-09",
+    icon: "nc-icon nc-single-02",
     component: UserProfile,
     layout: "/admin",
   },
