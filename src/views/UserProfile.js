@@ -10,7 +10,7 @@ import {
   Nav,
   Container,
   Row,
-  Col
+  Col,
 } from "react-bootstrap";
 
 function User() {
@@ -165,7 +165,7 @@ function User() {
                     <img
                       alt="..."
                       className="avatar border-gray"
-                      src={require("assets/img/faces/face-3.jpg")}
+                      src={require("assets/img/devsunset.jpg")}
                     ></img>
                     <h5 className="title">Mike Andrew</h5>
                   </a>
