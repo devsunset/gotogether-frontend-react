@@ -15,7 +15,7 @@ import {
   Col,
 } from "react-bootstrap";
 
-function Notifications() {
+function Memo() {
   const [showModal, setShowModal] = React.useState(false);
   const notificationAlertRef = React.useRef(null);
   const notify = (place) => {
@@ -318,4 +318,4 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+export default Memo;

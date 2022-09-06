@@ -1,69 +1,53 @@
-import Dashboard from "views/Dashboard.js";
-import UserProfile from "views/UserProfile.js";
-import TableList from "views/TableList.js";
-import Typography from "views/Typography.js";
-import Icons from "views/Icons.js";
-import Maps from "views/Maps.js";
-import Notifications from "views/Notifications.js";
+import Home from "views/Home.js";
+import Together from "views/Together.js";
+import Member from "views/Member.js";
+import Post from "views/Post.js";
+import Memo from "views/Memo.js";
+import Profile from "views/Profile.js";
 
-const dashboardRoutes = [
+const gotogetherRoutes = [
   {
-    path: "/dashboard",
+    path: "/home",
     name: "Home",
     icon: "nc-icon nc-atom",
-    component: Dashboard,
+    component: Home,
     layout: "/admin",
   },
   {
-    path: "/typography",
+    path: "/together",
     name: "Together ",
     icon: "nc-icon nc-chat-round",
-    component: Typography,
+    component: Together,
     layout: "/admin",
   },
   {
-    path: "/user",
+    path: "/member",
     name: "Member",
     icon: "nc-icon nc-circle-09",
-    component: UserProfile,
+    component: Member,
     layout: "/admin",
   },
   {
-    path: "/table",
+    path: "/post",
     name: "Post",
     icon: "nc-icon nc-notes",
-    component: TableList,
+    component: Post,
     layout: "/admin",
   },
   {
-    path: "/notifications",
+    path: "/memo",
     name: "Memo",
     icon: "nc-icon nc-email-85",
-    component: Notifications,
+    component: Memo,
     layout: "/admin",
   },
   {
-    path: "/user",
+    path: "/profile",
     name: "Profile",
     icon: "nc-icon nc-single-02",
-    component: UserProfile,
-    layout: "/admin",
-  },
-
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-atom",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
+    component: Profile,
     layout: "/admin",
   },
 ];
 
-export default dashboardRoutes;
+export default gotogetherRoutes;
