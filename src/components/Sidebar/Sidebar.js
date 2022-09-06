@@ -20,17 +20,16 @@ function Sidebar({ color, image, routes }) {
       />
       <div className="sidebar-wrapper">
         <div className="logo d-flex align-items-center justify-content-start">
-          <a
-            href="https://www.creative-tim.com?ref=lbd-sidebar"
-            className="simple-text logo-mini mx-1"
+          <NavLink
+            to={"/gotogether/home"}
+            className="nav-link"
+            activeClassName="active"
           >
-            <div className="logo-img">
-              <img src={require("assets/img/devsunset.jpg")} alt="..." />
-            </div>
-          </a>
-          <a className="simple-text" href="/">
-            Go Together
-          </a>
+            <span className="logo-img">
+              <img src={require("assets/img/devsunset.jpg")} /> &nbsp; Go
+              Together
+            </span>
+          </NavLink>
         </div>
         <Nav>
           {routes.map((prop, key) => {
