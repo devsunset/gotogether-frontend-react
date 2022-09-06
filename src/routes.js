@@ -4,6 +4,8 @@ import Member from "views/Member.js";
 import Post from "views/Post.js";
 import Memo from "views/Memo.js";
 import Profile from "views/Profile.js";
+import Login from "components/Login.js";
+import Register from "components/Register.js";
 
 const gotogetherRoutes = [
   {
@@ -46,6 +48,20 @@ const gotogetherRoutes = [
     name: "Profile",
     icon: "nc-icon nc-single-02",
     component: Profile,
+    layout: "/gotogether",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-single-02",
+    component: Login,
+    layout: "/gotogether",
+  },
+  {
+    path: "/register",
+    name: "Register",
+    icon: "nc-icon nc-single-02",
+    component: Register,
     layout: "/gotogether",
   },
 ];
