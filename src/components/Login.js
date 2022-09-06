@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 function Login() {
   return (
@@ -40,9 +41,13 @@ function Login() {
                 </div>
                 <div className="text-center mt-4 font-weight-light">
                   Don't have an account?{" "}
-                  <Link to="/user-pages/register" className="text-primary">
+                  <NavLink
+                    to={"/gotogether/register"}
+                    className="nav-link"
+                    activeClassName="active"
+                  >
                     Create
-                  </Link>
+                  </NavLink>
                 </div>
               </Form>
             </div>
