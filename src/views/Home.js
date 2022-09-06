@@ -32,7 +32,7 @@ function Home() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  More Info
+                  <b>More Info</b>
                 </div>
               </Card.Footer>
             </Card>
@@ -62,7 +62,7 @@ function Home() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  More Info
+                  <b>More Info</b>
                 </div>
               </Card.Footer>
             </Card>
@@ -92,7 +92,7 @@ function Home() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  More Info
+                  <b>More Info</b>
                 </div>
               </Card.Footer>
             </Card>
@@ -122,7 +122,7 @@ function Home() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  More Info
+                  <b>More Info</b>
                 </div>
               </Card.Footer>
             </Card>
@@ -140,11 +140,17 @@ function Home() {
                   <thead>
                     <tr>
                       <th className="border-0" width="60%">
-                        Together
+                        <b>Together</b>
                       </th>
-                      <th className="border-0">Progress</th>
-                      <th className="border-0">View</th>
-                      <th className="border-0">Date</th>
+                      <th className="border-0">
+                        <b>Progress</b>
+                      </th>
+                      <th className="border-0">
+                        <b>View</b>
+                      </th>
+                      <th className="border-0">
+                        <b>Date</b>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>

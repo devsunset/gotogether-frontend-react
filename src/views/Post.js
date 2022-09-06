@@ -18,12 +18,20 @@ function Post() {
                   <thead>
                     <tr>
                       <th className="border-0" width="60%">
-                        Talk
+                        <b>Talk</b>
                       </th>
-                      <th className="border-0">Reply</th>
-                      <th className="border-0">View</th>
-                      <th className="border-0">Nickname</th>
-                      <th className="border-0">Date</th>
+                      <th className="border-0">
+                        <b>Reply</b>
+                      </th>
+                      <th className="border-0">
+                        <b>View</b>
+                      </th>
+                      <th className="border-0">
+                        <b>Nickname</b>
+                      </th>
+                      <th className="border-0">
+                        <b>Date</b>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>

@@ -17,7 +17,9 @@ function Profile() {
                   <Row>
                     <Col md="12">
                       <Form.Group>
-                        <label>Introduce</label>
+                        <label>
+                          <b>Introduce</b>
+                        </label>
                         <Form.Control
                           defaultValue=""
                           placeholder="한줄 소개"
@@ -29,7 +31,9 @@ function Profile() {
                   <Row>
                     <Col md="12">
                       <Form.Group>
-                        <label>Note</label>
+                        <label>
+                          <b>Note</b>
+                        </label>
                         <Form.Control
                           cols="80"
                           defaultValue=""
@@ -43,7 +47,9 @@ function Profile() {
                   <Row>
                     <Col md="12">
                       <Form.Group>
-                        <label>Github</label>
+                        <label>
+                          <b>Github</b>
+                        </label>
                         <Form.Control
                           defaultValue=""
                           placeholder="Github"
@@ -55,7 +61,9 @@ function Profile() {
                   <Row>
                     <Col md="12">
                       <Form.Group>
-                        <label>Homepage</label>
+                        <label>
+                          <b>Homepage</b>
+                        </label>
                         <Form.Control
                           defaultValue=""
                           placeholder="Homepage"
@@ -68,7 +76,7 @@ function Profile() {
                   <Button
                     className="btn-fill pull-right"
                     type="submit"
-                    variant="info"
+                    variant="danger"
                   >
                     Submit
                   </Button>
@@ -87,15 +95,12 @@ function Profile() {
               </div>
               <Card.Body>
                 <div className="author">
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
-                      alt="..."
-                      className="avatar border-gray"
-                      src={require("assets/img/devsunset.jpg")}
-                    ></img>
-                    <h5 className="title">UserId : devsunset</h5>
-                    <h5 className="title">Nickname : devsunset</h5>
-                  </a>
+                  <img
+                    className="avatar border-gray"
+                    src={require("assets/img/devsunset.jpg")}
+                  ></img>
+                  <h5 className="title">UserId : devsunset</h5>
+                  <h5 className="title">Nickname : devsunset</h5>
                 </div>
               </Card.Body>
               <hr></hr>
