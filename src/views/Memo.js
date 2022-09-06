@@ -66,24 +66,7 @@ function Memo() {
         <Card>
           <Card.Header>
             <Card.Title as="h4">Notifications</Card.Title>
-            <p className="card-category">
-              Handcrafted by our friend and colleague{" "}
-              <a
-                href="https://github.com/EINazare"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Nazare Emanuel-Ioan
-              </a>
-              . Please checkout the{" "}
-              <a
-                href="https://github.com/creativetimofficial/react-notification-alert"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                full documentation.
-              </a>
-            </p>
+            <p className="card-category"></p>
           </Card.Header>
           <Card.Body>
             <Row>
@@ -224,10 +207,7 @@ function Memo() {
             <div className="places-buttons">
               <Row>
                 <Col className="offset-md-3 text-center" md="6">
-                  <Card.Title as="h4">Notifications Places</Card.Title>
-                  <p className="card-category">
-                    <small>Click to view notifications</small>
-                  </p>
+                  <Card.Title as="h4"></Card.Title>
                 </Col>
               </Row>
               <Row className="justify-content-center">
