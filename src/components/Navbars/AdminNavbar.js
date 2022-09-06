@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 
 import routes from "routes.js";
@@ -59,45 +59,40 @@ function Header() {
                   data-toggle="dropdown"
                   id="dropdown-67443507"
                   variant="default"
-                  className="m-0"
+                  className="m-2.5"
                 >
                   <i className="nc-icon nc-planet"></i>
                   <span className="notification">1</span>
                   <span className="d-lg-none ml-1"> New Memo</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                  <NavLink
+                    to={"/gotogether/memo"}
+                    className="nav-link"
+                    activeClassName="active"
                   >
-                    1 New Memo
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    See All Memo
-                  </Dropdown.Item>
+                    <span className="no-icon">Show All (1)</span>
+                  </NavLink>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+              <NavLink
+                to={"/gotogether/profile"}
+                className="nav-link"
+                activeClassName="active"
               >
-                <span className="no-icon">Account</span>
-              </Nav.Link>
+                <span className="no-icon">Profile</span>
+              </NavLink>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+              <NavLink
+                to={"/gotogether/login"}
+                className="nav-link"
+                activeClassName="active"
               >
-                <span className="no-icon">Log out</span>
-              </Nav.Link>
+                <span className="no-icon">Log In</span>
+              </NavLink>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
