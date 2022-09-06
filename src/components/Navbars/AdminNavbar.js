@@ -87,7 +87,7 @@ function Header() {
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
-                <span className="no-icon">Account</span>
+                <span className="no-icon">Profile</span>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
