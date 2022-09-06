@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Table, Container, Row, Col } from "react-bootstrap";
+import { Alert, Card, Table, Container, Row, Col } from "react-bootstrap";
 
 function Home() {
   return (
@@ -127,7 +127,14 @@ function Home() {
             </Card>
           </Col>
         </Row>
-
+        <Row>
+          <Col md="12">
+            <Alert className="alert-with-icon" variant="primary">
+              <span data-notify="icon" className="nc-icon nc-bell-55"></span>
+              <span>함께 공부 해요 ^^</span>
+            </Alert>
+          </Col>
+        </Row>
         <Row>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
