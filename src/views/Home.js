@@ -1,5 +1,4 @@
 import React from "react";
-import ChartistGraph from "react-chartist";
 import { Card, Table, Container, Row, Col } from "react-bootstrap";
 
 function Home() {
@@ -128,6 +127,7 @@ function Home() {
             </Card>
           </Col>
         </Row>
+
         <Row>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">

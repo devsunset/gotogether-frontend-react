@@ -56,6 +56,7 @@ const gotogetherRoutes = [
     icon: "nc-icon nc-single-02",
     component: Login,
     layout: "/gotogether",
+    invisible: true,
   },
   {
     path: "/register",
@@ -63,6 +64,7 @@ const gotogetherRoutes = [
     icon: "nc-icon nc-single-02",
     component: Register,
     layout: "/gotogether",
+    invisible: true,
   },
 ];
 
