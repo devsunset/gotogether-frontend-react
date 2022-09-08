@@ -25,7 +25,6 @@ function Member() {
   const cardbgcolor = {
     backgroundColor: "rgba(0,0,0,.07)",
   };
-
   return (
     <>
       <Card>
