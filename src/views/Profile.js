@@ -74,7 +74,7 @@ function Profile() {
                   </Row>
 
                   <Button
-                    className="btn-fill pull-right"
+                    className="pull-right"
                     type="submit"
                     variant="danger"
                   >

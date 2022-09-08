@@ -1,7 +1,9 @@
-import React from "react";
+import React , { Component }  from "react";
 
 
 import { Card, Button, Table, Container, Row, Col } from "react-bootstrap";
+
+import { Form, InputGroup } from "react-bootstrap";
 
 function Member() {
 
@@ -18,6 +20,7 @@ function Member() {
 
    const rightalign = {
       float: "right",
+      margin: "10px"
     }
    const margintable = {
       border: "1px solid #dee2e6",
@@ -26,7 +29,7 @@ function Member() {
       display: "none",
     }
     const cardbgcolor = {
-      backgroundColor : 'rgba(0,0,0,.03)',
+      backgroundColor : 'rgba(0,0,0,.07)',
     }
 
     const success = {
@@ -42,6 +45,7 @@ function Member() {
       verticalAlign: "baseline",
       borderRadius: ".25rem",
       marginRight:"3px",
+      marginLeft :"22px"
     }
 
     const danger = {
@@ -89,14 +93,18 @@ function Member() {
       marginRight:"3px",
     }
 
-
   return (
     <>
     <Card>
     <Card.Header style={cardbgcolor}>
     <span style={success}>기본 학습</span><span style={danger}>업무 사용</span><span style={warning}>관심 있음</span><span style={primary}>Toy Pjt.</span>
-       
-       <span style={rightalign}>22.08.24</span><p/>
+       <span style={rightalign}>
+       <InputGroup>
+        <Form.Control size="lg" type="text" placeholder="Search"></Form.Control> 
+         <Button variant="warning" size="sm"><i className="nc-icon nc-zoom-split"/></Button>
+         <p/>
+      </InputGroup>
+       </span><p/>
     </Card.Header>
     <Card.Body>
         <Container fluid>
@@ -151,7 +159,7 @@ function Member() {
         </Container>
        </Card.Body>
        <Card.Footer style={cardbgcolor}>
-        aaaa
+        paging...
        </Card.Footer>
       </Card>
     </>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert, Card, Table, Container, Row, Col } from "react-bootstrap";
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 function Home() {
   return (
@@ -20,7 +21,7 @@ function Home() {
                       <p className="card-category">
                           <b>Together</b>
                       </p>
-                      <Card.Title as="h3">1</Card.Title>
+                      <Card.Title as="h2">1</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -48,7 +49,7 @@ function Home() {
                       <p className="card-category">
                           <b>Member</b>
                       </p>
-                      <Card.Title as="h3">2</Card.Title>
+                      <Card.Title as="h2">2</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -76,7 +77,7 @@ function Home() {
                       <p className="card-category">
                           <b>Talk</b>
                       </p>
-                      <Card.Title as="h3">1</Card.Title>
+                      <Card.Title as="h2">1</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -104,7 +105,7 @@ function Home() {
                       <p className="card-category">
                           <b>Q&A</b>
                       </p>
-                      <Card.Title as="h3">1</Card.Title>
+                      <Card.Title as="h2">1</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -155,7 +156,18 @@ function Home() {
                   <tbody>
                     <tr>
                       <td>Talk 게시판</td>
-                      <td>1</td>
+                      <td>
+                        <ProgressBar now={60} label={`${60}%`} />
+                        <ProgressBar striped variant="success" now={40}  label={`${40}%`}/>
+                        <ProgressBar striped variant="info" now={20}  label={`${20}%`}/>
+                        <ProgressBar striped variant="warning" now={60} label={`${60}%`} />
+                        <ProgressBar striped variant="danger" now={80}  label={`${80}%`}/>
+
+
+                      </td>
+
+
+
                       <td>1</td>
                       <td>22.08.24 10:59</td>
                     </tr>
