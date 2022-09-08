@@ -59,7 +59,7 @@ function Member() {
                 type="text"
                 placeholder="Search"
               ></Form.Control>
-              <Button variant="warning" size="sm">
+              <Button variant="info" size="sm">
                 <i className="nc-icon nc-zoom-split" />
               </Button>
               <p />
