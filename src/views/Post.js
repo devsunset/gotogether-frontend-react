@@ -1,12 +1,22 @@
 import React from "react";
 
-import { Card, Table, Container, Row, Col ,Button,Dropdown,   Form, InputGroup} from "react-bootstrap";
+import {
+  Card,
+  Table,
+  Container,
+  Row,
+  Col,
+  Button,
+  Dropdown,
+  Form,
+  InputGroup,
+} from "react-bootstrap";
 
 function Post() {
-     const rightalign = {
-      float: "right",
-      margin: "10px"
-    }
+  const rightalign = {
+    float: "right",
+    margin: "10px",
+  };
   return (
     <>
       <Container fluid>
@@ -14,26 +24,27 @@ function Post() {
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
               <Card.Header>
-               <Button variant="success" size="sm">New</Button>
+                <Button variant="success" size="sm">
+                  New
+                </Button>
                 <span style={rightalign}>
-                
-                 <Dropdown>
-                  <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    Talk
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item>Talk</Dropdown.Item>
-                    <Dropdown.Item>Q&A</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                
-                 <InputGroup>
-
-                  <Form.Control size="lg" type="text" placeholder="Search"></Form.Control> 
-                   <Button variant="warning" size="sm"><i className="nc-icon nc-zoom-split"/></Button>
-                   <p/>
-                </InputGroup>
-                 </span><p/>
+                  <InputGroup>
+                    <Form.Select aria-label="select category" variant="warning">
+                      <option value="TALK">Talk</option>
+                      <option value="QA">Q&A</option>
+                    </Form.Select>
+                    <Form.Control
+                      size="lg"
+                      type="text"
+                      placeholder="Search"
+                    ></Form.Control>
+                    <Button variant="warning" size="sm">
+                      <i className="nc-icon nc-zoom-split" />
+                    </Button>
+                    <p />
+                  </InputGroup>
+                </span>
+                <p />
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
                 <Table className="table-hover table-striped">
