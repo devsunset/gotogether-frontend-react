@@ -18,11 +18,9 @@ function Home() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">
-                        <h3>
                           <b>Together</b>
-                        </h3>
                       </p>
-                      <Card.Title as="h4">1</Card.Title>
+                      <Card.Title as="h3">1</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -48,11 +46,9 @@ function Home() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">
-                        <h3>
                           <b>Member</b>
-                        </h3>
                       </p>
-                      <Card.Title as="h4">2</Card.Title>
+                      <Card.Title as="h3">2</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -78,11 +74,9 @@ function Home() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">
-                        <h3>
                           <b>Talk</b>
-                        </h3>
                       </p>
-                      <Card.Title as="h4">1</Card.Title>
+                      <Card.Title as="h3">1</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -108,11 +102,9 @@ function Home() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">
-                        <h3>
                           <b>Q&A</b>
-                        </h3>
                       </p>
-                      <Card.Title as="h4">1</Card.Title>
+                      <Card.Title as="h3">1</Card.Title>
                     </div>
                   </Col>
                 </Row>
