@@ -5,7 +5,7 @@ import AdminNavbar from "components/Navbars/AdminNavbar";
 import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
 import routes from "routes.js";
-import sidebarImage from "assets/img/sidebar-2.jpg";
+import sidebarImage from "assets/img/sidebar.jpg";
 
 function Admin() {
   const [image, setImage] = React.useState(sidebarImage);

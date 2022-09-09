@@ -73,11 +73,7 @@ function Profile() {
                     </Col>
                   </Row>
 
-                  <Button
-                    className="pull-right"
-                    type="submit"
-                    variant="danger"
-                  >
+                  <Button className="pull-right" type="submit" variant="danger">
                     Submit
                   </Button>
                   <div className="clearfix"></div>
@@ -90,7 +86,7 @@ function Profile() {
               <div className="card-image">
                 <img
                   alt="..."
-                  src={require("assets/img/photo-1431578500526-4d9613015464.jpeg")}
+                  src={require("assets/img/profile_bg.jpeg")}
                 ></img>
               </div>
               <Card.Body>
