@@ -117,37 +117,55 @@ function Member() {
                             <td width="15%">
                               <b>Introduce</b>
                             </td>
-                            <td>22.08.24 10:59</td>
+                            <td>-</td>
                           </tr>
                           <tr>
                             <td>
                               <b>Note</b>
                             </td>
-                            <td>22.08.24 10:59</td>
+                            <td>-</td>
                           </tr>
                           <tr>
                             <td>
                               <b>Github</b>
                             </td>
-                            <td>22.08.24 10:59</td>
+                            <td>-</td>
                           </tr>
                           <tr>
                             <td>
                               <b>Homepage</b>
                             </td>
-                            <td>22.08.24 10:59</td>
+                            <td>-</td>
                           </tr>
                           <tr>
                             <td>
                               <b>Skills</b>
                             </td>
-                            <td>22.08.24 10:59</td>
+                            <td>-</td>
                           </tr>
                           <tr>
                             <td>
-                              <b>메모전송</b>
+                              <b>
+                                <i
+                                  className="nc-icon nc-email-85"
+                                  style={{ marginTop: "5px" }}
+                                />
+                                &nbsp; 메모전송
+                              </b>
+                              <br />
+                              <Button variant="success" size="lg">
+                                Send
+                              </Button>
                             </td>
-                            <td>22.08.24 10:59</td>
+                            <td>
+                              <Form.Control
+                                cols="80"
+                                defaultValue=""
+                                placeholder="내용을 입력 하세요..."
+                                rows="2"
+                                as="textarea"
+                              ></Form.Control>
+                            </td>
                           </tr>
                         </tbody>
                       </Table>
