@@ -17,7 +17,7 @@ function Register() {
                     type="text"
                     className="form-control form-control-lg"
                     id="exampleInputUsername1"
-                    placeholder="Username"
+                    placeholder="UserId"
                   />
                 </div>
                 <div className="form-group">
@@ -25,7 +25,7 @@ function Register() {
                     type="text"
                     className="form-control form-control-lg"
                     id="exampleInputUsername1"
-                    placeholder="Username"
+                    placeholder="Nickname"
                   />
                 </div>
                 <div className="form-group">
