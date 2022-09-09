@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Button, Table, Container, Row, Col } from "react-bootstrap";
 import { Form, InputGroup } from "react-bootstrap";
 import Badge from "react-bootstrap/Badge";
+import Pagination from "react-bootstrap-4-pagination";
 
 function Member() {
   const [showResults, setShowResults] = React.useState(false);
@@ -25,6 +26,20 @@ function Member() {
   const cardbgcolor = {
     backgroundColor: "rgba(0,0,0,.07)",
   };
+
+  let paginationConfig = {
+    totalPages: 7,
+    currentPage: 3,
+    showMax: 5,
+    size: "sm",
+    threeDots: true,
+    prevNext: true,
+    onClick: function (page) {
+      console.log(page);
+      alert(page);
+    },
+  };
+
   return (
     <>
       <Card>
@@ -132,7 +147,9 @@ function Member() {
             </Row>
           </Container>
         </Card.Body>
-        <Card.Footer style={cardbgcolor}>paging...</Card.Footer>
+        <Card.Footer style={cardbgcolor}>
+          <Pagination {...paginationConfig} />
+        </Card.Footer>
       </Card>
     </>
   );
