@@ -9,6 +9,7 @@ import {
   InputGroup,
   Button,
 } from "react-bootstrap";
+import Pagination from "react-bootstrap-4-pagination";
 
 function Memo() {
   const [showResults, setShowResults] = React.useState(false);
@@ -21,9 +22,14 @@ function Memo() {
     }
   };
 
-  const rightalign = {
+  const cardheaderrightalign = {
     float: "right",
     margin: "10px",
+    width: "370px",
+  };
+
+  const rightalign = {
+    float: "right",
   };
 
   const displaynone = {
@@ -31,6 +37,25 @@ function Memo() {
   };
   const cardbgcolor = {
     backgroundColor: "rgba(0,0,0,.07)",
+  };
+
+  let paginationConfig = {
+    totalPages: 7,
+    currentPage: 3,
+    showMax: 5,
+    size: "sm",
+    threeDots: true,
+    prevNext: true,
+    onClick: function (page) {
+      console.log(page);
+      alert(page);
+    },
+  };
+
+  const footer = {
+    backgroundColor: "rgba(0,0,0,.07)",
+    float: "center",
+    padding: "15px",
   };
 
   return (
@@ -41,18 +66,21 @@ function Memo() {
             <InputGroup>
               <Form.Check className="mb-1 pl-0">
                 <Form.Check.Label
-                  style={{ paddingLeft: "65px", paddingRight: "22px" }}
+                  style={{
+                    paddingLeft: "65px",
+                    paddingRight: "22px",
+                  }}
                 >
                   <Form.Check.Input type="checkbox"></Form.Check.Input>
                   <span className="form-check-sign"></span>
-                  <Button variant="danger" size="sm" style={{ height: "25px" }}>
+                  <Button variant="danger" size="sm">
                     Delete
                   </Button>
                 </Form.Check.Label>
               </Form.Check>
             </InputGroup>
           </span>
-          <span style={rightalign}>
+          <span style={cardheaderrightalign}>
             <InputGroup>
               <Form.Check className="mb-1 pl-0">
                 <Form.Check.Label
@@ -63,7 +91,7 @@ function Memo() {
                   <b>Detail Display</b>
                 </Form.Check.Label>
               </Form.Check>
-              <Form.Select>
+              <Form.Select style={{ width: "200px" }}>
                 <option value="R">수신 메모함</option>
                 <option value="S">발신 메모함</option>
               </Form.Select>
@@ -123,7 +151,9 @@ function Memo() {
             </Row>
           </Container>
         </Card.Body>
-        <Card.Footer style={cardbgcolor}>paging...</Card.Footer>
+        <Card.Footer style={footer}>
+          <Pagination {...paginationConfig} />
+        </Card.Footer>
       </Card>
     </>
   );

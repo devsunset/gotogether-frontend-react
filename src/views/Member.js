@@ -15,9 +15,14 @@ function Member() {
     }
   };
 
-  const rightalign = {
+  const cardheaderrightalign = {
     float: "right",
     margin: "10px",
+    width: "370px",
+  };
+
+  const rightalign = {
+    float: "right",
   };
 
   const displaynone = {
@@ -25,6 +30,12 @@ function Member() {
   };
   const cardbgcolor = {
     backgroundColor: "rgba(0,0,0,.07)",
+  };
+
+  const footer = {
+    backgroundColor: "rgba(0,0,0,.07)",
+    float: "center",
+    padding: "15px",
   };
 
   let paginationConfig = {
@@ -57,7 +68,7 @@ function Member() {
           <Badge bg="primary" text="white">
             Toy Pjt.
           </Badge>{" "}
-          <span style={rightalign}>
+          <span style={cardheaderrightalign}>
             <Form.Check className="mb-1 pl-0">
               <Form.Check.Label style={{ paddingLeft: "22px" }}>
                 <Form.Check.Input
@@ -147,7 +158,7 @@ function Member() {
             </Row>
           </Container>
         </Card.Body>
-        <Card.Footer style={cardbgcolor}>
+        <Card.Footer style={footer}>
           <Pagination {...paginationConfig} />
         </Card.Footer>
       </Card>
