@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { register } from '../slices/auth';
 import { clearMessage } from '../slices/message';
@@ -113,6 +115,16 @@ const Register = () => {
             )}
           </Form>
         </Formik>
+        <div className="text-center mt-4 font-weight-light">
+          Already have an account?{' '}
+          <NavLink
+            to={'/gotogether/login'}
+            className="nav-link"
+            activeClassName="active"
+          >
+            Login
+          </NavLink>
+        </div>
       </div>
 
       {message && (
