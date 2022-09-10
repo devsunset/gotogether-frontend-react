@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Card,
@@ -9,21 +9,21 @@ import {
   Button,
   Form,
   InputGroup,
-} from "react-bootstrap";
-import Pagination from "react-bootstrap-4-pagination";
+} from 'react-bootstrap';
+import Pagination from 'react-bootstrap-4-pagination';
 
 function Together() {
   const rightalign = {
-    float: "right",
-    margin: "10px",
-    width: "340px",
+    float: 'right',
+    margin: '10px',
+    width: '340px',
   };
 
   let paginationConfig = {
     totalPages: 7,
     currentPage: 3,
     showMax: 5,
-    size: "sm",
+    size: 'sm',
     threeDots: true,
     prevNext: true,
     onClick: function (page) {
@@ -33,9 +33,9 @@ function Together() {
   };
 
   const footer = {
-    backgroundColor: "rgba(0,0,0,.07)",
-    float: "center",
-    padding: "15px",
+    backgroundColor: 'rgba(0,0,0,.07)',
+    float: 'center',
+    padding: '15px',
   };
 
   return (
@@ -48,14 +48,14 @@ function Together() {
                 <Button
                   variant="success"
                   size="sm"
-                  style={{ marginTop: "15px" }}
+                  style={{ marginTop: '10px' }}
                 >
                   New
                 </Button>
                 <span style={rightalign}>
                   <InputGroup>
                     <Form.Control
-                      size="lg"
+                      size="sm"
                       type="text"
                       placeholder="Search"
                     ></Form.Control>

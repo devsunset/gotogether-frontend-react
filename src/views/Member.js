@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Card, Button, Table, Container, Row, Col } from "react-bootstrap";
-import { Form, InputGroup } from "react-bootstrap";
-import Badge from "react-bootstrap/Badge";
-import Pagination from "react-bootstrap-4-pagination";
+import React, { Component } from 'react';
+import { Card, Button, Table, Container, Row, Col } from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Pagination from 'react-bootstrap-4-pagination';
 
 function Member() {
   const [showResults, setShowResults] = React.useState(false);
@@ -16,33 +16,33 @@ function Member() {
   };
 
   const cardheaderrightalign = {
-    float: "right",
-    margin: "10px",
-    width: "370px",
+    float: 'right',
+    margin: '10px',
+    width: '370px',
   };
 
   const rightalign = {
-    float: "right",
+    float: 'right',
   };
 
   const displaynone = {
-    display: "none",
+    display: 'none',
   };
   const cardbgcolor = {
-    backgroundColor: "rgba(0,0,0,.07)",
+    backgroundColor: 'rgba(0,0,0,.07)',
   };
 
   const footer = {
-    backgroundColor: "rgba(0,0,0,.07)",
-    float: "center",
-    padding: "15px",
+    backgroundColor: 'rgba(0,0,0,.07)',
+    float: 'center',
+    padding: '15px',
   };
 
   let paginationConfig = {
     totalPages: 7,
     currentPage: 3,
     showMax: 5,
-    size: "sm",
+    size: 'sm',
     threeDots: true,
     prevNext: true,
     onClick: function (page) {
@@ -57,20 +57,20 @@ function Member() {
         <Card.Header style={cardbgcolor}>
           <Badge bg="success" text="white">
             기본학습
-          </Badge>{" "}
+          </Badge>{' '}
           <Badge bg="danger" text="white">
             업무사용
-          </Badge>{" "}
+          </Badge>{' '}
           <Badge bg="warning" text="white">
-            {" "}
+            {' '}
             관심있음
-          </Badge>{" "}
+          </Badge>{' '}
           <Badge bg="primary" text="white">
             Toy Pjt.
-          </Badge>{" "}
+          </Badge>{' '}
           <span style={cardheaderrightalign}>
             <Form.Check className="mb-1 pl-0">
-              <Form.Check.Label style={{ paddingLeft: "22px" }}>
+              <Form.Check.Label style={{ paddingLeft: '22px' }}>
                 <Form.Check.Input
                   defaultChecked
                   type="checkbox"
@@ -81,7 +81,7 @@ function Member() {
             </Form.Check>
             <InputGroup>
               <Form.Control
-                size="lg"
+                size="sm"
                 type="text"
                 placeholder="Search"
               ></Form.Control>
@@ -99,7 +99,7 @@ function Member() {
               <Col md="12">
                 <Card>
                   <Card.Header style={cardbgcolor} onClick={onVisible}>
-                    <i className="nc-icon nc-single-02" /> devsunset{" "}
+                    <i className="nc-icon nc-single-02" /> devsunset{' '}
                     <span style={rightalign}>22.08.24</span>
                     <p />
                   </Card.Header>
@@ -148,7 +148,7 @@ function Member() {
                               <b>
                                 <i
                                   className="nc-icon nc-email-85"
-                                  style={{ marginTop: "5px" }}
+                                  style={{ marginTop: '5px' }}
                                 />
                                 &nbsp; 메모전송
                               </b>

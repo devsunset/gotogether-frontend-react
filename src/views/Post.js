@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Card,
@@ -10,21 +10,21 @@ import {
   Dropdown,
   Form,
   InputGroup,
-} from "react-bootstrap";
-import Pagination from "react-bootstrap-4-pagination";
+} from 'react-bootstrap';
+import Pagination from 'react-bootstrap-4-pagination';
 
 function Post() {
   const rightalign = {
-    float: "right",
-    margin: "10px",
-    width: "340px",
+    float: 'right',
+    margin: '10px',
+    width: '340px',
   };
 
   let paginationConfig = {
     totalPages: 7,
     currentPage: 3,
     showMax: 5,
-    size: "sm",
+    size: 'sm',
     threeDots: true,
     prevNext: true,
     onClick: function (page) {
@@ -34,9 +34,9 @@ function Post() {
   };
 
   const footer = {
-    backgroundColor: "rgba(0,0,0,.07)",
-    float: "center",
-    padding: "15px",
+    backgroundColor: 'rgba(0,0,0,.07)',
+    float: 'center',
+    padding: '15px',
   };
 
   return (
@@ -49,7 +49,7 @@ function Post() {
                 <Button
                   variant="success"
                   size="sm"
-                  style={{ marginTop: "15px" }}
+                  style={{ marginTop: '15px' }}
                 >
                   New
                 </Button>
@@ -58,13 +58,13 @@ function Post() {
                     <Form.Select
                       aria-label="select category"
                       variant="warning"
-                      style={{ width: "100px" }}
+                      style={{ width: '100px' }}
                     >
                       <option value="TALK">Talk</option>
                       <option value="QA">Q&A</option>
                     </Form.Select>
                     <Form.Control
-                      size="lg"
+                      size="sm"
                       type="text"
                       placeholder="Search"
                     ></Form.Control>
