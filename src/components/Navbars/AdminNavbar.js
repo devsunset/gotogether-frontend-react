@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { useLocation, NavLink } from "react-router-dom";
-import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
+import React, { Component } from 'react';
+import { useLocation, NavLink } from 'react-router-dom';
+import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
 
-import routes from "routes.js";
+import routes from 'routes.js';
 
 function Header() {
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
-    document.documentElement.classList.toggle("nav-open");
-    var node = document.createElement("div");
-    node.id = "bodyClick";
+    document.documentElement.classList.toggle('nav-open');
+    var node = document.createElement('div');
+    node.id = 'bodyClick';
     node.onclick = function () {
       this.parentElement.removeChild(this);
-      document.documentElement.classList.toggle("nav-open");
+      document.documentElement.classList.toggle('nav-open');
     };
     document.body.appendChild(node);
   };
@@ -24,7 +24,7 @@ function Header() {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return 'Brand';
   };
   return (
     <Navbar bg="light" expand="lg">
@@ -67,7 +67,7 @@ function Header() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <NavLink
-                    to={"/gotogether/memo"}
+                    to={'/gotogether/memo'}
                     className="nav-link"
                     activeClassName="active"
                   >
@@ -78,16 +78,7 @@ function Header() {
             </Nav.Item>
             <Nav.Item>
               <NavLink
-                to={"/gotogether/profile"}
-                className="nav-link"
-                activeClassName="active"
-              >
-                <span className="no-icon">Profile</span>
-              </NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink
-                to={"/gotogether/login"}
+                to={'/gotogether/login'}
                 className="nav-link"
                 activeClassName="active"
               >

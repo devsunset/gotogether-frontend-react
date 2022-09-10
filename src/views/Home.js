@@ -1,8 +1,27 @@
-import React from "react";
-import { Alert, Card, Table, Container, Row, Col } from "react-bootstrap";
-import ProgressBar from "react-bootstrap/ProgressBar";
+import React, { useState, useEffect } from 'react';
+import { Alert, Card, Table, Container, Row, Col } from 'react-bootstrap';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
+import UserService from '../services/user.service';
 
 function Home() {
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    UserService.getPublicContent().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        const _content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+
+        setContent(_content);
+      },
+    );
+  }, []);
   return (
     <>
       <Container fluid>
@@ -124,7 +143,7 @@ function Home() {
           <Col md="12">
             <Alert className="alert-with-icon" variant="primary">
               <span data-notify="icon" className="nc-icon nc-bell-55"></span>
-              <span>함께 공부 해요 ^^</span>
+              <span>{content}</span>
             </Alert>
           </Col>
         </Row>

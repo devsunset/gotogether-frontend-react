@@ -1,8 +1,16 @@
-import React from "react";
-
-import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Button, Card, Form, Container, Row, Col } from 'react-bootstrap';
 
 function Profile() {
+  const { user: currentUser } = useSelector((state) => state.auth);
+
+  alert(JSON.stringify(currentUser));
+  if (!currentUser) {
+    return <Redirect to="/home" />;
+  }
+
   return (
     <>
       <Container fluid>
@@ -86,17 +94,20 @@ function Profile() {
               <div className="card-image">
                 <img
                   alt="..."
-                  src={require("assets/img/profile_bg.jpeg")}
+                  src={require('assets/img/profile_bg.jpeg')}
                 ></img>
               </div>
               <Card.Body>
                 <div className="author">
                   <img
                     className="avatar border-gray"
-                    src={require("assets/img/devsunset.jpg")}
+                    src={require('assets/img/devsunset.jpg')}
                   ></img>
-                  <h5 className="title">UserId : devsunset</h5>
-                  <h5 className="title">Nickname : devsunset</h5>
+                  <h5 className="title">UserId : {currentUser.username}</h5>
+                  <h5 className="title">Nickname : {currentUser.nickname}</h5>
+                  <h5 className="title">
+                    Authorities : {currentUser.roles && currentUser.roles[0]}
+                  </h5>
                 </div>
               </Card.Body>
               <hr></hr>

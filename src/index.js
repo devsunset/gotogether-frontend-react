@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import store from './store';
+import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import AdminLayout from 'layouts/Admin.js';
 
@@ -12,13 +15,20 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <BrowserRouter>
-    <Switch>
-      <Route
-        path="/gotogether"
-        render={(props) => <AdminLayout {...props} />}
-      />
-      <Redirect from="/" to="/gotogether/home" />
-    </Switch>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
+        <Route
+          path="/gotogether"
+          render={(props) => <AdminLayout {...props} />}
+        />
+        <Redirect from="/" to="/gotogether/home" />
+      </Switch>
+    </BrowserRouter>
+  </Provider>,
 );
+
+// If you want your app to work offline and load faster, you can chađinge
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
