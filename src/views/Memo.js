@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Card,
   Form,
@@ -8,8 +8,8 @@ import {
   Col,
   InputGroup,
   Button,
-} from "react-bootstrap";
-import Pagination from "react-bootstrap-4-pagination";
+} from 'react-bootstrap';
+import Pagination from 'react-bootstrap-4-pagination';
 
 function Memo() {
   const [showResults, setShowResults] = React.useState(false);
@@ -23,27 +23,27 @@ function Memo() {
   };
 
   const cardheaderrightalign = {
-    float: "right",
-    margin: "10px",
-    width: "370px",
+    float: 'right',
+    margin: '10px',
+    width: '305px',
   };
 
   const rightalign = {
-    float: "right",
+    float: 'right',
   };
 
   const displaynone = {
-    display: "none",
+    display: 'none',
   };
   const cardbgcolor = {
-    backgroundColor: "rgba(0,0,0,.07)",
+    backgroundColor: 'rgba(0,0,0,.07)',
   };
 
   let paginationConfig = {
     totalPages: 7,
     currentPage: 3,
     showMax: 5,
-    size: "sm",
+    size: 'sm',
     threeDots: true,
     prevNext: true,
     onClick: function (page) {
@@ -53,9 +53,9 @@ function Memo() {
   };
 
   const footer = {
-    backgroundColor: "rgba(0,0,0,.07)",
-    float: "center",
-    padding: "15px",
+    backgroundColor: 'rgba(0,0,0,.07)',
+    float: 'center',
+    padding: '15px',
   };
 
   return (
@@ -67,8 +67,8 @@ function Memo() {
               <Form.Check className="mb-1 pl-0">
                 <Form.Check.Label
                   style={{
-                    paddingLeft: "65px",
-                    paddingRight: "22px",
+                    paddingLeft: '65px',
+                    paddingRight: '22px',
                   }}
                 >
                   <Form.Check.Input type="checkbox"></Form.Check.Input>
@@ -84,14 +84,14 @@ function Memo() {
             <InputGroup>
               <Form.Check className="mb-1 pl-0">
                 <Form.Check.Label
-                  style={{ paddingLeft: "0px", paddingRight: "22px" }}
+                  style={{ paddingLeft: '0px', paddingRight: '22px' }}
                 >
                   <Form.Check.Input type="checkbox"></Form.Check.Input>
                   <span className="form-check-sign"></span>
                   <b>Detail Display</b>
                 </Form.Check.Label>
               </Form.Check>
-              <Form.Select style={{ width: "200px" }}>
+              <Form.Select style={{ width: '200px' }}>
                 <option value="R">수신 메모함</option>
                 <option value="S">발신 메모함</option>
               </Form.Select>
@@ -112,10 +112,10 @@ function Memo() {
                           <span className="form-check-sign"></span>
                           <i
                             className="nc-icon nc-email-85"
-                            style={{ marginTop: "5px" }}
+                            style={{ marginTop: '5px' }}
                           />
                         </Form.Check.Label>
-                        {"  "}devsunset
+                        {'  '}devsunset
                         <span style={rightalign}>22.08.24</span>
                       </Form.Check>
                     </span>
@@ -141,7 +141,7 @@ function Memo() {
                               <b>
                                 <i
                                   className="nc-icon nc-email-85"
-                                  style={{ marginTop: "5px" }}
+                                  style={{ marginTop: '5px' }}
                                 />
                                 &nbsp; 메모전송
                               </b>
