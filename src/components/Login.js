@@ -74,7 +74,7 @@ function Login() {
               <Form className="pt-3">
                 <Form.Group className="d-flex search-field">
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="UserId"
                     size="lg"
                     className="h-auto"
