@@ -9,8 +9,11 @@ import EventBus from '../../common/EventBus';
 
 import routes from 'routes.js';
 
+import MemoService from '../../services/memo.service';
+
 function Header() {
   const { user: currentUser } = useSelector((state) => state.auth);
+  const [memo, setMemo] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -22,6 +25,19 @@ function Header() {
     EventBus.on('logout', () => {
       logOut();
     });
+    MemoService.getNewReceiveMemo().then(
+      (response) => {
+        setMemo(response.data.data.MEMO);
+      },
+      (error) => {
+        const _content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+
+        setMemo(0);
+      },
+    );
 
     return () => {
       EventBus.remove('logout');
@@ -86,7 +102,7 @@ function Header() {
                     className="m-2.5"
                   >
                     <i className="nc-icon nc-planet"></i>
-                    <span className="notification">1</span>
+                    <span className="notification">{memo}</span>
                     <span className="d-lg-none ml-1"> New Memo</span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -95,7 +111,7 @@ function Header() {
                       className="nav-link"
                       activeClassName="active"
                     >
-                      <span className="no-icon">Show All (1)</span>
+                      <span className="no-icon">Show All ({memo})</span>
                     </NavLink>
                   </Dropdown.Menu>
                 </Dropdown>
