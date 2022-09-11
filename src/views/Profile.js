@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Button, Card, Form, Container, Row, Col } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  Form,
+  Container,
+  Row,
+  Col,
+  Table,
+} from 'react-bootstrap';
 
 import UserService from '../services/user.service';
 
@@ -12,10 +20,17 @@ function Profile() {
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
 
+  const [userInfoId, setUserInfoId] = useState('');
   const [introduce, setIntroduce] = useState('');
   const [note, setNote] = useState('');
   const [github, setGithub] = useState('');
   const [homepage, setHomepage] = useState('');
+  const [skills, setSkills] = useState({
+    item: '',
+    level: '',
+  });
+
+  const { item, level } = skills;
 
   if (!currentUser) {
     return <Redirect to="/gotogether/home" />;
@@ -29,12 +44,32 @@ function Profile() {
 
     UserService.getUserInfo().then(
       (response) => {
-        setIntroduce(response.data.data.introduce);
-        setNote(response.data.data.note);
-        setGithub(response.data.data.github);
-        setHomepage(response.data.data.homepage);
+        if (response.data.data != null) {
+          setUserInfoId(response.data.data.userInfoId);
+          setIntroduce(response.data.data.introduce);
+          setNote(response.data.data.note);
+          setGithub(response.data.data.github);
+          setHomepage(response.data.data.homepage);
+          if (
+            response.data.data.skill === undefined ||
+            response.data.data.skill == null ||
+            response.data.data.skill === ''
+          ) {
+            setSkills({ item: '', level: 'INTEREST' });
+          } else {
+            var data = response.data.data.skill.split('|');
+            data.forEach(function (d) {
+              var datasub = d.split('^');
+              setSkills({ item: '', level: 'INTEREST' });
+              // setSkills(skills.concat({ item: datasub[0], level: datasub[1] }));
+            });
+          }
+        } else {
+          setSkills({ item: '', level: 'INTEREST' });
+        }
       },
       (error) => {
+        setSkills({ item: '', level: 'INTEREST' });
         const _content =
           (error.response && error.response.data) ||
           error.message ||
@@ -116,7 +151,38 @@ function Profile() {
                       </Form.Group>
                     </Col>
                   </Row>
-
+                  <Row>
+                    <Col md="12">
+                      <Table
+                        className="table-hover table-striped borded"
+                        variant="dark"
+                      >
+                        <thead>
+                          <tr>
+                            <th className="border-0">
+                              <b>SKILL</b>
+                            </th>
+                            <th className="border-0">
+                              <b>LEVEL</b>
+                            </th>
+                            <th className="border-0">
+                              <b>-</b>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {/* {skills &&
+                      skills.map((data) => (
+                        <tr key={data.item}>
+                          <td>{data.item}</td>
+                          <td>{data.level}</td>
+                          <td>1</td>
+                        </tr>
+                      ))} */}
+                        </tbody>
+                      </Table>
+                    </Col>
+                  </Row>
                   <Button className="pull-right" type="submit" variant="danger">
                     Submit
                   </Button>
