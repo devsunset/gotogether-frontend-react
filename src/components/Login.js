@@ -44,7 +44,7 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/gotogether/home" />;
   }
 
   return (

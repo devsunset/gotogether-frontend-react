@@ -16,7 +16,6 @@
     "react-dom": "18.2.0",
     "react-notification-alert": "0.0.13",
     "react-redux": "^8.0.2",
-    "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "5.0.1",
     "reactstrap": "8.8.1",

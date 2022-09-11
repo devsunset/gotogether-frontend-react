@@ -7,7 +7,7 @@ function Profile() {
   const { user: currentUser } = useSelector((state) => state.auth);
 
   if (!currentUser) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/gotogether/home" />;
   }
 
   // alert(JSON.stringify(currentUser));

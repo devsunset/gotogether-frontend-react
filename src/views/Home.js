@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Card, Table, Container, Row, Col } from 'react-bootstrap';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import CommonService from '../services/common.service';
 
 function Home() {
+  const history = useHistory();
   const [notice, setNotice] = useState('');
   const [together, setTogether] = useState(0);
   const [user, setUser] = useState(0);
@@ -36,6 +37,7 @@ function Home() {
 
   const handleClick = (id) => {
     alert(id);
+    history.push(`/gotogether/together`);
   };
   return (
     <>
