@@ -1,10 +1,9 @@
-import axios from 'axios';
-
-const API_URL = 'http://193.123.252.22:8282/api/auth/';
+import api from './api';
+import TokenService from './token.service';
 
 const register = (username, nickname, password) => {
   var email = username + '@email.com';
-  return axios.post(API_URL + 'signup', {
+  return api.post('/auth/signup', {
     username,
     nickname,
     email,
@@ -13,28 +12,33 @@ const register = (username, nickname, password) => {
 };
 
 const login = (username, password) => {
-  return axios
-    .post(API_URL + 'signin', {
+  return api
+    .post('/auth/signin', {
       username,
       password,
     })
     .then((response) => {
       if (response.data.data.token) {
-        localStorage.setItem('user', JSON.stringify(response.data.data));
+        TokenService.setUser(response.data.data);
       }
 
-      return response.data.data;
+      return response.data;
     });
 };
 
 const logout = () => {
-  localStorage.removeItem('user');
+  TokenService.removeUser();
 };
 
-const authService = {
+const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem('user'));
+};
+
+const AuthService = {
   register,
   login,
   logout,
+  getCurrentUser,
 };
 
-export default authService;
+export default AuthService;

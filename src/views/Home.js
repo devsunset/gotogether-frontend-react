@@ -143,7 +143,6 @@ function Home() {
           <Col md="12">
             <Alert className="alert-with-icon" variant="primary">
               <span data-notify="icon" className="nc-icon nc-bell-55"></span>
-              <span>{content}</span>
             </Alert>
           </Col>
         </Row>
