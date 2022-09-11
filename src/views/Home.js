@@ -36,7 +36,6 @@ function Home() {
   }, []);
 
   const handleClick = (id) => {
-    alert(id);
     history.push(`/gotogether/together`);
   };
   return (
