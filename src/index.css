@@ -1,0 +1,17 @@
+@media (max-width: 600px) {
+  .desktop {
+    display: none;
+  }
+  .ellipsisMobile {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+.ellipsisDesktop {
+  max-width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

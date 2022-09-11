@@ -223,16 +223,16 @@ function Home() {
                 <Table className="table-hover table-striped">
                   <thead>
                     <tr>
-                      <th className="border-0" width="60%">
+                      <th className="border-0" width="70%">
                         <b>Together</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>Progress</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>View</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>Date</b>
                       </th>
                     </tr>
@@ -252,7 +252,7 @@ function Home() {
                         data-item={data.togetherId}
                         onClick={(e) => handleClick(data.togetherId)}
                       >
-                        <td>{data.title}</td>
+                        <td className="ellipsisMobile">{data.title}</td>
                         <td>
                           {data.progressLegend == 'danger' && (
                             <ProgressBar
@@ -285,8 +285,10 @@ function Home() {
                             />
                           )}
                         </td>
-                        <td>{data.hit}</td>
-                        <td>{data.createdDate.substring(2, 10)}</td>
+                        <td className="desktop">{data.hit}</td>
+                        <td className="desktop">
+                          {data.createdDate.substring(2, 10)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
