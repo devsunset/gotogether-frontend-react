@@ -2,9 +2,11 @@ import axios from 'axios';
 
 const API_URL = 'http://193.123.252.22:8282/api/auth/';
 
-const register = (username, email, password) => {
+const register = (username, nickname, password) => {
+  var email = username + '@email.com';
   return axios.post(API_URL + 'signup', {
     username,
+    nickname,
     email,
     password,
   });

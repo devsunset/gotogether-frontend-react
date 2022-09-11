@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 import { register } from '../slices/auth';
@@ -20,6 +19,7 @@ const Register = () => {
 
   const initialValues = {
     username: '',
+    nickname: '',
     email: '',
     password: '',
   };
@@ -28,14 +28,22 @@ const Register = () => {
     username: Yup.string()
       .test(
         'len',
-        'The username must be between 3 and 20 characters.',
+        'The userid must be between 3 and 20 characters.',
         (val) =>
           val && val.toString().length >= 3 && val.toString().length <= 20,
       )
       .required('This field is required!'),
-    email: Yup.string()
-      .email('This is not a valid email.')
+    nickname: Yup.string()
+      .test(
+        'len',
+        'The nickname must be between 2 and 20 characters.',
+        (val) =>
+          val && val.toString().length >= 2 && val.toString().length <= 20,
+      )
       .required('This field is required!'),
+    // email: Yup.string()
+    //   .email('This is not a valid email.')
+    //   .required('This field is required!'),
     password: Yup.string()
       .test(
         'len',
@@ -44,14 +52,23 @@ const Register = () => {
           val && val.toString().length >= 6 && val.toString().length <= 40,
       )
       .required('This field is required!'),
+    retypepassword: Yup.string()
+      .test(
+        'len',
+        'The retypepassword must be between 6 and 40 characters.',
+        (val) =>
+          val && val.toString().length >= 6 && val.toString().length <= 40,
+      )
+      .required('This field is required!')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   });
 
   const handleRegister = (formValue) => {
-    const { username, email, password } = formValue;
+    const { username, nickname, password } = formValue;
 
     setSuccessful(false);
 
-    dispatch(register({ username, email, password }))
+    dispatch(register({ username, nickname, password }))
       .unwrap()
       .then(() => {
         setSuccessful(true);
@@ -62,8 +79,8 @@ const Register = () => {
   };
 
   return (
-    <div className="col-md-12 signup-form">
-      <div className="card card-container">
+    <div className="align-items-center" style={{ marginTop: '15px' }}>
+      <div className="card card-container align-items-center">
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -73,7 +90,7 @@ const Register = () => {
             {!successful && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="username">UserId</label>
                   <Field name="username" type="text" className="form-control" />
                   <ErrorMessage
                     name="username"
@@ -83,6 +100,16 @@ const Register = () => {
                 </div>
 
                 <div className="form-group">
+                  <label htmlFor="nickname">Nickname</label>
+                  <Field name="nickname" type="text" className="form-control" />
+                  <ErrorMessage
+                    name="nickname"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+
+                {/* <div className="form-group">
                   <label htmlFor="email">Email</label>
                   <Field name="email" type="email" className="form-control" />
                   <ErrorMessage
@@ -90,7 +117,7 @@ const Register = () => {
                     component="div"
                     className="alert alert-danger"
                   />
-                </div>
+                </div> */}
 
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
@@ -101,6 +128,20 @@ const Register = () => {
                   />
                   <ErrorMessage
                     name="password"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="retypepassword">Retype Password</label>
+                  <Field
+                    name="retypepassword"
+                    type="password"
+                    className="form-control"
+                  />
+                  <ErrorMessage
+                    name="retypepassword"
                     component="div"
                     className="alert alert-danger"
                   />
