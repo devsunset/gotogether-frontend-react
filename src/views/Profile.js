@@ -10,6 +10,13 @@ function Profile() {
     return <Redirect to="/home" />;
   }
 
+  // alert(JSON.stringify(currentUser));
+  // const user = JSON.parse(localStorage.getItem('user'));
+  // this.userid = user.username;
+  // this.nickname = user.nickname;
+  // this.email = user.email;
+  // this.roles= user.roles[0];
+
   return (
     <>
       <Container fluid>
