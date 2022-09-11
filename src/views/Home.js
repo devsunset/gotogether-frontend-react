@@ -2,15 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Card, Table, Container, Row, Col } from 'react-bootstrap';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-import UserService from '../services/user.service';
+import CommonService from '../services/common.service';
 
 function Home() {
-  const [content, setContent] = useState('');
+  const [notice, setNotice] = useState('');
+  const [together, setTogether] = useState(0);
+  const [user, setUser] = useState(0);
+  const [talk, setTalk] = useState(0);
+  const [qa, setQa] = useState(0);
+  const [recentTogether, setRecentTogether] = useState([]);
 
   useEffect(() => {
-    UserService.getPublicContent().then(
+    CommonService.getHome().then(
       (response) => {
-        setContent(response.data);
+        setTogether(response.data.data.TOGETHER);
+        setUser(response.data.data.USER);
+        setTalk(response.data.data.TALK);
+        setQa(response.data.data.QA);
+        setNotice(response.data.data.NOTICE);
+        setRecentTogether(response.data.data.RECENT_TOGETHER);
       },
       (error) => {
         const _content =
@@ -18,7 +28,7 @@ function Home() {
           error.message ||
           error.toString();
 
-        setContent(_content);
+        setNotice(_content);
       },
     );
   }, []);
@@ -40,7 +50,7 @@ function Home() {
                       <p className="card-category">
                         <b>Together</b>
                       </p>
-                      <Card.Title as="h2">1</Card.Title>
+                      <Card.Title as="h2">{together}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -68,7 +78,7 @@ function Home() {
                       <p className="card-category">
                         <b>Member</b>
                       </p>
-                      <Card.Title as="h2">2</Card.Title>
+                      <Card.Title as="h2">{user}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -96,7 +106,7 @@ function Home() {
                       <p className="card-category">
                         <b>Talk</b>
                       </p>
-                      <Card.Title as="h2">1</Card.Title>
+                      <Card.Title as="h2">{talk}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -124,7 +134,7 @@ function Home() {
                       <p className="card-category">
                         <b>Q&A</b>
                       </p>
-                      <Card.Title as="h2">1</Card.Title>
+                      <Card.Title as="h2">{qa}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -139,13 +149,16 @@ function Home() {
             </Card>
           </Col>
         </Row>
-        <Row>
-          <Col md="12">
-            <Alert className="alert-with-icon" variant="primary">
-              <span data-notify="icon" className="nc-icon nc-bell-55"></span>
-            </Alert>
-          </Col>
-        </Row>
+        {notice && (
+          <Row>
+            <Col md="12">
+              <Alert className="alert-with-icon" variant="primary">
+                <span data-notify="icon" className="nc-icon nc-bell-55"></span>
+                <span>{notice}</span>
+              </Alert>
+            </Col>
+          </Row>
+        )}
         <Row>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
@@ -172,39 +185,53 @@ function Home() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Talk 게시판</td>
-                      <td>
-                        <ProgressBar now={60} label={`${60}%`} />
-                        <ProgressBar
-                          striped
-                          variant="success"
-                          now={40}
-                          label={`${40}%`}
-                        />
-                        <ProgressBar
-                          striped
-                          variant="info"
-                          now={20}
-                          label={`${20}%`}
-                        />
-                        <ProgressBar
-                          striped
-                          variant="warning"
-                          now={60}
-                          label={`${60}%`}
-                        />
-                        <ProgressBar
-                          striped
-                          variant="danger"
-                          now={80}
-                          label={`${80}%`}
-                        />
-                      </td>
+                    {recentTogether.length == 0 && (
+                      <tr>
+                        <td colSpan="4" style={{ textAlign: 'center' }}>
+                          No Data.
+                        </td>
+                      </tr>
+                    )}
 
-                      <td>1</td>
-                      <td>22.08.24 10:59</td>
-                    </tr>
+                    {recentTogether.map((data) => (
+                      <tr key={data.togetherId}>
+                        <td>{data.title}</td>
+                        <td>
+                          {data.progressLegend == 'danger' && (
+                            <ProgressBar
+                              variant="danger"
+                              now={data.progress}
+                              label={`${data.progress}%`}
+                            />
+                          )}
+
+                          {data.progressLegend == 'warning' && (
+                            <ProgressBar
+                              variant="warning"
+                              now={data.progress}
+                              label={`${data.progress}%`}
+                            />
+                          )}
+
+                          {data.progressLegend == 'primary' && (
+                            <ProgressBar
+                              now={data.progress}
+                              label={`${data.progress}%`}
+                            />
+                          )}
+
+                          {data.progressLegend == 'success' && (
+                            <ProgressBar
+                              variant="success"
+                              now={data.progress}
+                              label={`${data.progress}%`}
+                            />
+                          )}
+                        </td>
+                        <td>{data.hit}</td>
+                        <td>{data.createdDate.substring(2, 10)}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </Table>
               </Card.Body>
@@ -217,3 +244,33 @@ function Home() {
 }
 
 export default Home;
+
+{
+  /* <td>
+<ProgressBar now={60} label={`${60}%`} />
+<ProgressBar
+  striped
+  variant="success"
+  now={40}
+  label={`${40}%`}
+/>
+<ProgressBar
+  striped
+  variant="info"
+  now={20}
+  label={`${20}%`}
+/>
+<ProgressBar
+  striped
+  variant="warning"
+  now={60}
+  label={`${60}%`}
+/>
+<ProgressBar
+  striped
+  variant="danger"
+  now={80}
+  label={`${80}%`}
+/>
+</td> */
+}
