@@ -1,26 +1,27 @@
-import api from "./api";
+import api from './api';
+import Common from './common.js';
 
 const getPublicContent = () => {
-  return api.get("/test/all");
+  return api.get('/test/all');
 };
 
-const getUserBoard = () => {
-  return api.get("/test/user");
+const getUserInfo = () => {
+  return api.get('/userinfo/');
 };
 
-const getModeratorBoard = () => {
-  return api.get("/test/mod");
+const setUserInfoSave = (reqData) => {
+  return api.post('/userinfo/', Common.preRequestHandler(reqData));
 };
 
-const getAdminBoard = () => {
-  return api.get("/test/admin");
+const getUserInfoList = (page, size, reqData) => {
+  return api.post('/userinfo/list?page=' + page + '&size=' + size, reqData);
 };
 
 const UserService = {
   getPublicContent,
-  getUserBoard,
-  getModeratorBoard,
-  getAdminBoard,
+  getUserInfo,
+  setUserInfoSave,
+  getUserInfoList,
 };
 
 export default UserService;

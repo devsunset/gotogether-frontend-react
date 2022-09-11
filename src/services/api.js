@@ -38,15 +38,27 @@ instance.interceptors.response.use(
         originalConfig._retry = true;
 
         try {
+          if (TokenService.getLocalRefreshToken() === undefined) {
+            alert('로그인 정보가 유효하지 않습니다.');
+            dispatch(logout());
+            TokenService.removeUser();
+            return;
+          }
+
           const rs = await instance.post('/auth/refreshtoken', {
             refreshToken: TokenService.getLocalRefreshToken(),
           });
 
-          const { accessToken } = rs.data;
-          TokenService.updateLocalAccessToken(accessToken);
+          const { token } = rs.data.data;
+          TokenService.updateLocalAccessToken(token);
 
           return instance(originalConfig);
         } catch (_error) {
+          if (_error.message == 'Request failed with status code 403') {
+            alert('로그인 정보가 만료되었습니다 다시 로그인해 주세요.');
+            dispatch(logout());
+            TokenService.removeUser();
+          }
           return Promise.reject(_error);
         }
       }
