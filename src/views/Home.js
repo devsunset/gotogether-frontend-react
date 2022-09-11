@@ -244,33 +244,3 @@ function Home() {
 }
 
 export default Home;
-
-{
-  /* <td>
-<ProgressBar now={60} label={`${60}%`} />
-<ProgressBar
-  striped
-  variant="success"
-  now={40}
-  label={`${40}%`}
-/>
-<ProgressBar
-  striped
-  variant="info"
-  now={20}
-  label={`${20}%`}
-/>
-<ProgressBar
-  striped
-  variant="warning"
-  now={60}
-  label={`${60}%`}
-/>
-<ProgressBar
-  striped
-  variant="danger"
-  now={80}
-  label={`${80}%`}
-/>
-</td> */
-}
