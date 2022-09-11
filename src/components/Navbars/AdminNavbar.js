@@ -1,10 +1,33 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
+
+import { logout } from '../../slices/auth';
+
+import EventBus from '../../common/EventBus';
 
 import routes from 'routes.js';
 
 function Header() {
+  const { user: currentUser } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+
+  const logOut = useCallback(() => {
+    dispatch(logout());
+  }, [dispatch]);
+
+  useEffect(() => {
+    EventBus.on('logout', () => {
+      logOut();
+    });
+
+    return () => {
+      EventBus.remove('logout');
+    };
+  }, [currentUser, logOut]);
+
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -52,39 +75,55 @@ function Header() {
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto" navbar>
-            <Nav.Item>
-              <Dropdown as={Nav.Item}>
-                <Dropdown.Toggle
-                  as={Nav.Link}
-                  data-toggle="dropdown"
-                  id="dropdown-67443507"
-                  variant="default"
-                  className="m-2.5"
-                >
-                  <i className="nc-icon nc-planet"></i>
-                  <span className="notification">1</span>
-                  <span className="d-lg-none ml-1"> New Memo</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <NavLink
-                    to={'/gotogether/memo'}
-                    className="nav-link"
-                    activeClassName="active"
+            {currentUser && (
+              <Nav.Item>
+                <Dropdown as={Nav.Item}>
+                  <Dropdown.Toggle
+                    as={Nav.Link}
+                    data-toggle="dropdown"
+                    id="dropdown-67443507"
+                    variant="default"
+                    className="m-2.5"
                   >
-                    <span className="no-icon">Show All (1)</span>
-                  </NavLink>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink
-                to={'/gotogether/login'}
-                className="nav-link"
-                activeClassName="active"
-              >
-                <span className="no-icon">Log In</span>
-              </NavLink>
-            </Nav.Item>
+                    <i className="nc-icon nc-planet"></i>
+                    <span className="notification">1</span>
+                    <span className="d-lg-none ml-1"> New Memo</span>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <NavLink
+                      to={'/gotogether/memo'}
+                      className="nav-link"
+                      activeClassName="active"
+                    >
+                      <span className="no-icon">Show All (1)</span>
+                    </NavLink>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Nav.Item>
+            )}
+
+            {currentUser ? (
+              <Nav.Item>
+                <NavLink
+                  to={'/gotogether/login'}
+                  className="nav-link"
+                  activeClassName="active"
+                  onClick={logOut}
+                >
+                  <span className="no-icon"> Log Out</span>
+                </NavLink>
+              </Nav.Item>
+            ) : (
+              <Nav.Item>
+                <NavLink
+                  to={'/gotogether/login'}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <span className="no-icon">Log In</span>
+                </NavLink>
+              </Nav.Item>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
