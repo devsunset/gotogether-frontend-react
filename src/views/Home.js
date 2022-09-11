@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Card, Table, Container, Row, Col } from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import CommonService from '../services/common.service';
@@ -32,6 +33,10 @@ function Home() {
       },
     );
   }, []);
+
+  const handleClick = (id) => {
+    alert(id);
+  };
   return (
     <>
       <Container fluid>
@@ -50,17 +55,29 @@ function Home() {
                       <p className="card-category">
                         <b>Together</b>
                       </p>
-                      <Card.Title as="h2">{together}</Card.Title>
+                      <NavLink
+                        to={'/gotogether/together'}
+                        className="nav-link"
+                        activeClassName="active"
+                      >
+                        <Card.Title as="h2">{together}</Card.Title>
+                      </NavLink>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  <b>More Info</b>
-                </div>
+                <NavLink
+                  to={'/gotogether/together'}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <div className="stats">
+                    <i className="fas fa-redo mr-1"></i>
+                    <b>More Info</b>
+                  </div>
+                </NavLink>
               </Card.Footer>
             </Card>
           </Col>
@@ -78,17 +95,29 @@ function Home() {
                       <p className="card-category">
                         <b>Member</b>
                       </p>
-                      <Card.Title as="h2">{user}</Card.Title>
+                      <NavLink
+                        to={'/gotogether/member'}
+                        className="nav-link"
+                        activeClassName="active"
+                      >
+                        <Card.Title as="h2">{user}</Card.Title>
+                      </NavLink>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  <b>More Info</b>
-                </div>
+                <NavLink
+                  to={'/gotogether/member'}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <div className="stats">
+                    <i className="fas fa-redo mr-1"></i>
+                    <b>More Info</b>
+                  </div>
+                </NavLink>
               </Card.Footer>
             </Card>
           </Col>
@@ -106,17 +135,29 @@ function Home() {
                       <p className="card-category">
                         <b>Talk</b>
                       </p>
-                      <Card.Title as="h2">{talk}</Card.Title>
+                      <NavLink
+                        to={'/gotogether/post?category=TALK'}
+                        className="nav-link"
+                        activeClassName="active"
+                      >
+                        <Card.Title as="h2">{talk}</Card.Title>
+                      </NavLink>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  <b>More Info</b>
-                </div>
+                <NavLink
+                  to={'/gotogether/post?category=TALK'}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <div className="stats">
+                    <i className="fas fa-redo mr-1"></i>
+                    <b>More Info</b>
+                  </div>
+                </NavLink>
               </Card.Footer>
             </Card>
           </Col>
@@ -134,17 +175,29 @@ function Home() {
                       <p className="card-category">
                         <b>Q&A</b>
                       </p>
-                      <Card.Title as="h2">{qa}</Card.Title>
+                      <NavLink
+                        to={'/gotogether/post?category=QA'}
+                        className="nav-link"
+                        activeClassName="active"
+                      >
+                        <Card.Title as="h2">{qa}</Card.Title>
+                      </NavLink>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  <b>More Info</b>
-                </div>
+                <NavLink
+                  to={'/gotogether/post?category=QA'}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <div className="stats">
+                    <i className="fas fa-redo mr-1"></i>
+                    <b>More Info</b>
+                  </div>
+                </NavLink>
               </Card.Footer>
             </Card>
           </Col>
@@ -194,7 +247,11 @@ function Home() {
                     )}
 
                     {recentTogether.map((data) => (
-                      <tr key={data.togetherId}>
+                      <tr
+                        key={data.togetherId}
+                        data-item={data.togetherId}
+                        onClick={(e) => handleClick(data.togetherId)}
+                      >
                         <td>{data.title}</td>
                         <td>
                           {data.progressLegend == 'danger' && (
