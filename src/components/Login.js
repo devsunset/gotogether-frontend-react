@@ -48,11 +48,11 @@ const Login = (props) => {
   }
 
   return (
-    <div className="align-items-center" style={{ marginTop: '15px' }}>
+    <div className="align-items-center">
       <div className="card card-container align-items-center">
         <div
           className="card card-container align-items-center"
-          style={{ width: '300px', padding: '15px' }}
+          style={{ width: '350px', padding: '15px', marginTop: '15px' }}
         >
           <img
             src={require('assets/img/devsunset.jpg')}

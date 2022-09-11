@@ -81,35 +81,47 @@ const Register = () => {
   return (
     <div className="align-items-center" style={{ marginTop: '15px' }}>
       <div className="card card-container align-items-center">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleRegister}
+        <div
+          className="card card-container align-items-center"
+          style={{ width: '350px', padding: '15px', marginTop: '15px' }}
         >
-          <Form>
-            {!successful && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="username">UserId</label>
-                  <Field name="username" type="text" className="form-control" />
-                  <ErrorMessage
-                    name="username"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleRegister}
+          >
+            <Form>
+              {!successful && (
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="username">UserId</label>
+                    <Field
+                      name="username"
+                      type="text"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="username"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="nickname">Nickname</label>
-                  <Field name="nickname" type="text" className="form-control" />
-                  <ErrorMessage
-                    name="nickname"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="nickname">Nickname</label>
+                    <Field
+                      name="nickname"
+                      type="text"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="nickname"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
 
-                {/* <div className="form-group">
+                  {/* <div className="form-group">
                   <label htmlFor="email">Email</label>
                   <Field name="email" type="email" className="form-control" />
                   <ErrorMessage
@@ -119,67 +131,68 @@ const Register = () => {
                   />
                 </div> */}
 
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Field
-                    name="password"
-                    type="password"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <Field
+                      name="password"
+                      type="password"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
 
-                <div className="form-group">
-                  <label htmlFor="retypepassword">Retype Password</label>
-                  <Field
-                    name="retypepassword"
-                    type="password"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="retypepassword"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
+                  <div className="form-group">
+                    <label htmlFor="retypepassword">Retype Password</label>
+                    <Field
+                      name="retypepassword"
+                      type="password"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="retypepassword"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
 
-                <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">
-                    Sign Up
-                  </button>
+                  <div className="form-group">
+                    <button type="submit" className="btn btn-primary btn-block">
+                      Sign Up
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
-          </Form>
-        </Formik>
-        <div className="text-center mt-4 font-weight-light">
-          Already have an account?{' '}
-          <NavLink
-            to={'/gotogether/login'}
-            className="nav-link"
-            activeClassName="active"
-          >
-            Login
-          </NavLink>
-        </div>
-      </div>
-
-      {message && (
-        <div className="form-group">
-          <div
-            className={
-              successful ? 'alert alert-success' : 'alert alert-danger'
-            }
-            role="alert"
-          >
-            {message}
+              )}
+            </Form>
+          </Formik>
+          <div className="text-center mt-4 font-weight-light">
+            Already have an account?{' '}
+            <NavLink
+              to={'/gotogether/login'}
+              className="nav-link"
+              activeClassName="active"
+            >
+              Login
+            </NavLink>
           </div>
         </div>
-      )}
+
+        {message && (
+          <div className="form-group">
+            <div
+              className={
+                successful ? 'alert alert-success' : 'alert alert-danger'
+              }
+              role="alert"
+            >
+              {message}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
