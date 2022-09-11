@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Card, Form, Container, Row, Col } from 'react-bootstrap';
 
+import UserService from '../services/user.service';
+
 function Profile() {
   const { user: currentUser } = useSelector((state) => state.auth);
+
+  const [username, setUsername] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [roles, setRoles] = useState('');
+
+  const [introduce, setIntroduce] = useState('');
+  const [note, setNote] = useState('');
+  const [github, setGithub] = useState('');
+  const [homepage, setHomepage] = useState('');
 
   if (!currentUser) {
     return <Redirect to="/gotogether/home" />;
   }
 
-  // alert(JSON.stringify(currentUser));
-  // const user = JSON.parse(localStorage.getItem('user'));
-  // this.userid = user.username;
-  // this.nickname = user.nickname;
-  // this.email = user.email;
-  // this.roles= user.roles[0];
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUsername(user.username);
+    setNickname(user.nickname);
+    setRoles(user.roles[0]);
+
+    UserService.getUserInfo().then(
+      (response) => {
+        setIntroduce(response.data.data.introduce);
+        setNote(response.data.data.note);
+        setGithub(response.data.data.github);
+        setHomepage(response.data.data.homepage);
+      },
+      (error) => {
+        const _content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      },
+    );
+  }, []);
 
   return (
     <>
@@ -37,6 +63,7 @@ function Profile() {
                         <Form.Control
                           defaultValue=""
                           placeholder="한줄 소개"
+                          defaultValue={introduce}
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -52,6 +79,7 @@ function Profile() {
                           cols="80"
                           defaultValue=""
                           placeholder="자기 소개"
+                          defaultValue={note}
                           rows="4"
                           as="textarea"
                         ></Form.Control>
@@ -67,6 +95,7 @@ function Profile() {
                         <Form.Control
                           defaultValue=""
                           placeholder="Github"
+                          defaultValue={github}
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -81,6 +110,7 @@ function Profile() {
                         <Form.Control
                           defaultValue=""
                           placeholder="Homepage"
+                          defaultValue={homepage}
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -109,11 +139,9 @@ function Profile() {
                     className="avatar border-gray"
                     src={require('assets/img/devsunset.jpg')}
                   ></img>
-                  <h5 className="title">UserId : {currentUser.username}</h5>
-                  <h5 className="title">Nickname : {currentUser.nickname}</h5>
-                  <h5 className="title">
-                    Authorities : {currentUser.roles && currentUser.roles[0]}
-                  </h5>
+                  <h5 className="title">UserId : {username}</h5>
+                  <h5 className="title">Nickname : {nickname}</h5>
+                  <h5 className="title">Authorities : {roles}</h5>
                 </div>
               </Card.Body>
               <hr></hr>
