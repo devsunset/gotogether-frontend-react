@@ -19,11 +19,11 @@ const login = (username, password) => {
       password,
     })
     .then((response) => {
-      if (response.data.accessToken) {
+      if (response.data.data.token) {
         localStorage.setItem('user', JSON.stringify(response.data.data));
       }
 
-      return response.data;
+      return response.data.data;
     });
 };
 

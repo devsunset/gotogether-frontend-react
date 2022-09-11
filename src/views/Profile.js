@@ -6,7 +6,6 @@ import { Button, Card, Form, Container, Row, Col } from 'react-bootstrap';
 function Profile() {
   const { user: currentUser } = useSelector((state) => state.auth);
 
-  alert(JSON.stringify(currentUser));
   if (!currentUser) {
     return <Redirect to="/home" />;
   }
