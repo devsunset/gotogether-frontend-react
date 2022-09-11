@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Card, Table, Container, Row, Col } from 'react-bootstrap';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import CommonService from '../services/common.service';
