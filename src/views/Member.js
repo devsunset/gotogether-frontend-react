@@ -318,30 +318,33 @@ function Member() {
                                       ))}
                                 </td>
                               </tr>
-                              <tr>
-                                <td>
-                                  <b>
-                                    <i
-                                      className="nc-icon nc-email-85"
-                                      style={{ marginTop: '5px' }}
-                                    />
-                                    &nbsp; 메모전송
-                                  </b>
-                                  <br />
-                                  <Button variant="success" size="lg">
-                                    Send
-                                  </Button>
-                                </td>
-                                <td>
-                                  <Form.Control
-                                    cols="80"
-                                    defaultValue=""
-                                    placeholder="내용을 입력 하세요..."
-                                    rows="2"
-                                    as="textarea"
-                                  ></Form.Control>
-                                </td>
-                              </tr>
+
+                              {member.username != username && (
+                                <tr>
+                                  <td>
+                                    <b>
+                                      <i
+                                        className="nc-icon nc-email-85"
+                                        style={{ marginTop: '5px' }}
+                                      />
+                                      &nbsp; 메모전송
+                                    </b>
+                                    <br />
+                                    <Button variant="success" size="lg">
+                                      Send
+                                    </Button>
+                                  </td>
+                                  <td>
+                                    <Form.Control
+                                      cols="80"
+                                      defaultValue=""
+                                      placeholder="내용을 입력 하세요..."
+                                      rows="2"
+                                      as="textarea"
+                                    ></Form.Control>
+                                  </td>
+                                </tr>
+                              )}
                             </tbody>
                           </Table>
                         </Card.Body>
