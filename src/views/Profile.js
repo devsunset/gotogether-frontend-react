@@ -25,12 +25,7 @@ function Profile() {
   const [note, setNote] = useState('');
   const [github, setGithub] = useState('');
   const [homepage, setHomepage] = useState('');
-  const [skills, setSkills] = useState([
-    {
-      item: '',
-      level: 'INTEREST',
-    },
-  ]);
+  const [skills, setSkills] = useState([]);
 
   if (!currentUser) {
     return <Redirect to="/gotogether/home" />;
@@ -55,7 +50,7 @@ function Profile() {
             response.data.data.skill == null ||
             response.data.data.skill === ''
           ) {
-            console.log('empty skills');
+            setSkills({ item: '', level: 'INTEREST' });
           } else {
             var data = response.data.data.skill.split('|');
             let item = [];
@@ -64,10 +59,12 @@ function Profile() {
               item.push({ item: datasub[0], level: datasub[1] });
             });
             setSkills(item);
+            console.log(item);
           }
         }
       },
       (error) => {
+        setSkills({ item: '', level: 'INTEREST' });
         const _content =
           (error.response && error.response.data) ||
           error.message ||
@@ -75,6 +72,13 @@ function Profile() {
       },
     );
   }, []);
+
+  const handleDeleteClick = (idx) => {
+    alert(idx);
+  };
+  const handleAddClick = (idx) => {
+    alert(idx);
+  };
 
   return (
     <>
@@ -163,18 +167,54 @@ function Profile() {
                             <th className="border-0">
                               <b>LEVEL</b>
                             </th>
-                            <th className="border-0">
-                              <b>-</b>
-                            </th>
+                            <th className="border-0"></th>
                           </tr>
                         </thead>
                         <tbody>
                           {skills &&
                             skills.map((data, index) => (
                               <tr key={index}>
-                                <td>{data.item}</td>
-                                <td>{data.level}</td>
-                                <td>1</td>
+                                <td>
+                                  <Form.Control
+                                    defaultValue=""
+                                    placeholder="Skill 입력"
+                                    defaultValue={data.item}
+                                    type="text"
+                                  ></Form.Control>
+                                </td>
+                                <td>
+                                  <Form.Select
+                                    aria-label="select level"
+                                    variant="warning"
+                                    defaultValue={data.level}
+                                  >
+                                    <option value="BASIC">기본 학습</option>
+                                    <option value="JOB">업무 사용</option>
+                                    <option value="INTEREST">관심 있음</option>
+                                    <option value="TOY_PROJECT">
+                                      Toy Pjt.
+                                    </option>
+                                  </Form.Select>
+                                </td>
+                                <td>
+                                  {skills.length - 1 == index ? (
+                                    <Button
+                                      variant="warning"
+                                      className="btn-fill"
+                                      onClick={(e) => handleAddClick(index)}
+                                    >
+                                      +
+                                    </Button>
+                                  ) : (
+                                    <Button
+                                      variant="primary"
+                                      className="btn-fill"
+                                      onClick={(e) => handleDeleteClick(index)}
+                                    >
+                                      -
+                                    </Button>
+                                  )}
+                                </td>
                               </tr>
                             ))}
                         </tbody>
