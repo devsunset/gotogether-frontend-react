@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Notify from 'react-notification-alert';
 
 import {
   Button,
@@ -76,7 +77,33 @@ function Profile() {
     levelSelect.current.value = 'INTEREST';
   };
 
+  const notiRef = useRef();
+
   const handleSubmit = () => {
+    var successOption = {
+      place: 'br',
+      message: (
+        <div>
+          <div>Success.</div>
+        </div>
+      ),
+      type: 'primary',
+      icon: 'now-ui-icons ui-1_bell-53',
+      autoDismiss: 2,
+    };
+
+    var failOption = {
+      place: 'br',
+      message: (
+        <div>
+          <div>Fail.</div>
+        </div>
+      ),
+      type: 'danger',
+      icon: 'now-ui-icons ui-1_bell-53',
+      autoDismiss: 2,
+    };
+
     let temp = '';
     skills.forEach(function (d) {
       let tmp = d.item.trim().replace(/\|/g, '').replace(/\^/g, '');
@@ -89,20 +116,6 @@ function Profile() {
       temp = temp.substring(0, temp.length - 1);
     }
 
-    alert(
-      userInfoId +
-        ' : ' +
-        introduce +
-        ' :  ' +
-        note +
-        ' :  ' +
-        github +
-        ' : ' +
-        homepage +
-        ' : ' +
-        temp,
-    );
-
     // this.loading = true;
     UserService.setUserInfoSave({
       introduce: introduce,
@@ -114,14 +127,14 @@ function Profile() {
       (response) => {
         // this.loading = false;
         if (response.data.result == 'S') {
-          // this.$toast.success(`Success.`);
+          notiRef.current.notificationAlert(successOption);
         } else {
-          // this.$toast.error(`Fail.`);
+          notiRef.current.notificationAlert(failOption);
         }
       },
       (error) => {
         // this.loading = false;
-        // this.$toast.error(`Fail.`);
+        notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
             error.response.data &&
@@ -378,6 +391,7 @@ function Profile() {
           </Col>
         </Row>
       </Container>
+      <Notify ref={notiRef} />
     </>
   );
 }
