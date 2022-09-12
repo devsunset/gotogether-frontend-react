@@ -88,10 +88,12 @@ function Profile() {
   };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    setUsername(user.username);
-    setNickname(user.nickname);
-    setRoles(user.roles[0]);
+    if (currentUser) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      setUsername(user.username);
+      setNickname(user.nickname);
+      setRoles(user.roles[0]);
+    }
 
     UserService.getUserInfo().then(
       (response) => {
@@ -119,10 +121,11 @@ function Profile() {
         }
       },
       (error) => {
-        const _content =
+        console.log(
           (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
+            error.message ||
+            error.toString(),
+        );
       },
     );
   }, []);
