@@ -14,6 +14,7 @@ import {
   Table,
 } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
+import Modal from 'react-bootstrap/Modal';
 
 import UserService from '../services/user.service';
 
@@ -80,9 +81,61 @@ function Profile() {
     levelSelect.current.value = 'INTEREST';
   };
 
+  const handleSubmit = () => {
+    handleShow();
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUsername(user.username);
+    setNickname(user.nickname);
+    setRoles(user.roles[0]);
+
+    UserService.getUserInfo().then(
+      (response) => {
+        if (response.data.data != null) {
+          setUserInfoId(response.data.data.userInfoId);
+          setIntroduce(response.data.data.introduce);
+          setNote(response.data.data.note);
+          setGithub(response.data.data.github);
+          setHomepage(response.data.data.homepage);
+          if (
+            !(
+              response.data.data.skill === undefined ||
+              response.data.data.skill == null ||
+              response.data.data.skill === ''
+            )
+          ) {
+            var data = response.data.data.skill.split('|');
+            let item = [];
+            data.forEach(function (d) {
+              var datasub = d.split('^');
+              item.push({ item: datasub[0], level: datasub[1] });
+            });
+            setSkills(item);
+          }
+        }
+      },
+      (error) => {
+        const _content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      },
+    );
+  }, []);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
   const notiRef = useRef();
 
-  const handleSubmit = () => {
+  const handleYesClose = () => {
+    setShow(false);
+
     var successOption = {
       place: 'br',
       message: (
@@ -148,46 +201,9 @@ function Profile() {
       },
     );
   };
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    setUsername(user.username);
-    setNickname(user.nickname);
-    setRoles(user.roles[0]);
-
-    UserService.getUserInfo().then(
-      (response) => {
-        if (response.data.data != null) {
-          setUserInfoId(response.data.data.userInfoId);
-          setIntroduce(response.data.data.introduce);
-          setNote(response.data.data.note);
-          setGithub(response.data.data.github);
-          setHomepage(response.data.data.homepage);
-          if (
-            !(
-              response.data.data.skill === undefined ||
-              response.data.data.skill == null ||
-              response.data.data.skill === ''
-            )
-          ) {
-            var data = response.data.data.skill.split('|');
-            let item = [];
-            data.forEach(function (d) {
-              var datasub = d.split('^');
-              item.push({ item: datasub[0], level: datasub[1] });
-            });
-            setSkills(item);
-          }
-        }
-      },
-      (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      },
-    );
-  }, []);
+  const handleShow = () => {
+    setShow(true);
+  };
 
   return (
     <>
@@ -358,12 +374,17 @@ function Profile() {
                     </Col>
                   </Row>
                   {loading ? (
-                    <Spinner animation="border" />
+                    <Spinner
+                      animation="border"
+                      variant="primary"
+                      style={{ float: 'right' }}
+                    />
                   ) : (
                     <Button
                       className="pull-right"
                       type="button"
                       variant="danger"
+                      style={{ float: 'right' }}
                       onClick={handleSubmit}
                     >
                       Submit
@@ -399,6 +420,20 @@ function Profile() {
         </Row>
       </Container>
       <Notify ref={notiRef} />
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>저장 하시겠습니까 ?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleYesClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
