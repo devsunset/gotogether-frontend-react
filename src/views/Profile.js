@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
 import Spinner from 'react-bootstrap/Spinner';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import {
   Button,
@@ -19,10 +19,12 @@ import Modal from 'react-bootstrap/Modal';
 import UserService from '../services/user.service';
 
 function Profile() {
+  const history = useHistory();
   const { user: currentUser } = useSelector((state) => state.auth);
 
   if (!currentUser) {
-    return <Redirect to="/gotogether/home" />;
+    // return <Redirect to="/gotogether/home" />;
+    history.push(`/gotogether/home`);
   }
 
   const [username, setUsername] = useState('');
