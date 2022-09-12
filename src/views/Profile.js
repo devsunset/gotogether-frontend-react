@@ -376,11 +376,21 @@ function Profile() {
                     </Col>
                   </Row>
                   {loading ? (
-                    <Spinner
-                      animation="border"
-                      variant="primary"
+                    <Button
+                      variant="danger"
+                      className="btn-fill"
+                      disabled
                       style={{ float: 'right' }}
-                    />
+                    >
+                      <Spinner
+                        as="span"
+                        animation="grow"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      Processing...
+                    </Button>
                   ) : (
                     <Button
                       className="pull-right"
