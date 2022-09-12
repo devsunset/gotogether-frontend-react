@@ -16,6 +16,10 @@ import UserService from '../services/user.service';
 function Profile() {
   const { user: currentUser } = useSelector((state) => state.auth);
 
+  if (!currentUser) {
+    return <Redirect to="/gotogether/home" />;
+  }
+
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
@@ -27,9 +31,21 @@ function Profile() {
   const [homepage, setHomepage] = useState('');
   const [skills, setSkills] = useState([]);
 
-  if (!currentUser) {
-    return <Redirect to="/gotogether/home" />;
-  }
+  const handleIntroduceChange = (e) => {
+    setIntroduce(e.target.value);
+  };
+
+  const handleNoteChange = (e) => {
+    setNote(e.target.value);
+  };
+
+  const handleGithubChange = (e) => {
+    setGithub(e.target.value);
+  };
+
+  const handleHomepageChange = (e) => {
+    setHomepage(e.target.value);
+  };
 
   const handleDeleteClick = (idx) => {
     var array = [...skills];
@@ -53,6 +69,8 @@ function Profile() {
       userInfoId +
         ' : ' +
         introduce +
+        ' :  ' +
+        note +
         ' :  ' +
         github +
         ' : ' +
@@ -124,6 +142,7 @@ function Profile() {
                           defaultValue=""
                           placeholder="한줄 소개"
                           defaultValue={introduce}
+                          onChange={handleIntroduceChange}
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -140,6 +159,7 @@ function Profile() {
                           defaultValue=""
                           placeholder="자기 소개"
                           defaultValue={note}
+                          onChange={handleNoteChange}
                           rows="4"
                           as="textarea"
                         ></Form.Control>
@@ -156,6 +176,7 @@ function Profile() {
                           defaultValue=""
                           placeholder="Github"
                           defaultValue={github}
+                          onChange={handleGithubChange}
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -171,6 +192,7 @@ function Profile() {
                           defaultValue=""
                           placeholder="Homepage"
                           defaultValue={homepage}
+                          onChange={handleHomepageChange}
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -246,7 +268,7 @@ function Profile() {
                   </Row>
                   <Button
                     className="pull-right"
-                    type="submit"
+                    type="button"
                     variant="danger"
                     onClick={handleSubmit}
                   >
