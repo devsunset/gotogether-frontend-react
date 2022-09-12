@@ -59,7 +59,6 @@ function Profile() {
               item.push({ item: datasub[0], level: datasub[1] });
             });
             setSkills(item);
-            console.log(item);
           }
         }
       },
@@ -74,10 +73,15 @@ function Profile() {
   }, []);
 
   const handleDeleteClick = (idx) => {
-    alert(idx);
+    var array = [...skills];
+    alert(array[idx].item);
+    array.splice(idx, 1);
+    setSkills(array);
+    console.log(array);
+    console.log(skills);
   };
   const handleAddClick = (idx) => {
-    alert(idx);
+    setSkills([...skills, { item: '', level: 'INTEREST' }]);
   };
 
   return (
