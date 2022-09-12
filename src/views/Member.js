@@ -57,6 +57,16 @@ function Member() {
     padding: '15px',
   };
 
+  const handleKeywordChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      getUserInfoList('INIT');
+    }
+  };
+
   useEffect(() => {
     if (currentUser) {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -196,8 +206,15 @@ function Member() {
                 size="sm"
                 type="text"
                 placeholder="Search"
+                defaultValue={keyword}
+                onKeyPress={handleKeyPress}
+                onChange={handleKeywordChange}
               ></Form.Control>
-              <Button variant="info" size="sm">
+              <Button
+                variant="info"
+                size="sm"
+                onClick={(e) => getUserInfoList('INIT')}
+              >
                 <i className="nc-icon nc-zoom-split" />
               </Button>
               <p />
