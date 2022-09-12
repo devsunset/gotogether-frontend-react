@@ -25,12 +25,12 @@ function Profile() {
   const [note, setNote] = useState('');
   const [github, setGithub] = useState('');
   const [homepage, setHomepage] = useState('');
-  const [skills, setSkills] = useState({
-    item: '',
-    level: '',
-  });
-
-  const { item, level } = skills;
+  const [skills, setSkills] = useState([
+    {
+      item: '',
+      level: 'INTEREST',
+    },
+  ]);
 
   if (!currentUser) {
     return <Redirect to="/gotogether/home" />;
@@ -55,21 +55,19 @@ function Profile() {
             response.data.data.skill == null ||
             response.data.data.skill === ''
           ) {
-            setSkills({ item: '', level: 'INTEREST' });
+            console.log('empty skills');
           } else {
             var data = response.data.data.skill.split('|');
+            let item = [];
             data.forEach(function (d) {
               var datasub = d.split('^');
-              setSkills({ item: '', level: 'INTEREST' });
-              // setSkills(skills.concat({ item: datasub[0], level: datasub[1] }));
+              item.push({ item: datasub[0], level: datasub[1] });
             });
+            setSkills(item);
           }
-        } else {
-          setSkills({ item: '', level: 'INTEREST' });
         }
       },
       (error) => {
-        setSkills({ item: '', level: 'INTEREST' });
         const _content =
           (error.response && error.response.data) ||
           error.message ||
@@ -171,14 +169,14 @@ function Profile() {
                           </tr>
                         </thead>
                         <tbody>
-                          {/* {skills &&
-                      skills.map((data) => (
-                        <tr key={data.item}>
-                          <td>{data.item}</td>
-                          <td>{data.level}</td>
-                          <td>1</td>
-                        </tr>
-                      ))} */}
+                          {skills &&
+                            skills.map((data, index) => (
+                              <tr key={index}>
+                                <td>{data.item}</td>
+                                <td>{data.level}</td>
+                                <td>1</td>
+                              </tr>
+                            ))}
                         </tbody>
                       </Table>
                     </Col>
