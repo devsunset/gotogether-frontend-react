@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import {
   Button,
   Card,
@@ -10,6 +11,7 @@ import {
   Col,
   Table,
 } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
 
 import UserService from '../services/user.service';
 
@@ -51,11 +53,11 @@ function Profile() {
     var array = [...skills];
     console.log(array.splice(idx, 1));
     setSkills(array);
-    console.log(array);
-    console.log(skills); // Whay ?
-    // setSkills(skills.filter((skill) => skill.item !== 'Erlang'));
+    // console.log(array);
+    // console.log(skills);
   };
-  const handleAddClick = (idx) => {
+  const handleAddClick = () => {
+    alert('추가');
     setSkills([...skills, { item: '', level: 'INTEREST' }]);
   };
 
@@ -219,49 +221,70 @@ function Profile() {
                           {skills &&
                             skills.map((data, index) => (
                               <tr key={index}>
+                                <td>{data.item}</td>
                                 <td>
-                                  <Form.Control
-                                    defaultValue=""
-                                    placeholder="Skill 입력"
-                                    defaultValue={data.item}
-                                    type="text"
-                                  ></Form.Control>
-                                </td>
-                                <td>
-                                  <Form.Select
-                                    aria-label="select level"
-                                    variant="warning"
-                                    defaultValue={data.level}
-                                  >
-                                    <option value="BASIC">기본 학습</option>
-                                    <option value="JOB">업무 사용</option>
-                                    <option value="INTEREST">관심 있음</option>
-                                    <option value="TOY_PROJECT">
-                                      Toy Pjt.
-                                    </option>
-                                  </Form.Select>
-                                </td>
-                                <td>
-                                  {skills.length - 1 == index ? (
-                                    <Button
-                                      variant="warning"
-                                      className="btn-fill"
-                                      onClick={(e) => handleAddClick(index)}
-                                    >
-                                      +
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      variant="primary"
-                                      className="btn-fill"
-                                      onClick={(e) => handleDeleteClick(index)}
-                                    >
-                                      -
-                                    </Button>
+                                  {data.level == 'BASIC' && (
+                                    <Badge bg="success" text="white" size="lg">
+                                      기본학습
+                                    </Badge>
                                   )}
+                                  {data.level == 'JOB' && (
+                                    <Badge bg="danger" text="white" size="lg">
+                                      업무사용
+                                    </Badge>
+                                  )}
+                                  {data.level == 'INTEREST' && (
+                                    <Badge bg="warning" text="white" size="lg">
+                                      관심있음
+                                    </Badge>
+                                  )}
+                                  {data.level == 'TOY_PROJECT' && (
+                                    <Badge bg="primary" text="white" size="lg">
+                                      Toy Pjt.
+                                    </Badge>
+                                  )}
+                                </td>
+                                <td>
+                                  <Button
+                                    variant="primary"
+                                    className="btn-fill"
+                                    onClick={(e) => handleDeleteClick(index)}
+                                  >
+                                    -
+                                  </Button>
                                 </td>
                               </tr>
                             ))}
+                          <tr>
+                            <td>
+                              <Form.Control
+                                defaultValue=""
+                                placeholder="Skill 입력"
+                                type="text"
+                              ></Form.Control>
+                            </td>
+                            <td>
+                              <Form.Select
+                                aria-label="select level"
+                                variant="warning"
+                                defaultValue="INTEREST"
+                              >
+                                <option value="BASIC">기본 학습</option>
+                                <option value="JOB">업무 사용</option>
+                                <option value="INTEREST">관심 있음</option>
+                                <option value="TOY_PROJECT">Toy Pjt.</option>
+                              </Form.Select>
+                            </td>
+                            <td>
+                              <Button
+                                variant="warning"
+                                className="btn-fill"
+                                onClick={(e) => handleAddClick()}
+                              >
+                                +
+                              </Button>
+                            </td>
+                          </tr>
                         </tbody>
                       </Table>
                     </Col>
