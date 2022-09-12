@@ -31,6 +31,37 @@ function Profile() {
     return <Redirect to="/gotogether/home" />;
   }
 
+  const handleDeleteClick = (idx) => {
+    var array = [...skills];
+    console.log(array.splice(idx, 1));
+    setSkills(array);
+    console.log(array);
+    console.log(skills); // Whay ?
+    // setSkills(skills.filter((skill) => skill.item !== 'Erlang'));
+  };
+  const handleAddClick = (idx) => {
+    setSkills([...skills, { item: '', level: 'INTEREST' }]);
+  };
+
+  const handleSubmit = () => {
+    let temp = '';
+    skills.forEach(function (d) {
+      temp += d.item + '^' + d.level + '|';
+    });
+
+    alert(
+      userInfoId +
+        ' : ' +
+        introduce +
+        ' :  ' +
+        github +
+        ' : ' +
+        homepage +
+        ' : ' +
+        temp,
+    );
+  };
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     setUsername(user.username);
@@ -71,18 +102,6 @@ function Profile() {
       },
     );
   }, []);
-
-  const handleDeleteClick = (idx) => {
-    var array = [...skills];
-    alert(array[idx].item);
-    array.splice(idx, 1);
-    setSkills(array);
-    console.log(array);
-    console.log(skills);
-  };
-  const handleAddClick = (idx) => {
-    setSkills([...skills, { item: '', level: 'INTEREST' }]);
-  };
 
   return (
     <>
@@ -225,7 +244,12 @@ function Profile() {
                       </Table>
                     </Col>
                   </Row>
-                  <Button className="pull-right" type="submit" variant="danger">
+                  <Button
+                    className="pull-right"
+                    type="submit"
+                    variant="danger"
+                    onClick={handleSubmit}
+                  >
                     Submit
                   </Button>
                   <div className="clearfix"></div>
