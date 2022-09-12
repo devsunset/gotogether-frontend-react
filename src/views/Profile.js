@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
+import Spinner from 'react-bootstrap/Spinner';
 
 import {
   Button,
@@ -33,6 +34,8 @@ function Profile() {
   const [github, setGithub] = useState('');
   const [homepage, setHomepage] = useState('');
   const [skills, setSkills] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const handleIntroduceChange = (e) => {
     setIntroduce(e.target.value);
@@ -116,7 +119,7 @@ function Profile() {
       temp = temp.substring(0, temp.length - 1);
     }
 
-    // this.loading = true;
+    setLoading(true);
     UserService.setUserInfoSave({
       introduce: introduce,
       note: note,
@@ -125,7 +128,7 @@ function Profile() {
       skill: temp,
     }).then(
       (response) => {
-        // this.loading = false;
+        setLoading(false);
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
         } else {
@@ -133,7 +136,7 @@ function Profile() {
         }
       },
       (error) => {
-        // this.loading = false;
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -354,14 +357,18 @@ function Profile() {
                       </Table>
                     </Col>
                   </Row>
-                  <Button
-                    className="pull-right"
-                    type="button"
-                    variant="danger"
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </Button>
+                  {loading ? (
+                    <Spinner animation="border" />
+                  ) : (
+                    <Button
+                      className="pull-right"
+                      type="button"
+                      variant="danger"
+                      onClick={handleSubmit}
+                    >
+                      Submit
+                    </Button>
+                  )}
                   <div className="clearfix"></div>
                 </Form>
               </Card.Body>
