@@ -422,9 +422,15 @@ function Profile() {
       <Notify ref={notiRef} />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm</Modal.Title>
+          <Modal.Title style={{ height: '0px' }}>
+            <b>Confirm</b>
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>저장 하시겠습니까 ?</Modal.Body>
+        <Modal.Body style={{ textAlign: 'center' }}>
+          <hr />
+          저장 하시겠습니까 ?
+          <hr />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

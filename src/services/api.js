@@ -34,9 +34,12 @@ instance.interceptors.response.use(
 
     if (originalConfig.url !== '/auth/signin' && err.response) {
       // Access Token was expired
-      if (err.response.status === 401 && !originalConfig._retry) {
-        originalConfig._retry = true;
-
+      // 401 or 접근이 거부되었습니다 -> 원칙은 401만 체크하는게 맞으나 Role체크 로직이 있기 때문에 "접근 권한이 없습니다. " 값도 함께 체크
+      if (
+        (err.response.status === 401 ||
+          err.response.data.description == '접근이 거부되었습니다.') &&
+        !originalConfig._retry
+      ) {
         try {
           if (TokenService.getLocalRefreshToken() === undefined) {
             alert('로그인 정보가 유효하지 않습니다.');
