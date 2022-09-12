@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -56,16 +56,38 @@ function Profile() {
     // console.log(array);
     // console.log(skills);
   };
+
+  const itemInput = useRef();
+  const levelSelect = useRef();
+
   const handleAddClick = () => {
-    alert('추가');
-    setSkills([...skills, { item: '', level: 'INTEREST' }]);
+    if (itemInput.current.value.trim() == '') {
+      alert('Skill을 입력해 주세요.');
+      itemInput.current.focus();
+      return;
+    }
+
+    setSkills([
+      ...skills,
+      { item: itemInput.current.value, level: levelSelect.current.value },
+    ]);
+
+    itemInput.current.value = '';
+    levelSelect.current.value = 'INTEREST';
   };
 
   const handleSubmit = () => {
     let temp = '';
     skills.forEach(function (d) {
-      temp += d.item + '^' + d.level + '|';
+      let tmp = d.item.trim().replace(/\|/g, '').replace(/\^/g, '');
+      if (tmp != '') {
+        temp += tmp + '^' + d.level + '|';
+      }
     });
+
+    if (temp != '') {
+      temp = temp.substring(0, temp.length - 1);
+    }
 
     alert(
       userInfoId +
@@ -79,6 +101,35 @@ function Profile() {
         homepage +
         ' : ' +
         temp,
+    );
+
+    // this.loading = true;
+    UserService.setUserInfoSave({
+      introduce: introduce,
+      note: note,
+      github: github,
+      homepage: homepage,
+      skill: temp,
+    }).then(
+      (response) => {
+        // this.loading = false;
+        if (response.data.result == 'S') {
+          // this.$toast.success(`Success.`);
+        } else {
+          // this.$toast.error(`Fail.`);
+        }
+      },
+      (error) => {
+        // this.loading = false;
+        // this.$toast.error(`Fail.`);
+        console.log(
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString(),
+        );
+      },
     );
   };
 
@@ -97,12 +148,12 @@ function Profile() {
           setGithub(response.data.data.github);
           setHomepage(response.data.data.homepage);
           if (
-            response.data.data.skill === undefined ||
-            response.data.data.skill == null ||
-            response.data.data.skill === ''
+            !(
+              response.data.data.skill === undefined ||
+              response.data.data.skill == null ||
+              response.data.data.skill === ''
+            )
           ) {
-            setSkills({ item: '', level: 'INTEREST' });
-          } else {
             var data = response.data.data.skill.split('|');
             let item = [];
             data.forEach(function (d) {
@@ -114,7 +165,6 @@ function Profile() {
         }
       },
       (error) => {
-        setSkills({ item: '', level: 'INTEREST' });
         const _content =
           (error.response && error.response.data) ||
           error.message ||
@@ -261,12 +311,14 @@ function Profile() {
                                 defaultValue=""
                                 placeholder="Skill 입력"
                                 type="text"
+                                ref={itemInput}
                               ></Form.Control>
                             </td>
                             <td>
                               <Form.Select
                                 aria-label="select level"
                                 variant="warning"
+                                ref={levelSelect}
                                 defaultValue="INTEREST"
                               >
                                 <option value="BASIC">기본 학습</option>
