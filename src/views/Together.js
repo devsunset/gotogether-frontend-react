@@ -68,7 +68,10 @@ function Together() {
                 <p />
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
-                <Table className="table-hover table-striped">
+                <Table
+                  className="table-hover table-striped borded"
+                  variant="dark"
+                >
                   <thead>
                     <tr>
                       <th className="border-0" width="60%">

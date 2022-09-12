@@ -10,7 +10,7 @@ import { Spinner } from 'react-spinners-css';
 import UserService from '../services/user.service';
 
 function Member() {
-  const [showResults, setShowResults] = useState(false);
+  const [showResults, setShowResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -33,14 +33,6 @@ function Member() {
 
   const [keyword, setKeyword] = useState('');
   const [members, setMembers] = useState([]);
-
-  const onVisible = () => {
-    if (showResults) {
-      setShowResults(false);
-    } else {
-      setShowResults(true);
-    }
-  };
 
   const cardheaderrightalign = {
     float: 'right',
@@ -116,6 +108,13 @@ function Member() {
               getUserInfoList(page);
             },
           });
+
+          let tmp = [];
+          response.data.data.content.forEach(function (d) {
+            tmp.push(false);
+          });
+
+          setShowResults(tmp);
         }
       },
       (error) => {
@@ -135,6 +134,8 @@ function Member() {
           },
         });
 
+        setShowResults([]);
+
         console.log(
           (error.response && error.response.data) ||
             error.message ||
@@ -142,6 +143,16 @@ function Member() {
         );
       },
     );
+  };
+
+  const onVisible = (idx) => {
+    let copyArray = [...showResults];
+    if (showResults[idx]) {
+      copyArray[idx] = false;
+    } else {
+      copyArray[idx] = true;
+    }
+    setShowResults(copyArray);
   };
 
   return (
@@ -175,10 +186,7 @@ function Member() {
           <span style={cardheaderrightalign}>
             <Form.Check className="mb-1 pl-0">
               <Form.Check.Label style={{ paddingLeft: '22px' }}>
-                <Form.Check.Input
-                  defaultChecked
-                  type="checkbox"
-                ></Form.Check.Input>
+                <Form.Check.Input type="checkbox"></Form.Check.Input>
                 <span className="form-check-sign"></span>
                 <b>Detail Display</b>
               </Form.Check.Label>
@@ -200,18 +208,21 @@ function Member() {
         <Card.Body>
           <Container fluid>
             {members &&
-              members.map((member) => (
+              members.map((member, idx) => (
                 <Row key={member.username}>
                   <Col md="12">
                     <Card>
-                      <Card.Header style={cardbgcolor} onClick={onVisible}>
+                      <Card.Header
+                        style={cardbgcolor}
+                        onClick={(e) => onVisible(idx)}
+                      >
                         <i className="nc-icon nc-single-02" /> {member.nickname}
                         <span style={rightalign}>
                           {member.modifiedDate.substring(2, 10)}
                         </span>
                         <p />
                       </Card.Header>
-                      {showResults && (
+                      {showResults[idx] && (
                         <Card.Body>
                           <Table bordered width="80%">
                             <thead style={displaynone}>
