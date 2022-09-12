@@ -4,6 +4,8 @@ import { Form, InputGroup } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import Pagination from 'react-bootstrap-4-pagination';
 
+import { Spinner } from 'react-spinners-css';
+
 function Member() {
   const [showResults, setShowResults] = React.useState(false);
 
@@ -53,6 +55,15 @@ function Member() {
 
   return (
     <>
+      <Spinner
+        style={{
+          position: 'fixed',
+          top: '40%',
+          left: '60%',
+          zIndex: '9999999',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
       <Card>
         <Card.Header style={cardbgcolor}>
           <Badge bg="success" text="white">
