@@ -4,19 +4,22 @@ import { Card, Button, Table, Container, Row, Col } from 'react-bootstrap';
 import { Form, InputGroup } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import Pagination from 'react-bootstrap-4-pagination';
-
 import { Spinner } from 'react-spinners-css';
 
 import UserService from '../services/user.service';
 
 function Member() {
-  const [showResults, setShowResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-
   const { user: currentUser } = useSelector((state) => state.auth);
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
+
+  const [showResults, setShowResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [keyword, setKeyword] = useState('');
+  const [members, setMembers] = useState([]);
+  const [checkAll, setCheckAll] = useState(false);
 
   const [paginationConfig, setPaginationConfig] = useState({
     totalPages: 1,
@@ -29,10 +32,6 @@ function Member() {
       console.log(page);
     },
   });
-  const [page, setPage] = useState(1);
-
-  const [keyword, setKeyword] = useState('');
-  const [members, setMembers] = useState([]);
 
   const cardheaderrightalign = {
     float: 'right',
@@ -55,16 +54,6 @@ function Member() {
     backgroundColor: 'rgba(0,0,0,.07)',
     float: 'center',
     padding: '15px',
-  };
-
-  const handleKeywordChange = (e) => {
-    setKeyword(e.target.value);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      getUserInfoList('INIT');
-    }
   };
 
   useEffect(() => {
@@ -121,7 +110,11 @@ function Member() {
 
           let tmp = [];
           response.data.data.content.forEach(function (d) {
-            tmp.push(false);
+            if (checkAll) {
+              tmp.push(true);
+            } else {
+              tmp.push(false);
+            }
           });
 
           setShowResults(tmp);
@@ -153,6 +146,30 @@ function Member() {
         );
       },
     );
+  };
+
+  const handleCheckAllChange = (e) => {
+    setCheckAll(e.target.checked);
+
+    let copyArray = [...showResults];
+    copyArray.forEach(function (d, idx) {
+      if (checkAll) {
+        copyArray[idx] = false;
+      } else {
+        copyArray[idx] = true;
+      }
+    });
+    setShowResults(copyArray);
+  };
+
+  const handleKeywordChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      getUserInfoList('INIT');
+    }
   };
 
   const onVisible = (idx) => {
@@ -196,11 +213,16 @@ function Member() {
           <span style={cardheaderrightalign}>
             <Form.Check className="mb-1 pl-0">
               <Form.Check.Label style={{ paddingLeft: '22px' }}>
-                <Form.Check.Input type="checkbox"></Form.Check.Input>
+                <Form.Check.Input
+                  type="checkbox"
+                  defaultChecked={checkAll}
+                  onChange={handleCheckAllChange}
+                ></Form.Check.Input>
                 <span className="form-check-sign"></span>
                 <b>Detail Display</b>
               </Form.Check.Label>
             </Form.Check>
+
             <InputGroup>
               <Form.Control
                 size="sm"
