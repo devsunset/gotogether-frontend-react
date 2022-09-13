@@ -37,8 +37,8 @@ function Memo() {
   const checkAllRef = useRef();
   const memoFlagSelect = useRef();
   const notiRef = useRef();
-  const dCheckRefs = useRef([]);
-  const memoRefs = useRef([]);
+  let dCheckRefs = useRef([]);
+  let memoRefs = useRef([]);
 
   const [paginationConfig, setPaginationConfig] = useState({
     totalPages: 1,
@@ -121,6 +121,9 @@ function Memo() {
 
     checkAllRef.current.checked = false;
     checkAllRef.current.value = false;
+
+    dCheckRefs.current = [];
+    memoRefs.current = [];
 
     if (memoFlagSelect.current.value == 'R') {
       MemoService.getReceiveMemo(pageArg - 1, 5).then(
@@ -386,11 +389,11 @@ function Memo() {
 
   const setMemoDelete = () => {
     var checkedValue = '';
-    alert(dCheckRefs.current.length + ' : ' + memos.length);
-    console.log(dCheckRefs.toString);
     dCheckRefs.current.forEach((data, idx) => {
-      if (dCheckRefs.current[idx].checked) {
-        checkedValue += memos[idx].memoId + ',';
+      if (data !== null) {
+        if (dCheckRefs.current[idx].checked) {
+          checkedValue += memos[idx].memoId + ',';
+        }
       }
     });
 
@@ -453,8 +456,10 @@ function Memo() {
 
     var checkedValue = '';
     dCheckRefs.current.forEach((data, idx) => {
-      if (dCheckRefs.current[idx].checked) {
-        checkedValue += memos[idx].memoId + ',';
+      if (data !== null) {
+        if (dCheckRefs.current[idx].checked) {
+          checkedValue += memos[idx].memoId + ',';
+        }
       }
     });
 
