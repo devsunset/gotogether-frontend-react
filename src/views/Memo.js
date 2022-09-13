@@ -32,9 +32,11 @@ function Memo() {
   const [deleteAll, setDeleteAll] = useState(false);
   const [memoFlag, setMemoFlag] = useState('R');
 
+  const dAllCheckRef = useRef();
   const checkAllRef = useRef();
   const memoFlagSelect = useRef();
   const notiRef = useRef();
+  const dCheckRefs = useRef([]);
   const memoRefs = useRef([]);
 
   const [paginationConfig, setPaginationConfig] = useState({
@@ -110,6 +112,12 @@ function Memo() {
 
     setLoading(true);
     setCheckAll(false);
+
+    if (dAllCheckRef.current !== undefined) {
+      dAllCheckRef.current.checked = false;
+      dAllCheckRef.current.value = false;
+    }
+
     checkAllRef.current.checked = false;
     checkAllRef.current.value = false;
 
@@ -228,6 +236,20 @@ function Memo() {
         },
       );
     }
+  };
+
+  const handleDeleteCheckAllChange = (e) => {
+    try {
+      dCheckRefs.current.forEach((data, idx) => {
+        if (e.target.checked) {
+          dCheckRefs.current[idx].checked = true;
+          dCheckRefs.current[idx].value = true;
+        } else {
+          dCheckRefs.current[idx].checked = false;
+          dCheckRefs.current[idx].value = false;
+        }
+      });
+    } catch (e) {}
   };
 
   const handleCheckAllChange = (e) => {
@@ -463,7 +485,11 @@ function Memo() {
                       paddingRight: '22px',
                     }}
                   >
-                    <Form.Check.Input type="checkbox"></Form.Check.Input>
+                    <Form.Check.Input
+                      type="checkbox"
+                      ref={dAllCheckRef}
+                      onChange={handleDeleteCheckAllChange}
+                    ></Form.Check.Input>
                     <span className="form-check-sign"></span>
                     <Button variant="danger" size="sm" onClick={setMemoDelete}>
                       Delete
@@ -514,7 +540,10 @@ function Memo() {
                       >
                         <Form.Check className="mb-1 pl-0">
                           <Form.Check.Label>
-                            <Form.Check.Input type="checkbox"></Form.Check.Input>
+                            <Form.Check.Input
+                              type="checkbox"
+                              ref={(el) => (dCheckRefs.current[idx] = el)}
+                            ></Form.Check.Input>
                             <span className="form-check-sign"></span>
                             <i
                               className="nc-icon nc-email-85"
