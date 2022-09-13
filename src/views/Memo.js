@@ -10,6 +10,7 @@ import {
   Col,
   Form,
   InputGroup,
+  Badge,
 } from 'react-bootstrap';
 import Notify from 'react-notification-alert';
 import Pagination from 'react-bootstrap-4-pagination';
@@ -384,7 +385,11 @@ function Memo() {
               <Col md="12" style={{ textAlign: 'center' }}>
                 <Alert className="alert-with-icon" variant="primary">
                   <span data-notify="icon" className="nc-icon nc-atom"></span>
-                  <span>No Data.</span>
+                  <span>
+                    {memoFlag == 'R'
+                      ? '수신 메모함 데이타가 없습니다.'
+                      : '발신 메모함 데이타가 없습니다.'}
+                  </span>
                 </Alert>
               </Col>
             )}
@@ -397,10 +402,36 @@ function Memo() {
                         style={cardbgcolor}
                         onClick={(e) => onVisible(idx)}
                       >
-                        <i className="nc-icon nc-single-02" /> {memo.nickname}
-                        <span style={rightalign}>
-                          {memo.modifiedDate.substring(2, 10)}
-                        </span>
+                        <Form.Check className="mb-1 pl-0">
+                          <Form.Check.Label>
+                            <Form.Check.Input type="checkbox"></Form.Check.Input>
+                            <span className="form-check-sign"></span>
+                            <i
+                              className="nc-icon nc-email-85"
+                              style={{ marginTop: '5px', marginRight: '5px' }}
+                            />
+                            {memoFlag == 'R' && memo.readflag === 'N' && (
+                              <Badge
+                                bg="danger"
+                                text="white"
+                                style={{
+                                  marginLeft: '5px',
+                                  marginRight: '5px',
+                                  marginTop: '7px',
+                                  verticalAlign: 'top',
+                                }}
+                              >
+                                New
+                              </Badge>
+                            )}
+                          </Form.Check.Label>
+                          {memoFlag == 'R'
+                            ? memo.senderNickname
+                            : memo.receiverNicknam}
+                          <span style={rightalign}>
+                            {memo.modifiedDate.substring(2, 10)}
+                          </span>
+                        </Form.Check>
                         <p />
                       </Card.Header>
                       {showResults[idx] && (
