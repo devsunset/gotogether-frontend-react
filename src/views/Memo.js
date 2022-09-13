@@ -446,7 +446,7 @@ function Memo() {
                             <tbody>
                               <tr>
                                 <td width="10%">
-                                  <b>Introduce</b>
+                                  <b>Memo</b>
                                 </td>
                                 <td>
                                   <div
@@ -455,7 +455,7 @@ function Memo() {
                                       wordBreak: 'break-all',
                                     }}
                                   >
-                                    {memo.note}
+                                    {memo.memo}
                                   </div>
                                 </td>
                               </tr>
@@ -467,11 +467,16 @@ function Memo() {
                                         className="nc-icon nc-email-85"
                                         style={{ marginTop: '5px' }}
                                       />
-                                      &nbsp; 메모전송
+                                      &nbsp;{' '}
+                                      {memoFlag == 'R'
+                                        ? '답장전송'
+                                        : '다시전송'}
                                     </b>
                                     <br />
                                     <Button
-                                      variant="success"
+                                      variant={
+                                        memoFlag == 'R' ? 'success' : 'warning'
+                                      }
                                       size="lg"
                                       onClick={(e) =>
                                         sendMemo(idx, memo.username)
@@ -484,7 +489,7 @@ function Memo() {
                                     <Form.Control
                                       cols="80"
                                       defaultValue=""
-                                      placeholder="내용을 입력 하세요..."
+                                      placeholder="메모를 남겨 보세요..."
                                       rows="2"
                                       as="textarea"
                                       ref={(el) => (memoRefs.current[idx] = el)}
