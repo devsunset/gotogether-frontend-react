@@ -19,6 +19,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import TogetherService from '../services/together.service';
 
 function Together() {
+  let pageArg = 1;
   const history = useHistory();
   const { user: currentUser } = useSelector((state) => state.auth);
   const [username, setUsername] = useState('');
@@ -81,13 +82,12 @@ function Together() {
 
   const goTogetherDetail = (togetherId) => {
     alert('to-do');
-    sessionStorage.setItem('together_page', page);
+    sessionStorage.setItem('together_page', pageArg);
     sessionStorage.setItem('together_keyword', keyword);
     history.push(`/gotogether/togetherdetial?togetherId=` + togetherId);
   };
 
   const getTogetherList = (flag) => {
-    let pageArg = 1;
     if (flag == 'INIT') {
       pageArg = 1;
       setPaginationConfig({

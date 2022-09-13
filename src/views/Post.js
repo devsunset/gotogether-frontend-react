@@ -18,6 +18,7 @@ import { Spinner } from 'react-spinners-css';
 import PostService from '../services/post.service';
 
 function Post() {
+  let pageArg = 1;
   const queryParams = new URLSearchParams(window.location.search);
   const categorySelect = useRef();
 
@@ -105,14 +106,13 @@ function Post() {
 
   const goPostDetail = (postId) => {
     alert('to-do');
-    sessionStorage.setItem('post_page', page);
+    sessionStorage.setItem('post_page', pageArg);
     sessionStorage.setItem('post_category', category);
     sessionStorage.setItem('post_keyword', keyword);
     history.push(`/gotogether/postedetail?postId=` + postId);
   };
 
   const getPostList = (flag) => {
-    let pageArg = 1;
     if (flag == 'INIT') {
       pageArg = 1;
       setPaginationConfig({
