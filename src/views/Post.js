@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
   Card,
@@ -7,30 +8,42 @@ import {
   Row,
   Col,
   Button,
-  Dropdown,
   Form,
   InputGroup,
 } from 'react-bootstrap';
+import Notify from 'react-notification-alert';
 import Pagination from 'react-bootstrap-4-pagination';
+import { Spinner } from 'react-spinners-css';
+
+import PostService from '../services/post.service';
 
 function Post() {
-  const rightalign = {
-    float: 'right',
-    margin: '10px',
-    width: '340px',
-  };
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const [username, setUsername] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [roles, setRoles] = useState('');
 
-  let paginationConfig = {
-    totalPages: 7,
-    currentPage: 3,
-    showMax: 5,
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [keyword, setKeyword] = useState('');
+  const [posts, setPosts] = useState([]);
+
+  const [paginationConfig, setPaginationConfig] = useState({
+    totalPages: 1,
+    currentPage: 0,
+    showMax: 10,
     size: 'sm',
     threeDots: true,
     prevNext: true,
     onClick: function (page) {
       console.log(page);
-      alert(page);
     },
+  });
+
+  const rightalign = {
+    float: 'right',
+    margin: '10px',
+    width: '340px',
   };
 
   const footer = {
@@ -39,8 +52,110 @@ function Post() {
     padding: '15px',
   };
 
+  const handleKeywordChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      getPostList('INIT');
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      setUsername(user.username);
+      setNickname(user.nickname);
+      setRoles(user.roles[0]);
+    }
+
+    getPostList('INIT');
+  }, []);
+
+  const getPostList = (flag) => {
+    if (flag == 'INIT') {
+      setPage(1);
+
+      setPaginationConfig({
+        totalPages: 1,
+        currentPage: 0,
+        showMax: 5,
+        size: 'sm',
+        threeDots: true,
+        prevNext: true,
+        onClick: function (page) {
+          console.log(page);
+        },
+      });
+    } else {
+      setPage(flag);
+    }
+
+    setLoading(true);
+    UserService.getUserInfoList(page - 1, 5, {
+      category: '',
+      keyword: keyword,
+    }).then(
+      (response) => {
+        setLoading(false);
+        if (response.data.data != null) {
+          setPosts(response.data.data.content);
+
+          setPaginationConfig({
+            totalPages: response.data.data.number + 1,
+            currentPage: response.data.data.totalPages,
+            showMax: 10,
+            size: 'sm',
+            threeDots: true,
+            prevNext: true,
+            onClick: function (page) {
+              getPostList(page);
+            },
+          });
+        }
+      },
+      (error) => {
+        setLoading(false);
+
+        setPage(1);
+
+        setPosts([]);
+
+        setPaginationConfig({
+          totalPages: 1,
+          currentPage: 0,
+          showMax: 5,
+          size: 'sm',
+          threeDots: true,
+          prevNext: true,
+          onClick: function (page) {
+            console.log(page);
+          },
+        });
+
+        console.log(
+          (error.response && error.response.data) ||
+            error.message ||
+            error.toString(),
+        );
+      },
+    );
+  };
+
   return (
     <>
+      {loading && (
+        <Spinner
+          style={{
+            position: 'fixed',
+            top: '40%',
+            left: '60%',
+            zIndex: '9999999',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
       <Container fluid>
         <Row>
           <Col md="12">
@@ -67,8 +182,15 @@ function Post() {
                       size="sm"
                       type="text"
                       placeholder="Search"
+                      defaultValue={keyword}
+                      onKeyPress={handleKeyPress}
+                      onChange={handleKeywordChange}
                     ></Form.Control>
-                    <Button variant="info" size="sm">
+                    <Button
+                      variant="info"
+                      size="sm"
+                      onClick={(e) => getPostList('INIT')}
+                    >
                       <i className="nc-icon nc-zoom-split" />
                     </Button>
                     <p />
@@ -111,6 +233,9 @@ function Post() {
                   </tbody>
                 </Table>
               </Card.Body>
+              <Card.Footer style={footer}>
+                <Pagination {...paginationConfig} />
+              </Card.Footer>
             </Card>
           </Col>
         </Row>

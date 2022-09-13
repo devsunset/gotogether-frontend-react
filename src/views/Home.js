@@ -205,7 +205,7 @@ function Home() {
         </Row>
         {notice && (
           <Row>
-            <Col md="12">
+            <Col md="12" style={{ textAlign: 'center' }}>
               <Alert className="alert-with-icon" variant="primary">
                 <span data-notify="icon" className="nc-icon nc-bell-55"></span>
                 <span>{notice}</span>
