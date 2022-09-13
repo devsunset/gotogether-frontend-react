@@ -299,6 +299,7 @@ function Memo() {
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
           memoRefs.current[idx].value = '';
+          getMemoList('INIT');
         } else {
           notiRef.current.notificationAlert(failOption);
         }
@@ -317,6 +318,104 @@ function Memo() {
     );
   };
 
+  const setReadMemo = (idx) => {
+    if (memoFlag === 'R') {
+      if (memos[idx].readflag == 'N') {
+        MemoService.setReadMemo(memos[idx].memoId).then(
+          (response) => {
+            if (response.data.result == 'S') {
+              //memos[idx].readflag = 'Y';
+            }
+          },
+          (error) => {
+            console.log(
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString(),
+            );
+          },
+        );
+      }
+    }
+  };
+
+  /*
+  const setMemoDelete = () => {
+    let i = 0;
+    var checkedValue = '';
+    this.memoData.forEach((data) => {
+      if (data.check) {
+        checkedValue += data.memoId + ',';
+      }
+      i++;
+    });
+    if (checkedValue !== '') {
+      checkedValue = checkedValue.substring(0, checkedValue.length - 1);
+    }
+    if (i == 0) {
+      return;
+    }
+
+    if (checkedValue == '') {
+      this.$toast.warning(`삭제할 메모를 선택해 주세요.`);
+      return;
+    }
+    this.$confirm('삭제 하시겠습니까?')
+      .then(() => {
+        if (this.memoFlag === 'R') {
+          MemoService.setDeleteReceiveMemo(checkedValue).then(
+            (response) => {
+              if (response.data.result == 'S') {
+                this.$toast.success(`Success.`);
+                this.getMemoList('INIT');
+                this.emitter.emit('notificationRefresh');
+              } else {
+                this.$toast.error(`Fail.`);
+              }
+            },
+            (error) => {
+              this.$toast.error(`Fail.`);
+              console.log(
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                  error.message ||
+                  error.toString(),
+              );
+            },
+          );
+        } else {
+          MemoService.setDeleteSendMemo(checkedValue).then(
+            (response) => {
+              if (response.data.result == 'S') {
+                this.$toast.success(`Success.`);
+                this.getMemoList('INIT');
+              } else {
+                this.$toast.error(`Fail.`);
+              }
+            },
+            (error) => {
+              this.$toast.error(`Fail.`);
+              console.log(
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                  error.message ||
+                  error.toString(),
+              );
+            },
+          );
+        }
+      })
+      .catch((e) =>
+        e !== undefined
+          ? this.$toast.error(`Fail. ->` + e)
+          : console.log('no selected =>' + e),
+      );
+  };
+*/
   return (
     <>
       {loading && (
@@ -443,6 +542,16 @@ function Memo() {
                               <tr>
                                 <td width="10%">
                                   <b>Memo</b>
+                                  {memoFlag == 'S' && memo.readflag == 'Y' && (
+                                    <span>
+                                      <br />
+                                      <Badge bg="warning" text="white">
+                                        수신일시
+                                      </Badge>
+                                      <br />
+                                      {memo.modifiedDate.substring(5, 16)}
+                                    </span>
+                                  )}
                                 </td>
                                 <td>
                                   <div
@@ -466,17 +575,28 @@ function Memo() {
                                     {memoFlag == 'R' ? '답장전송' : '다시전송'}
                                   </b>
                                   <br />
-                                  <Button
-                                    variant={
-                                      memoFlag == 'R' ? 'success' : 'warning'
-                                    }
-                                    size="lg"
-                                    onClick={(e) =>
-                                      sendMemo(idx, memo.username)
-                                    }
-                                  >
-                                    Send
-                                  </Button>
+                                  {memoFlag == 'R' && (
+                                    <Button
+                                      variant="success"
+                                      size="lg"
+                                      onClick={(e) =>
+                                        sendMemo(idx, memo.senderUsername)
+                                      }
+                                    >
+                                      Send
+                                    </Button>
+                                  )}
+                                  {memoFlag == 'S' && (
+                                    <Button
+                                      variant="warning"
+                                      size="lg"
+                                      onClick={(e) =>
+                                        sendMemo(idx, memo.receiverUsername)
+                                      }
+                                    >
+                                      Send
+                                    </Button>
+                                  )}
                                 </td>
                                 <td>
                                   <Form.Control
@@ -486,9 +606,6 @@ function Memo() {
                                     rows="2"
                                     as="textarea"
                                     ref={(el) => (memoRefs.current[idx] = el)}
-                                    onChange={(e) =>
-                                      handleMemoChange(idx, e.target.value)
-                                    }
                                   ></Form.Control>
                                 </td>
                               </tr>

@@ -489,9 +489,6 @@ function Member() {
                                       rows="2"
                                       as="textarea"
                                       ref={(el) => (memoRefs.current[idx] = el)}
-                                      onChange={(e) =>
-                                        handleMemoChange(idx, e.target.value)
-                                      }
                                     ></Form.Control>
                                   </td>
                                 </tr>
