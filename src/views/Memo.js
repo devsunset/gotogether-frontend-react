@@ -29,6 +29,7 @@ function Memo() {
   const [loading, setLoading] = useState(false);
   const [memos, setMemos] = useState([]);
   const [checkAll, setCheckAll] = useState(false);
+  const [deleteAll, setDeleteAll] = useState(false);
   const [memoFlag, setMemoFlag] = useState('R');
 
   const checkAllRef = useRef();
@@ -360,8 +361,9 @@ function Memo() {
     }
   };
 
-  /*
   const setMemoDelete = () => {
+    alert('delete');
+    /*
     let i = 0;
     var checkedValue = '';
     this.memoData.forEach((data) => {
@@ -433,8 +435,9 @@ function Memo() {
           ? this.$toast.error(`Fail. ->` + e)
           : console.log('no selected =>' + e),
       );
+      */
   };
-*/
+
   return (
     <>
       {loading && (
@@ -450,24 +453,26 @@ function Memo() {
       )}
       <Card>
         <Card.Header style={cardbgcolor}>
-          <span>
-            <InputGroup>
-              <Form.Check className="mb-1 pl-0">
-                <Form.Check.Label
-                  style={{
-                    paddingLeft: '65px',
-                    paddingRight: '22px',
-                  }}
-                >
-                  <Form.Check.Input type="checkbox"></Form.Check.Input>
-                  <span className="form-check-sign"></span>
-                  <Button variant="danger" size="sm">
-                    Delete
-                  </Button>
-                </Form.Check.Label>
-              </Form.Check>
-            </InputGroup>
-          </span>
+          {memos.length > 0 && (
+            <span>
+              <InputGroup>
+                <Form.Check className="mb-1 pl-0">
+                  <Form.Check.Label
+                    style={{
+                      paddingLeft: '65px',
+                      paddingRight: '22px',
+                    }}
+                  >
+                    <Form.Check.Input type="checkbox"></Form.Check.Input>
+                    <span className="form-check-sign"></span>
+                    <Button variant="danger" size="sm" onClick={setMemoDelete}>
+                      Delete
+                    </Button>
+                  </Form.Check.Label>
+                </Form.Check>
+              </InputGroup>
+            </span>
+          )}
           <span style={cardheaderrightalign}>
             <InputGroup>
               <Form.Check className="mb-1 pl-0">
