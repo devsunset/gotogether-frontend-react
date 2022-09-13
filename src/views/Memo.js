@@ -423,7 +423,7 @@ function Memo() {
                           </Form.Check.Label>
                           {memoFlag == 'R'
                             ? memo.senderNickname
-                            : memo.receiverNicknam}
+                            : memo.receiverNickname}
                           <span style={rightalign}>
                             {memo.modifiedDate.substring(2, 10)}
                           </span>
@@ -455,47 +455,43 @@ function Memo() {
                                   </div>
                                 </td>
                               </tr>
-                              {memo.username != username && (
-                                <tr>
-                                  <td>
-                                    <b>
-                                      <i
-                                        className="nc-icon nc-email-85"
-                                        style={{ marginTop: '5px' }}
-                                      />
-                                      &nbsp;{' '}
-                                      {memoFlag == 'R'
-                                        ? '답장전송'
-                                        : '다시전송'}
-                                    </b>
-                                    <br />
-                                    <Button
-                                      variant={
-                                        memoFlag == 'R' ? 'success' : 'warning'
-                                      }
-                                      size="lg"
-                                      onClick={(e) =>
-                                        sendMemo(idx, memo.username)
-                                      }
-                                    >
-                                      Send
-                                    </Button>
-                                  </td>
-                                  <td>
-                                    <Form.Control
-                                      cols="80"
-                                      defaultValue=""
-                                      placeholder="메모를 남겨 보세요..."
-                                      rows="2"
-                                      as="textarea"
-                                      ref={(el) => (memoRefs.current[idx] = el)}
-                                      onChange={(e) =>
-                                        handleMemoChange(idx, e.target.value)
-                                      }
-                                    ></Form.Control>
-                                  </td>
-                                </tr>
-                              )}
+                              <tr>
+                                <td>
+                                  <b>
+                                    <i
+                                      className="nc-icon nc-email-85"
+                                      style={{ marginTop: '5px' }}
+                                    />
+                                    &nbsp;{' '}
+                                    {memoFlag == 'R' ? '답장전송' : '다시전송'}
+                                  </b>
+                                  <br />
+                                  <Button
+                                    variant={
+                                      memoFlag == 'R' ? 'success' : 'warning'
+                                    }
+                                    size="lg"
+                                    onClick={(e) =>
+                                      sendMemo(idx, memo.username)
+                                    }
+                                  >
+                                    Send
+                                  </Button>
+                                </td>
+                                <td>
+                                  <Form.Control
+                                    cols="80"
+                                    defaultValue=""
+                                    placeholder="메모를 남겨 보세요..."
+                                    rows="2"
+                                    as="textarea"
+                                    ref={(el) => (memoRefs.current[idx] = el)}
+                                    onChange={(e) =>
+                                      handleMemoChange(idx, e.target.value)
+                                    }
+                                  ></Form.Control>
+                                </td>
+                              </tr>
                             </tbody>
                           </Table>
                         </Card.Body>
