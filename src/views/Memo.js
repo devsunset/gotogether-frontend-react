@@ -65,12 +65,15 @@ function Memo() {
   const displaynone = {
     display: 'none',
   };
+
   const cardbgcolor = {
-    backgroundColor: 'rgba(0,0,0,.07)',
+    backgroundColor: '#454d55',
+    color: '#ffffff',
   };
 
   const footer = {
-    backgroundColor: 'rgba(0,0,0,.07)',
+    backgroundColor: '#454d55',
+    color: '#ffffff',
     float: 'center',
     padding: '15px',
   };
