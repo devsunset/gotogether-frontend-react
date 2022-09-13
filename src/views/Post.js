@@ -18,6 +18,8 @@ import { Spinner } from 'react-spinners-css';
 import PostService from '../services/post.service';
 
 function Post() {
+  const queryParams = new URLSearchParams(window.location.search);
+
   const history = useHistory();
   const { user: currentUser } = useSelector((state) => state.auth);
   const [username, setUsername] = useState('');
@@ -81,6 +83,17 @@ function Post() {
       setUsername(user.username);
       setNickname(user.nickname);
       setRoles(user.roles[0]);
+    }
+
+    let tmp = queryParams.get('category');
+    if (tmp === null || tmp === undefined) {
+      setCategory('TALK');
+    } else {
+      if (!(tmp == 'TALK' || tmp == 'QA')) {
+        setCategory('TALK');
+      } else {
+        setCategory(tmp);
+      }
     }
 
     getPostList('INIT');
@@ -195,14 +208,16 @@ function Post() {
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
               <Card.Header>
-                <Button
-                  variant="success"
-                  size="sm"
-                  style={{ marginTop: '15px' }}
-                  onClick={goPostNew}
-                >
-                  New
-                </Button>
+                {currentUser && (
+                  <Button
+                    variant="success"
+                    size="sm"
+                    style={{ marginTop: '15px' }}
+                    onClick={goPostNew}
+                  >
+                    New
+                  </Button>
+                )}
                 <span style={rightalign}>
                   <InputGroup>
                     <Form.Select

@@ -1,69 +1,69 @@
-import Home from "views/Home.js";
-import Together from "views/Together.js";
-import Member from "views/Member.js";
-import Post from "views/Post.js";
-import Memo from "views/Memo.js";
-import Profile from "views/Profile.js";
-import Login from "components/Login.js";
-import Register from "components/Register.js";
+import Home from 'views/Home.js';
+import Together from 'views/Together.js';
+import Member from 'views/Member.js';
+import Post from 'views/Post.js';
+import Memo from 'views/Memo.js';
+import Profile from 'views/Profile.js';
+import Login from 'components/Login.js';
+import Register from 'components/Register.js';
 
 const gotogetherRoutes = [
   {
-    path: "/home",
-    name: "Home",
-    icon: "nc-icon nc-atom",
+    path: '/home',
+    name: 'Home',
+    icon: 'nc-icon nc-atom',
     component: Home,
-    layout: "/gotogether",
+    layout: '/gotogether',
   },
   {
-    path: "/together",
-    name: "Together ",
-    icon: "nc-icon nc-chat-round",
+    path: '/together',
+    name: 'Together ',
+    icon: 'nc-icon nc-chat-round',
     component: Together,
-    layout: "/gotogether",
+    layout: '/gotogether',
   },
   {
-    path: "/member",
-    name: "Member",
-    icon: "nc-icon nc-circle-09",
+    path: '/member',
+    name: 'Member',
+    icon: 'nc-icon nc-circle-09',
     component: Member,
-    layout: "/gotogether",
+    layout: '/gotogether',
   },
   {
-    path: "/post",
-    name: "Post",
-    icon: "nc-icon nc-notes",
+    path: '/post',
+    name: 'Post',
+    icon: 'nc-icon nc-notes',
     component: Post,
-    layout: "/gotogether",
+    layout: '/gotogether',
   },
   {
-    path: "/memo",
-    name: "Memo",
-    icon: "nc-icon nc-email-85",
+    path: '/memo',
+    name: 'Memo',
+    icon: 'nc-icon nc-email-85',
     component: Memo,
-    layout: "/gotogether",
+    layout: '/gotogether',
   },
   {
-    path: "/profile",
-    name: "Profile",
-    icon: "nc-icon nc-single-02",
+    path: '/profile',
+    name: 'Profile',
+    icon: 'nc-icon nc-single-02',
     component: Profile,
-    layout: "/gotogether",
+    layout: '/gotogether',
   },
   {
-    path: "/login",
-    name: "Login",
-    icon: "nc-icon nc-single-02",
+    path: '/login',
+    name: 'Login',
+    icon: 'nc-icon nc-single-02',
     component: Login,
-    layout: "/gotogether",
+    layout: '/gotogether',
     invisible: true,
   },
   {
-    path: "/register",
-    name: "Register",
-    icon: "nc-icon nc-single-02",
+    path: '/register',
+    name: 'Register',
+    icon: 'nc-icon nc-single-02',
     component: Register,
-    layout: "/gotogether",
+    layout: '/gotogether',
     invisible: true,
   },
 ];

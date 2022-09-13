@@ -187,14 +187,16 @@ function Together() {
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
               <Card.Header>
-                <Button
-                  variant="success"
-                  size="sm"
-                  style={{ marginTop: '10px' }}
-                  onClick={goTogetherNew}
-                >
-                  New
-                </Button>
+                {currentUser && (
+                  <Button
+                    variant="success"
+                    size="sm"
+                    style={{ marginTop: '10px' }}
+                    onClick={goTogetherNew}
+                  >
+                    New
+                  </Button>
+                )}
                 <span style={rightalign}>
                   <InputGroup>
                     <Form.Control
