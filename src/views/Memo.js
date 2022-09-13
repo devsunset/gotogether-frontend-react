@@ -11,6 +11,7 @@ import {
   Form,
   InputGroup,
   Badge,
+  Modal,
 } from 'react-bootstrap';
 import Notify from 'react-notification-alert';
 import Pagination from 'react-bootstrap-4-pagination';
@@ -384,81 +385,129 @@ function Memo() {
   };
 
   const setMemoDelete = () => {
-    alert('delete');
-
-    /*
-    let i = 0;
     var checkedValue = '';
-    this.memoData.forEach((data) => {
-      if (data.check) {
-        checkedValue += data.memoId + ',';
+    alert(dCheckRefs.current.length + ' : ' + memos.length);
+    console.log(dCheckRefs.toString);
+    dCheckRefs.current.forEach((data, idx) => {
+      if (dCheckRefs.current[idx].checked) {
+        checkedValue += memos[idx].memoId + ',';
       }
-      i++;
     });
+
+    if (checkedValue !== '') {
+      checkedValue = checkedValue.substring(0, checkedValue.length - 1);
+    } else {
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>삭제할 메모를 선택해 주세요.`</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
+      return;
+    }
+
+    handleShow();
+  };
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const handleShow = () => {
+    setShow(true);
+  };
+
+  const handleYesClose = () => {
+    setShow(false);
+
+    var successOption = {
+      place: 'br',
+      message: (
+        <div>
+          <div>Success.</div>
+        </div>
+      ),
+      type: 'primary',
+      icon: 'now-ui-icons ui-1_bell-53',
+      autoDismiss: 2,
+    };
+
+    var failOption = {
+      place: 'br',
+      message: (
+        <div>
+          <div>Fail.</div>
+        </div>
+      ),
+      type: 'danger',
+      icon: 'now-ui-icons ui-1_bell-53',
+      autoDismiss: 2,
+    };
+
+    var checkedValue = '';
+    dCheckRefs.current.forEach((data, idx) => {
+      if (dCheckRefs.current[idx].checked) {
+        checkedValue += memos[idx].memoId + ',';
+      }
+    });
+
     if (checkedValue !== '') {
       checkedValue = checkedValue.substring(0, checkedValue.length - 1);
     }
-    if (i == 0) {
-      return;
-    }
 
-    if (checkedValue == '') {
-      this.$toast.warning(`삭제할 메모를 선택해 주세요.`);
-      return;
-    }
-    this.$confirm('삭제 하시겠습니까?')
-      .then(() => {
-        if (this.memoFlag === 'R') {
-          MemoService.setDeleteReceiveMemo(checkedValue).then(
-            (response) => {
-              if (response.data.result == 'S') {
-                this.$toast.success(`Success.`);
-                this.getMemoList('INIT');
-                this.emitter.emit('notificationRefresh');
-              } else {
-                this.$toast.error(`Fail.`);
-              }
-            },
-            (error) => {
-              this.$toast.error(`Fail.`);
-              console.log(
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                  error.message ||
-                  error.toString(),
-              );
-            },
+    setLoading(true);
+
+    if (memoFlag === 'R') {
+      MemoService.setDeleteReceiveMemo(checkedValue).then(
+        (response) => {
+          if (response.data.result == 'S') {
+            notiRef.current.notificationAlert(successOption);
+            getMemoList('INIT');
+            dispatch('@@ui/NOTIFITION_REFRESH');
+          } else {
+            notiRef.current.notificationAlert(failOption);
+          }
+        },
+        (error) => {
+          notiRef.current.notificationAlert(failOption);
+          console.log(
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+              error.message ||
+              error.toString(),
           );
-        } else {
-          MemoService.setDeleteSendMemo(checkedValue).then(
-            (response) => {
-              if (response.data.result == 'S') {
-                this.$toast.success(`Success.`);
-                this.getMemoList('INIT');
-              } else {
-                this.$toast.error(`Fail.`);
-              }
-            },
-            (error) => {
-              this.$toast.error(`Fail.`);
-              console.log(
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                  error.message ||
-                  error.toString(),
-              );
-            },
-          );
-        }
-      })
-      .catch((e) =>
-        e !== undefined
-          ? this.$toast.error(`Fail. ->` + e)
-          : console.log('no selected =>' + e),
+        },
       );
-      */
+    } else {
+      MemoService.setDeleteSendMemo(checkedValue).then(
+        (response) => {
+          if (response.data.result == 'S') {
+            notiRef.current.notificationAlert(successOption);
+            getMemoList('INIT');
+          } else {
+            notiRef.current.notificationAlert(failOption);
+          }
+        },
+        (error) => {
+          notiRef.current.notificationAlert(failOption);
+          console.log(
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+              error.message ||
+              error.toString(),
+          );
+        },
+      );
+    }
   };
 
   return (
@@ -681,6 +730,26 @@ function Memo() {
         </Card.Footer>
       </Card>
       <Notify ref={notiRef} />
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ height: '0px' }}>
+            <b>Confirm</b>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ textAlign: 'center' }}>
+          <hr />
+          삭제 하시겠습니까 ?
+          <hr />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleYesClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
