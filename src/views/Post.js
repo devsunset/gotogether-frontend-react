@@ -19,6 +19,7 @@ import PostService from '../services/post.service';
 
 function Post() {
   const queryParams = new URLSearchParams(window.location.search);
+  const categorySelect = useRef();
 
   const history = useHistory();
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -58,12 +59,13 @@ function Post() {
 
   const goPostNew = () => {
     alert('to-do');
-    history.push(`/gotogether/postedit?category=` + category);
+    history.push(
+      `/gotogether/postedit?category=` + categorySelect.current.value,
+    );
   };
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
-    alert(category);
     getPostList('INIT');
   };
 
@@ -88,11 +90,14 @@ function Post() {
     let tmp = queryParams.get('category');
     if (tmp === null || tmp === undefined) {
       setCategory('TALK');
+      categorySelect.current.value = 'TALK';
     } else {
       if (!(tmp == 'TALK' || tmp == 'QA')) {
         setCategory('TALK');
+        categorySelect.current.value = 'TALK';
       } else {
         setCategory(tmp);
+        categorySelect.current.value = tmp;
       }
     }
 
@@ -131,6 +136,7 @@ function Post() {
       ) {
         setPage(sessionStorage.getItem('post_page'));
         setCategory(sessionStorage.getItem('post_category'));
+        categorySelect.current.value = sessionStorage.getItem('post_category');
         setKeyword(sessionStorage.getItem('post_keyword'));
       }
       sessionStorage.setItem('post_back', 'N');
@@ -141,7 +147,7 @@ function Post() {
 
     setLoading(true);
     PostService.getPostList(page - 1, 10, {
-      category: category,
+      category: categorySelect.current.value,
       keyword: keyword,
     }).then(
       (response) => {
@@ -224,7 +230,7 @@ function Post() {
                       aria-label="select category"
                       variant="warning"
                       style={{ width: '100px' }}
-                      defaultValue={category}
+                      ref={categorySelect}
                       onChange={handleCategoryChange}
                     >
                       <option value="TALK">Talk</option>
