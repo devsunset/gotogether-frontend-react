@@ -107,18 +107,10 @@ function Memo() {
       pageArg = flag;
     }
 
-    setCheckAll(false);
     setLoading(true);
-    setMemos([]);
-    setShowResults([]);
+    setCheckAll(false);
     checkAllRef.current.checked = false;
     checkAllRef.current.value = false;
-
-    let copyArray = [...showResults];
-    copyArray.forEach(function (d, idx) {
-      copyArray[idx] = false;
-    });
-    setShowResults(copyArray);
 
     if (memoFlagSelect.current.value == 'R') {
       MemoService.getReceiveMemo(pageArg - 1, 5).then(
@@ -139,16 +131,16 @@ function Memo() {
               },
             });
 
-            let tmp = [];
+            let tmpR = [];
             response.data.data.content.forEach(function (d) {
-              if (checkAll) {
-                tmp.push(true);
+              if (checkAllRef.current.value) {
+                tmpR.push(false);
               } else {
-                tmp.push(false);
+                tmpR.push(true);
               }
             });
 
-            setShowResults(tmp);
+            setShowResults(tmpR);
           }
         },
         (error) => {
@@ -196,16 +188,16 @@ function Memo() {
               },
             });
 
-            let tmp = [];
+            let tmpS = [];
             response.data.data.content.forEach(function (d) {
-              if (checkAll) {
-                tmp.push(true);
+              if (checkAllRef.current.value) {
+                tmpS.push(false);
               } else {
-                tmp.push(false);
+                tmpS.push(true);
               }
             });
 
-            setShowResults(tmp);
+            setShowResults(tmpS);
           }
         },
         (error) => {
