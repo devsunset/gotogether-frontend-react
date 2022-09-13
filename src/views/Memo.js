@@ -31,6 +31,7 @@ function Memo() {
   const [checkAll, setCheckAll] = useState(false);
   const [memoFlag, setMemoFlag] = useState('R');
 
+  const checkAllRef = useRef();
   const memoFlagSelect = useRef();
   const notiRef = useRef();
   const memoRefs = useRef([]);
@@ -108,6 +109,16 @@ function Memo() {
 
     setCheckAll(false);
     setLoading(true);
+    setMemos([]);
+    setShowResults([]);
+    checkAllRef.current.checked = false;
+    checkAllRef.current.value = false;
+
+    let copyArray = [...showResults];
+    copyArray.forEach(function (d, idx) {
+      copyArray[idx] = false;
+    });
+    setShowResults(copyArray);
 
     if (memoFlagSelect.current.value == 'R') {
       MemoService.getReceiveMemo(pageArg - 1, 5).then(
@@ -470,10 +481,13 @@ function Memo() {
               <Form.Check className="mb-1 pl-0">
                 <Form.Check.Label
                   style={{ paddingLeft: '0px', paddingRight: '22px' }}
-                  defaultChecked={checkAll}
-                  onChange={handleCheckAllChange}
                 >
-                  <Form.Check.Input type="checkbox"></Form.Check.Input>
+                  <Form.Check.Input
+                    type="checkbox"
+                    defaultChecked={checkAll}
+                    onChange={handleCheckAllChange}
+                    ref={checkAllRef}
+                  ></Form.Check.Input>
                   <span className="form-check-sign"></span>
                   <b>Detail Display</b>
                 </Form.Check.Label>
@@ -492,18 +506,6 @@ function Memo() {
         </Card.Header>
         <Card.Body>
           <Container fluid>
-            {memos.length == 0 && (
-              <Col md="12" style={{ textAlign: 'center' }}>
-                <Alert className="alert-with-icon" variant="primary">
-                  <span data-notify="icon" className="nc-icon nc-atom"></span>
-                  <span>
-                    {memoFlag == 'R'
-                      ? '수신 메모함 데이타가 없습니다.'
-                      : '발신 메모함 데이타가 없습니다.'}
-                  </span>
-                </Alert>
-              </Col>
-            )}
             {memos &&
               memos.map((memo, idx) => (
                 <Row key={memo.memoId}>
@@ -633,6 +635,18 @@ function Memo() {
                   </Col>
                 </Row>
               ))}
+            {memos.length == 0 && (
+              <Col md="12" style={{ textAlign: 'center' }}>
+                <Alert className="alert-with-icon" variant="primary">
+                  <span data-notify="icon" className="nc-icon nc-atom"></span>
+                  <span>
+                    {memoFlag == 'R'
+                      ? '수신 메모함 데이타가 없습니다.'
+                      : '발신 메모함 데이타가 없습니다.'}
+                  </span>
+                </Alert>
+              </Col>
+            )}
           </Container>
         </Card.Body>
         <Card.Footer style={footer}>
