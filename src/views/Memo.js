@@ -26,7 +26,6 @@ function Memo() {
 
   const [showResults, setShowResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [memos, setMemos] = useState([]);
   const [checkAll, setCheckAll] = useState(false);
   const [memoFlag, setMemoFlag] = useState('R');
@@ -42,8 +41,8 @@ function Memo() {
     size: 'sm',
     threeDots: true,
     prevNext: true,
-    onClick: function (page) {
-      console.log(page);
+    onClick: function (pageNumber) {
+      console.log(pageNumber);
     },
   });
 
@@ -87,8 +86,9 @@ function Memo() {
   };
 
   const getMemoList = (flag) => {
+    let pageArg = 1;
     if (flag == 'INIT') {
-      setPage(1);
+      pageArg = 1;
 
       setPaginationConfig({
         totalPages: 1,
@@ -97,32 +97,32 @@ function Memo() {
         size: 'sm',
         threeDots: true,
         prevNext: true,
-        onClick: function (page) {
-          console.log(page);
+        onClick: function (pageNumber) {
+          console.log(pageNumber);
         },
       });
     } else {
-      setPage(flag);
+      pageArg = flag;
     }
 
     setLoading(true);
 
     if (memoFlagSelect.current.value == 'R') {
-      MemoService.getReceiveMemo(page - 1, 5).then(
+      MemoService.getReceiveMemo(pageArg - 1, 5).then(
         (response) => {
           setLoading(false);
           if (response.data.data != null) {
             setMemos(response.data.data.content);
 
             setPaginationConfig({
-              totalPages: response.data.data.number + 1,
-              currentPage: response.data.data.totalPages,
+              totalPages: response.data.data.totalPages,
+              currentPage: response.data.data.number + 1,
               showMax: 5,
               size: 'sm',
               threeDots: true,
               prevNext: true,
-              onClick: function (page) {
-                getUserInfoList(page);
+              onClick: function (pageNumber) {
+                getMemoList(pageNumber);
               },
             });
 
@@ -141,8 +141,6 @@ function Memo() {
         (error) => {
           setLoading(false);
 
-          setPage(1);
-
           setMemos([]);
 
           setPaginationConfig({
@@ -152,8 +150,8 @@ function Memo() {
             size: 'sm',
             threeDots: true,
             prevNext: true,
-            onClick: function (page) {
-              console.log(page);
+            onClick: function (pageNumber) {
+              console.log(pageNumber);
             },
           });
 
@@ -167,21 +165,21 @@ function Memo() {
         },
       );
     } else {
-      MemoService.getSendMemo(page - 1, 5).then(
+      MemoService.getSendMemo(pageArg - 1, 5).then(
         (response) => {
           setLoading(false);
           if (response.data.data != null) {
             setMemos(response.data.data.content);
 
             setPaginationConfig({
-              totalPages: response.data.data.number + 1,
-              currentPage: response.data.data.totalPages,
+              totalPages: response.data.data.totalPages,
+              currentPage: response.data.data.number + 1,
               showMax: 5,
               size: 'sm',
               threeDots: true,
               prevNext: true,
-              onClick: function (page) {
-                getMemoList(page);
+              onClick: function (pageNubmer) {
+                getMemoList(pageNubmer);
               },
             });
 
@@ -200,8 +198,6 @@ function Memo() {
         (error) => {
           setLoading(false);
 
-          setPage(1);
-
           setMemos([]);
 
           setPaginationConfig({
@@ -211,8 +207,8 @@ function Memo() {
             size: 'sm',
             threeDots: true,
             prevNext: true,
-            onClick: function (page) {
-              console.log(page);
+            onClick: function (pageNumber) {
+              console.log(pageNumber);
             },
           });
 

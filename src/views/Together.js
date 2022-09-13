@@ -26,7 +26,6 @@ function Together() {
   const [roles, setRoles] = useState('');
 
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState('');
   const [togethers, setTogethers] = useState([]);
 
@@ -37,8 +36,8 @@ function Together() {
     size: 'sm',
     threeDots: true,
     prevNext: true,
-    onClick: function (page) {
-      console.log(page);
+    onClick: function (pageNumber) {
+      console.log(pageNumber);
     },
   });
 
@@ -88,9 +87,9 @@ function Together() {
   };
 
   const getTogetherList = (flag) => {
+    let pageArg = 1;
     if (flag == 'INIT') {
-      setPage(1);
-
+      pageArg = 1;
       setPaginationConfig({
         totalPages: 1,
         currentPage: 0,
@@ -98,19 +97,18 @@ function Together() {
         size: 'sm',
         threeDots: true,
         prevNext: true,
-        onClick: function (page) {
-          console.log(page);
+        onClick: function (pageNumber) {
+          console.log(pageNumber);
         },
       });
     } else {
-      setPage(flag);
-
+      pageArg = flag;
       if (
         sessionStorage.getItem('together_back') == 'Y' &&
         sessionStorage.getItem('together_page') !== null &&
         sessionStorage.getItem('together_page') !== ''
       ) {
-        setPage(sessionStorage.getItem('together_page'));
+        pageArg = sessionStorage.getItem('together_page');
         setKeyword(sessionStorage.getItem('together_keyword'));
       }
       sessionStorage.setItem('together_back', 'N');
@@ -119,7 +117,7 @@ function Together() {
     }
 
     setLoading(true);
-    TogetherService.getTogetherList(page - 1, 5, {
+    TogetherService.getTogetherList(pageArg - 1, 5, {
       category: '',
       keyword: keyword,
     }).then(
@@ -129,22 +127,20 @@ function Together() {
           setTogethers(response.data.data.content);
 
           setPaginationConfig({
-            totalPages: response.data.data.number + 1,
-            currentPage: response.data.data.totalPages,
+            totalPages: response.data.data.totalPages,
+            currentPage: response.data.data.number + 1,
             showMax: 5,
             size: 'sm',
             threeDots: true,
             prevNext: true,
-            onClick: function (page) {
-              getTogetherList(page);
+            onClick: function (pageNumber) {
+              getTogetherList(pageNumber);
             },
           });
         }
       },
       (error) => {
         setLoading(false);
-
-        setPage(1);
 
         setTogethers([]);
 
@@ -155,8 +151,8 @@ function Together() {
           size: 'sm',
           threeDots: true,
           prevNext: true,
-          onClick: function (page) {
-            console.log(page);
+          onClick: function (pageNumber) {
+            console.log(pageNumber);
           },
         });
 

@@ -28,7 +28,6 @@ function Post() {
   const [roles, setRoles] = useState('');
 
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [category, setCategory] = useState('TALK');
   const [keyword, setKeyword] = useState('');
   const [posts, setPosts] = useState([]);
@@ -40,8 +39,8 @@ function Post() {
     size: 'sm',
     threeDots: true,
     prevNext: true,
-    onClick: function (page) {
-      console.log(page);
+    onClick: function (pageNumber) {
+      console.log(pageNumber);
     },
   });
 
@@ -113,9 +112,9 @@ function Post() {
   };
 
   const getPostList = (flag) => {
+    let pageArg = 1;
     if (flag == 'INIT') {
-      setPage(1);
-
+      pageArg = 1;
       setPaginationConfig({
         totalPages: 1,
         currentPage: 0,
@@ -123,18 +122,18 @@ function Post() {
         size: 'sm',
         threeDots: true,
         prevNext: true,
-        onClick: function (page) {
-          console.log(page);
+        onClick: function (pageNumber) {
+          console.log(pageNumber);
         },
       });
     } else {
-      setPage(flag);
+      pageArg = flag;
       if (
         sessionStorage.getItem('post_back') == 'Y' &&
         sessionStorage.getItem('post_page') !== null &&
         sessionStorage.getItem('post_page') !== ''
       ) {
-        setPage(sessionStorage.getItem('post_page'));
+        pageArg = sessionStorage.getItem('post_page');
         setCategory(sessionStorage.getItem('post_category'));
         categorySelect.current.value = sessionStorage.getItem('post_category');
         setKeyword(sessionStorage.getItem('post_keyword'));
@@ -146,7 +145,7 @@ function Post() {
     }
 
     setLoading(true);
-    PostService.getPostList(page - 1, 10, {
+    PostService.getPostList(pageArg - 1, 10, {
       category: categorySelect.current.value,
       keyword: keyword,
     }).then(
@@ -156,22 +155,20 @@ function Post() {
           setPosts(response.data.data.content);
 
           setPaginationConfig({
-            totalPages: response.data.data.number + 1,
-            currentPage: response.data.data.totalPages,
+            totalPages: response.data.data.totalPages,
+            currentPage: response.data.data.number + 1,
             showMax: 10,
             size: 'sm',
             threeDots: true,
             prevNext: true,
-            onClick: function (page) {
-              getPostList(page);
+            onClick: function (pageNumber) {
+              getPostList(pageNumber);
             },
           });
         }
       },
       (error) => {
         setLoading(false);
-
-        setPage(1);
 
         setPosts([]);
 
@@ -182,8 +179,8 @@ function Post() {
           size: 'sm',
           threeDots: true,
           prevNext: true,
-          onClick: function (page) {
-            console.log(page);
+          onClick: function (pageNumber) {
+            console.log(pageNumber);
           },
         });
 

@@ -27,7 +27,6 @@ function Member() {
 
   const [showResults, setShowResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState('');
   const [members, setMembers] = useState([]);
   const [checkAll, setCheckAll] = useState(false);
@@ -42,8 +41,8 @@ function Member() {
     size: 'sm',
     threeDots: true,
     prevNext: true,
-    onClick: function (page) {
-      console.log(page);
+    onClick: function (pageNumber) {
+      console.log(pageNumber);
     },
   });
 
@@ -82,8 +81,9 @@ function Member() {
   }, []);
 
   const getUserInfoList = (flag) => {
+    let pageArg = 1;
     if (flag == 'INIT') {
-      setPage(1);
+      pageArg = 1;
 
       setPaginationConfig({
         totalPages: 1,
@@ -92,16 +92,16 @@ function Member() {
         size: 'sm',
         threeDots: true,
         prevNext: true,
-        onClick: function (page) {
-          console.log(page);
+        onClick: function (pageNumber) {
+          console.log(pageNumber);
         },
       });
     } else {
-      setPage(flag);
+      pageArg = flag;
     }
 
     setLoading(true);
-    UserService.getUserInfoList(page - 1, 5, {
+    UserService.getUserInfoList(pageArg - 1, 5, {
       category: '',
       keyword: keyword,
     }).then(
@@ -111,14 +111,14 @@ function Member() {
           setMembers(response.data.data.content);
 
           setPaginationConfig({
-            totalPages: response.data.data.number + 1,
-            currentPage: response.data.data.totalPages,
+            totalPages: response.data.data.totalPages,
+            currentPage: response.data.data.number + 1,
             showMax: 5,
             size: 'sm',
             threeDots: true,
             prevNext: true,
-            onClick: function (page) {
-              getUserInfoList(page);
+            onClick: function (pageNumber) {
+              getUserInfoList(pageNumber);
             },
           });
 
@@ -137,8 +137,6 @@ function Member() {
       (error) => {
         setLoading(false);
 
-        setPage(1);
-
         setMembers([]);
 
         setPaginationConfig({
@@ -148,8 +146,8 @@ function Member() {
           size: 'sm',
           threeDots: true,
           prevNext: true,
-          onClick: function (page) {
-            console.log(page);
+          onClick: function (pageNumber) {
+            console.log(pageNumber);
           },
         });
 
