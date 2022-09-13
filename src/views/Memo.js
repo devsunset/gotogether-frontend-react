@@ -385,6 +385,7 @@ function Memo() {
 
   const setMemoDelete = () => {
     alert('delete');
+
     /*
     let i = 0;
     var checkedValue = '';
