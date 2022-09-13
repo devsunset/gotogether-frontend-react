@@ -162,6 +162,16 @@ function Member() {
     );
   };
 
+  const handleKeywordChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      getUserInfoList('INIT');
+    }
+  };
+
   const handleCheckAllChange = (e) => {
     setCheckAll(e.target.checked);
 
@@ -174,16 +184,6 @@ function Member() {
       }
     });
     setShowResults(copyArray);
-  };
-
-  const handleKeywordChange = (e) => {
-    setKeyword(e.target.value);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      getUserInfoList('INIT');
-    }
   };
 
   const onVisible = (idx) => {

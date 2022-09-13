@@ -105,6 +105,7 @@ function Memo() {
       pageArg = flag;
     }
 
+    setCheckAll(false);
     setLoading(true);
 
     if (memoFlagSelect.current.value == 'R') {
@@ -233,6 +234,7 @@ function Memo() {
         copyArray[idx] = false;
       } else {
         copyArray[idx] = true;
+        setReadMemo(idx);
       }
     });
     setShowResults(copyArray);
@@ -244,6 +246,7 @@ function Memo() {
       copyArray[idx] = false;
     } else {
       copyArray[idx] = true;
+      setReadMemo(idx);
     }
     setShowResults(copyArray);
   };
@@ -324,7 +327,9 @@ function Memo() {
         MemoService.setReadMemo(memos[idx].memoId).then(
           (response) => {
             if (response.data.result == 'S') {
-              //memos[idx].readflag = 'Y';
+              let copyObj = [...memos];
+              copyObj[idx].readflag = 'Y';
+              setMemos(copyObj);
             }
           },
           (error) => {
