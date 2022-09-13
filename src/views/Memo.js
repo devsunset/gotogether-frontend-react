@@ -15,6 +15,7 @@ import {
 import Notify from 'react-notification-alert';
 import Pagination from 'react-bootstrap-4-pagination';
 import { Spinner } from 'react-spinners-css';
+import { dispatch } from 'use-bus';
 
 import MemoService from '../services/memo.service';
 
@@ -234,10 +235,16 @@ function Memo() {
         copyArray[idx] = false;
       } else {
         copyArray[idx] = true;
-        setReadMemo(idx);
+        if (memoFlag === 'R') {
+          setReadMemo(idx);
+        }
       }
     });
     setShowResults(copyArray);
+
+    if (memoFlag === 'R') {
+      dispatch('@@ui/NOTIFITION_REFRESH');
+    }
   };
 
   const onVisible = (idx) => {
@@ -246,7 +253,10 @@ function Memo() {
       copyArray[idx] = false;
     } else {
       copyArray[idx] = true;
-      setReadMemo(idx);
+      if (memoFlag === 'R') {
+        setReadMemo(idx);
+        dispatch('@@ui/NOTIFITION_REFRESH');
+      }
     }
     setShowResults(copyArray);
   };
@@ -330,6 +340,7 @@ function Memo() {
               let copyObj = [...memos];
               copyObj[idx].readflag = 'Y';
               setMemos(copyObj);
+              dispatch('@@ui/NOTIFITION_REFRESH');
             }
           },
           (error) => {

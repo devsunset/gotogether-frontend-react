@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
+import useBus from 'use-bus';
 
 import { logout } from '../../slices/auth';
 
@@ -25,6 +26,17 @@ function Header() {
     EventBus.on('logout', () => {
       logOut();
     });
+
+    getNotifition();
+
+    return () => {
+      EventBus.remove('logout');
+    };
+  }, [currentUser, logOut]);
+
+  useBus('@@ui/NOTIFITION_REFRESH', () => getNotifition(), []);
+
+  const getNotifition = () => {
     MemoService.getNewReceiveMemo().then(
       (response) => {
         setMemo(response.data.data.MEMO);
@@ -38,11 +50,7 @@ function Header() {
         setMemo(0);
       },
     );
-
-    return () => {
-      EventBus.remove('logout');
-    };
-  }, [currentUser, logOut]);
+  };
 
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
