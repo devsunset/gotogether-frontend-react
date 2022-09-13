@@ -66,13 +66,18 @@ function Memo() {
     display: 'none',
   };
 
+  const header = {
+    backgroundColor: '#343a40',
+    color: '#ffffff',
+  };
+
   const cardbgcolor = {
     backgroundColor: '#454d55',
     color: '#ffffff',
   };
 
   const footer = {
-    backgroundColor: '#454d55',
+    backgroundColor: '#343a40',
     color: '#ffffff',
     float: 'center',
     padding: '15px',
@@ -532,7 +537,7 @@ function Memo() {
         />
       )}
       <Card>
-        <Card.Header style={cardbgcolor}>
+        <Card.Header style={header}>
           {memos.length > 0 && (
             <span>
               <InputGroup>
