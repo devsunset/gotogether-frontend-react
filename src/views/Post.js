@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import {
   Card,
@@ -11,13 +12,13 @@ import {
   Form,
   InputGroup,
 } from 'react-bootstrap';
-import Notify from 'react-notification-alert';
 import Pagination from 'react-bootstrap-4-pagination';
 import { Spinner } from 'react-spinners-css';
 
 import PostService from '../services/post.service';
 
 function Post() {
+  const history = useHistory();
   const { user: currentUser } = useSelector((state) => state.auth);
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
@@ -25,6 +26,7 @@ function Post() {
 
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [category, setCategory] = useState('TALK');
   const [keyword, setKeyword] = useState('');
   const [posts, setPosts] = useState([]);
 
@@ -52,6 +54,17 @@ function Post() {
     padding: '15px',
   };
 
+  const goPostNew = () => {
+    alert('to-do');
+    history.push(`/gotogether/postedit?category=` + category);
+  };
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+    alert(category);
+    getPostList('INIT');
+  };
+
   const handleKeywordChange = (e) => {
     setKeyword(e.target.value);
   };
@@ -73,6 +86,14 @@ function Post() {
     getPostList('INIT');
   }, []);
 
+  const goPostDetail = (postId) => {
+    alert('to-do');
+    sessionStorage.setItem('post_page', page);
+    sessionStorage.setItem('post_category', category);
+    sessionStorage.setItem('post_keyword', keyword);
+    history.push(`/gotogether/postedetail?postId=` + postId);
+  };
+
   const getPostList = (flag) => {
     if (flag == 'INIT') {
       setPage(1);
@@ -80,7 +101,7 @@ function Post() {
       setPaginationConfig({
         totalPages: 1,
         currentPage: 0,
-        showMax: 5,
+        showMax: 10,
         size: 'sm',
         threeDots: true,
         prevNext: true,
@@ -90,11 +111,24 @@ function Post() {
       });
     } else {
       setPage(flag);
+      if (
+        sessionStorage.getItem('post_back') == 'Y' &&
+        sessionStorage.getItem('post_page') !== null &&
+        sessionStorage.getItem('post_page') !== ''
+      ) {
+        setPage(sessionStorage.getItem('post_page'));
+        setCategory(sessionStorage.getItem('post_category'));
+        setKeyword(sessionStorage.getItem('post_keyword'));
+      }
+      sessionStorage.setItem('post_back', 'N');
+      sessionStorage.setItem('post_page', '');
+      sessionStorage.setItem('post_category', '');
+      sessionStorage.setItem('post_keyword', '');
     }
 
     setLoading(true);
-    UserService.getUserInfoList(page - 1, 5, {
-      category: '',
+    PostService.getPostList(page - 1, 10, {
+      category: category,
       keyword: keyword,
     }).then(
       (response) => {
@@ -125,7 +159,7 @@ function Post() {
         setPaginationConfig({
           totalPages: 1,
           currentPage: 0,
-          showMax: 5,
+          showMax: 10,
           size: 'sm',
           threeDots: true,
           prevNext: true,
@@ -165,6 +199,7 @@ function Post() {
                   variant="success"
                   size="sm"
                   style={{ marginTop: '15px' }}
+                  onClick={goPostNew}
                 >
                   New
                 </Button>
@@ -174,6 +209,8 @@ function Post() {
                       aria-label="select category"
                       variant="warning"
                       style={{ width: '100px' }}
+                      defaultValue={category}
+                      onChange={handleCategoryChange}
                     >
                       <option value="TALK">Talk</option>
                       <option value="QA">Q&A</option>
@@ -206,7 +243,7 @@ function Post() {
                   <thead>
                     <tr>
                       <th className="border-0" width="60%">
-                        <b>Talk</b>
+                        <b>{category == 'TALK' ? 'Talk' : 'Q&A'}</b>
                       </th>
                       <th className="border-0">
                         <b>Reply</b>
@@ -223,13 +260,28 @@ function Post() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Talk 게시판</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>devsunset</td>
-                      <td>22.08.24 10:59</td>
-                    </tr>
+                    {posts.length == 0 && (
+                      <tr>
+                        <td colSpan="5" style={{ textAlign: 'center' }}>
+                          No Data.
+                        </td>
+                      </tr>
+                    )}
+                    {posts.map((data) => (
+                      <tr
+                        key={data.postId}
+                        data-item={data.postId}
+                        onClick={(e) => goPostDetail(data.postId)}
+                      >
+                        <td className="ellipsisMobile">{data.title}</td>
+                        <td className="desktop">{data.comment_count}</td>
+                        <td className="desktop">{data.hit}</td>
+                        <td className="desktop">{data.nickname}</td>
+                        <td className="desktop">
+                          {data.createdDate.substring(2, 16)}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </Table>
               </Card.Body>
