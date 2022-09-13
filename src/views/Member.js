@@ -1,12 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Card, Button, Table, Container, Row, Col } from 'react-bootstrap';
+import Notify from 'react-notification-alert';
+import {
+  Alert,
+  Card,
+  Button,
+  Table,
+  Container,
+  Row,
+  Col,
+} from 'react-bootstrap';
 import { Form, InputGroup } from 'react-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import Pagination from 'react-bootstrap-4-pagination';
 import { Spinner } from 'react-spinners-css';
 
 import UserService from '../services/user.service';
+import MemoService from '../services/memo.service';
 
 function Member() {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -20,6 +30,9 @@ function Member() {
   const [keyword, setKeyword] = useState('');
   const [members, setMembers] = useState([]);
   const [checkAll, setCheckAll] = useState(false);
+
+  const notiRef = useRef();
+  const memoRefs = useRef([]);
 
   const [paginationConfig, setPaginationConfig] = useState({
     totalPages: 1,
@@ -125,6 +138,8 @@ function Member() {
 
         setPage(1);
 
+        setMembers([]);
+
         setPaginationConfig({
           totalPages: 1,
           currentPage: 0,
@@ -180,6 +195,75 @@ function Member() {
       copyArray[idx] = true;
     }
     setShowResults(copyArray);
+  };
+
+  const sendMemo = (idx, receiver) => {
+    var successOption = {
+      place: 'br',
+      message: (
+        <div>
+          <div>Success.</div>
+        </div>
+      ),
+      type: 'primary',
+      icon: 'now-ui-icons ui-1_bell-53',
+      autoDismiss: 2,
+    };
+
+    var failOption = {
+      place: 'br',
+      message: (
+        <div>
+          <div>Fail.</div>
+        </div>
+      ),
+      type: 'danger',
+      icon: 'now-ui-icons ui-1_bell-53',
+      autoDismiss: 2,
+    };
+
+    if (memoRefs.current[idx].value == '') {
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>메모 내용을 입력해 주세요.</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
+      memoRefs.current[idx].focus();
+      return;
+    }
+
+    setLoading(true);
+    MemoService.sendMemo({
+      memo: memoRefs.current[idx].value.trim(),
+      receiver: receiver,
+    }).then(
+      (response) => {
+        setLoading(false);
+        if (response.data.result == 'S') {
+          notiRef.current.notificationAlert(successOption);
+          memoRefs.current[idx].value = '';
+        } else {
+          notiRef.current.notificationAlert(failOption);
+        }
+      },
+      (error) => {
+        setLoading(false);
+        notiRef.current.notificationAlert(failOption);
+        console.log(
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString(),
+        );
+      },
+    );
   };
 
   return (
@@ -246,6 +330,14 @@ function Member() {
         </Card.Header>
         <Card.Body>
           <Container fluid>
+            {members.length == 0 && (
+              <Col md="12" style={{ textAlign: 'center' }}>
+                <Alert className="alert-with-icon" variant="primary">
+                  <span data-notify="icon" className="nc-icon nc-atom"></span>
+                  <span>No Data.</span>
+                </Alert>
+              </Col>
+            )}
             {members &&
               members.map((member, idx) => (
                 <Row key={member.username}>
@@ -380,7 +472,13 @@ function Member() {
                                       &nbsp; 메모전송
                                     </b>
                                     <br />
-                                    <Button variant="success" size="lg">
+                                    <Button
+                                      variant="success"
+                                      size="lg"
+                                      onClick={(e) =>
+                                        sendMemo(idx, member.username)
+                                      }
+                                    >
                                       Send
                                     </Button>
                                   </td>
@@ -391,6 +489,10 @@ function Member() {
                                       placeholder="내용을 입력 하세요..."
                                       rows="2"
                                       as="textarea"
+                                      ref={(el) => (memoRefs.current[idx] = el)}
+                                      onChange={(e) =>
+                                        handleMemoChange(idx, e.target.value)
+                                      }
                                     ></Form.Control>
                                   </td>
                                 </tr>
@@ -409,6 +511,7 @@ function Member() {
           <Pagination {...paginationConfig} />
         </Card.Footer>
       </Card>
+      <Notify ref={notiRef} />
     </>
   );
 }

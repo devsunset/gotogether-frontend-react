@@ -69,7 +69,17 @@ function Profile() {
 
   const handleAddClick = () => {
     if (itemInput.current.value.trim() == '') {
-      alert('Skill을 입력해 주세요.');
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>Skill을 입력해 주세요.</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
       itemInput.current.focus();
       return;
     }

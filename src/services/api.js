@@ -42,9 +42,9 @@ instance.interceptors.response.use(
       ) {
         try {
           if (TokenService.getLocalRefreshToken() === undefined) {
-            alert('로그인 정보가 유효하지 않습니다.');
             dispatch(logout());
             TokenService.removeUser();
+            alert('로그인 정보가 유효하지 않습니다.');
             return;
           }
 
@@ -58,9 +58,9 @@ instance.interceptors.response.use(
           return instance(originalConfig);
         } catch (_error) {
           if (_error.message == 'Request failed with status code 403') {
-            alert('로그인 정보가 만료되었습니다 다시 로그인해 주세요.');
             dispatch(logout());
             TokenService.removeUser();
+            alert('로그인 정보가 만료되었습니다 다시 로그인해 주세요.');
           }
           return Promise.reject(_error);
         }
