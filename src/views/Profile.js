@@ -12,9 +12,9 @@ import {
   Row,
   Col,
   Table,
+  Badge,
+  Modal,
 } from 'react-bootstrap';
-import Badge from 'react-bootstrap/Badge';
-import Modal from 'react-bootstrap/Modal';
 
 import UserService from '../services/user.service';
 

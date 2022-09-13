@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import Notify from 'react-notification-alert';
 import {
   Alert,
   Card,
@@ -9,9 +8,11 @@ import {
   Container,
   Row,
   Col,
+  Form,
+  InputGroup,
+  Badge,
 } from 'react-bootstrap';
-import { Form, InputGroup } from 'react-bootstrap';
-import Badge from 'react-bootstrap/Badge';
+import Notify from 'react-notification-alert';
 import Pagination from 'react-bootstrap-4-pagination';
 import { Spinner } from 'react-spinners-css';
 
