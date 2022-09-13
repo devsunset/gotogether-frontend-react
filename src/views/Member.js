@@ -113,7 +113,7 @@ function Member() {
           setPaginationConfig({
             totalPages: response.data.data.number + 1,
             currentPage: response.data.data.totalPages,
-            showMax: 10,
+            showMax: 5,
             size: 'sm',
             threeDots: true,
             prevNext: true,
