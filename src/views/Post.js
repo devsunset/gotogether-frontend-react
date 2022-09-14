@@ -113,11 +113,10 @@ function Post() {
   }, []);
 
   const goPostDetail = (postId) => {
-    alert('to-do');
     sessionStorage.setItem('post_page', pageArg);
     sessionStorage.setItem('post_category', category);
     sessionStorage.setItem('post_keyword', keyword);
-    history.push(`/gotogether/postedetail?postId=` + postId);
+    history.push(`/gotogether/postdetail?postId=` + postId);
   };
 
   const getPostList = (flag) => {

@@ -140,7 +140,6 @@ function Postedit() {
           if (response.data.result == 'S') {
             setCategory(response.data.data.category);
             setTitle(response.data.data.title);
-            setContent(response.data.data.content);
             if (quill) {
               quill.clipboard.dangerouslyPasteHTML(response.data.data.content);
             }
@@ -319,7 +318,6 @@ function Postedit() {
                           <b>Title</b>
                         </label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Title"
                           defaultValue={title}
                           onChange={handleTitleChange}
