@@ -52,6 +52,20 @@ function Postedit() {
   const quillElement = useRef(null); // Quill을 적용할 DivElement를 설정
   const quillInstance = useRef(null); // Quill 인스턴스를 설정
 
+  const header = {
+    backgroundColor: '#343a40',
+    color: '#ffffff',
+    padding: '15px',
+  };
+
+  const footer = {
+    backgroundColor: '#343a40',
+    color: '#ffffff',
+    float: 'center',
+    padding: '5px',
+    marginTop: '50px',
+  };
+
   var successOption = {
     place: 'br',
     message: (
@@ -231,8 +245,8 @@ function Postedit() {
         <Row>
           <Col md="12">
             <Card>
-              <Card.Header>
-                <Card.Title as="h4">
+              <Card.Header style={header}>
+                <Card.Title as="h4" style={{ color: '#ffffff' }}>
                   Post {postId ? 'Edit' : 'New'}{' '}
                   {category == 'TALK' ? 'Talk' : 'Q&A'}
                 </Card.Title>
@@ -277,7 +291,7 @@ function Postedit() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12">
+                    <Col md="12" style={{ height: '300px' }}>
                       <Form.Group>
                         <label>
                           <b>Content</b>
@@ -285,7 +299,7 @@ function Postedit() {
                         <div
                           style={{
                             width: '100%',
-                            height: '150px',
+                            height: 220,
                           }}
                         >
                           <div ref={quillRef} />
@@ -293,54 +307,52 @@ function Postedit() {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col md="12" style={{ marginTop: '40px' }}>
-                      <Button
-                        className="pull-right"
-                        type="button"
-                        variant="primary"
-                        className="btn-fill"
-                        style={{ float: 'right' }}
-                        onClick={handleList}
-                      >
-                        List
-                      </Button>
-                      {loading ? (
-                        <Button
-                          variant="danger"
-                          className="btn-fill"
-                          disabled
-                          style={{ float: 'right' }}
-                        >
-                          <Spinner
-                            as="span"
-                            animation="grow"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                          />
-                          Processing...
-                        </Button>
-                      ) : (
-                        <Button
-                          className="pull-right"
-                          type="button"
-                          variant="danger"
-                          style={{ float: 'right', marginRight: '10px' }}
-                          onClick={handleSubmit}
-                        >
-                          Submit
-                        </Button>
-                      )}
-                      <div className="clearfix"></div>
-                    </Col>
-                  </Row>
                 </Form>
               </Card.Body>
+              <Card.Footer style={footer}>
+                <Button
+                  className="pull-right"
+                  type="button"
+                  variant="primary"
+                  className="btn-fill"
+                  style={{ float: 'right' }}
+                  onClick={handleList}
+                >
+                  List
+                </Button>
+                {loading ? (
+                  <Button
+                    variant="danger"
+                    className="btn-fill"
+                    disabled
+                    style={{ float: 'right' }}
+                  >
+                    <Spinner
+                      as="span"
+                      animation="grow"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    Processing...
+                  </Button>
+                ) : (
+                  <Button
+                    className="pull-right"
+                    type="button"
+                    variant="danger"
+                    style={{ float: 'right', marginRight: '10px' }}
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </Button>
+                )}
+              </Card.Footer>
             </Card>
           </Col>
         </Row>
       </Container>
+
       <Notify ref={notiRef} />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
