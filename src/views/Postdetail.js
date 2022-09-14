@@ -231,12 +231,14 @@ function Postdetail() {
                   </Row>
                   <Row>
                     <Col md="12">
-                      <label>
-                        <b>Content</b>
-                      </label>
-                      <div></div>
-                      <br />
-                      <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                      <Card>
+                        <Card.Header style={header}></Card.Header>
+                        <Card.Body>
+                          <div
+                            dangerouslySetInnerHTML={{ __html: content }}
+                          ></div>
+                        </Card.Body>
+                      </Card>
                     </Col>
                   </Row>
                 </Form>
