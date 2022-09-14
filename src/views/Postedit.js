@@ -334,6 +334,7 @@ function Postedit() {
                       <div
                         style={{
                           width: '100%',
+                          minHeight: '100px',
                         }}
                       >
                         <div ref={quillRef} />
