@@ -36,6 +36,11 @@ function Postdetail() {
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [writerNickname, setWriterNickname] = useState('');
+  const [writerUsername, setWriterUsername] = useState('');
+  const [modifiedDate, setModifiedDate] = useState('');
+  const [hit, setHit] = useState(0);
+  const [commentCount, setCommentCount] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -109,6 +114,10 @@ function Postdetail() {
             setCategory(response.data.data.category);
             setTitle(response.data.data.title);
             setContent(response.data.data.content);
+            setHit(response.data.data.hit);
+            setWriterNickname(response.data.data.nickname);
+            setWriterUsername(response.data.data.username);
+            setModifiedDate(response.data.data.modifiedDate);
           } else {
             notiRef.current.notificationAlert(failOption);
           }
@@ -183,7 +192,17 @@ function Postdetail() {
       <Card>
         <Card.Header style={header}>
           <Card.Title as="h4" style={{ color: '#ffffff' }}>
-            Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'}
+            {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
+            <span style={{ float: 'left' }}>
+              <i className="nc-icon nc-single-02" /> {writerNickname}
+              <br />
+              <i className="nc-icon nc-time-alarm" /> {modifiedDate}
+            </span>
+            <span style={{ float: 'right' }}>
+              <i className="nc-icon nc-zoom-split" /> {hit}
+              <br />
+              <i className="nc-icon nc-chat-round" /> {commentCount}
+            </span>
           </Card.Title>
         </Card.Header>
 
@@ -232,7 +251,9 @@ function Postdetail() {
                   <Row>
                     <Col md="12">
                       <Card>
-                        <Card.Header style={header}></Card.Header>
+                        <Card.Header
+                          style={{ backgroundColor: '#3472F7' }}
+                        ></Card.Header>
                         <Card.Body>
                           <div
                             dangerouslySetInnerHTML={{ __html: content }}
@@ -318,45 +339,7 @@ export default Postdetail;
   /* <template>
 
 
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <div>
-                       <!-- ////////////////////////////////////////////////// -->
-                        <div class="card card-primary card-outline">
-                        <div class="card-header">
-                        <h3 class="card-title"><i class="nav-icon fas fa-user"></i> &nbsp;{{writerNickname}}<br><i class="nav-icon fas fa-edit"></i>&nbsp;{{modifiedDate}}</h3>
-                        <div style="float:right">
-                        <i class="fas fa-eye fa-fw" style="color: var(--fa-navy);"></i>&nbsp;{{hit}} <br> <i class="fas fa-comment-dots fa-fw" style="color: var(--fa-navy);"></i>&nbsp;{{comment_count}}
-                        </div>
-                        </div>
 
-                        <div class="card-body">
-                        <div class="form-group">
-                                <select class="form-control" v-model="category" disabled> 
-                                      <option value="TALK">Talk</option>
-                                      <option value="QA">Q&A</option> 
-                                  </select>
-                        </div>
-                        <div class="form-group">
-                        <input class="form-control" placeholder="Title" v-model="title" disabled>
-                        </div>
-                        <div class="form-group"> 
-                        <div class="col-md" style="padding:0px">
-                        <div class="card card-info">
-                        <div class="card-header" style="height:40px">
-                        <span class="card-title"></span>
-                        <div class="card-tools">
-                        </div>
-                        </div>
-                        <div class="card-body" style="display: block;">
-                                <p v-html="content" style="min-height:200px"></p>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="card-footer">
                         <div class="float-right">
                         <button v-if="roles == 'ROLE_ADMIN'" type="submit" class="btn btn-warning" @click="setUpdate">C</button>    
                         <button v-if="userid == writerUsername || roles == 'ROLE_ADMIN'" type="submit" class="btn btn-danger" style="margin-left: 15px;" @click="setDelete">Delete</button>
@@ -402,13 +385,6 @@ export default Postdetail;
                     </div>
 
 
-        </div>
-    </div>
-    <!-- /.container-fluid -->
-</section>
-
-
-<!-- /.content -->
 </template>
 
 <script>
@@ -431,31 +407,6 @@ export default {
             };
         },
         created() {
-           PostService.getPost(this.$route.query.postId).then(
-                    (response) => {
-                        if(response.data.result == 'S'){
-                            this.category = response.data.data.category;
-                            this.title = response.data.data.title;
-                            this.content = response.data.data.content;
-                            this.hit = response.data.data.hit;
-                            this.writerNickname = response.data.data.nickname;
-                            this.writerUsername = response.data.data.username;
-                            this.modifiedDate = response.data.data.modifiedDate;
-                        }else{
-                            this.$toast.error(`Fail.`);
-                        }
-                    },
-                    (error) => {
-                        this.$toast.error(`Fail.`);
-                        console.log(
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString());
-                    }
-            );
-
             this.getPostCommentList();
         },
         computed: {
