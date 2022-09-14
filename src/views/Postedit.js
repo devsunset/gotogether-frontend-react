@@ -22,8 +22,8 @@ import PostService from '../services/post.service';
 function Postedit() {
   const { quill, quillRef } = useQuill();
 
-  console.log(quill); // undefined > Quill Object
-  console.log(quillRef); // { current: undefined } > { current: Quill Editor Reference }
+  // console.log(quill); // undefined > Quill Object
+  // console.log(quillRef); // { current: undefined } > { current: Quill Editor Reference }
 
   const history = useHistory();
   const queryParams = new URLSearchParams(window.location.search);
@@ -165,9 +165,49 @@ function Postedit() {
     }
   }, []);
 
+  React.useEffect(() => {
+    if (quill) {
+      quill.on('text-change', (delta, oldDelta, source) => {
+        // console.log('Text change!');
+        // console.log(quill.getText()); // Get text only
+        // console.log(quill.getContents()); // Get delta contents
+        // console.log(quill.root.innerHTML); // Get innerHTML using quill
+        // console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
+      });
+    }
+  }, [quill]);
+
   const handleShow = () => {
+    if (title.trim() == '') {
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>제목을 입력해 주세요.</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
+      return;
+    }
+    if (quill.getText().trim() == '') {
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>내용을 입력해 주세요.</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
+      return;
+    }
+
     setShow(true);
-    alert(postId);
   };
 
   const handleClose = () => {
@@ -177,12 +217,15 @@ function Postedit() {
   const handleYesClose = () => {
     setShow(false);
 
+    // console.log(quill.getText()); // Get text only
+    // console.log(quill.root.innerHTML); // Get innerHTML using quill
+
     setLoading(true);
     if (postId) {
       PostService.putPost(postId, {
         category: category,
         title: title,
-        content: content,
+        content: quill.root.innerHTML.replace(/"/gi, "'"),
       }).then(
         (response) => {
           setLoading(false);
@@ -211,7 +254,7 @@ function Postedit() {
       PostService.setPost({
         category: category,
         title: title,
-        content: content.replace(/"/gi, "'"),
+        content: quill.root.innerHTML.replace(/"/gi, "'"),
       }).then(
         (response) => {
           setLoading(false);
