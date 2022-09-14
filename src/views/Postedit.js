@@ -327,20 +327,17 @@ function Postedit() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12" style={{ height: '300px' }}>
-                      <Form.Group>
-                        <label>
-                          <b>Content</b>
-                        </label>
-                        <div
-                          style={{
-                            width: '100%',
-                            height: 220,
-                          }}
-                        >
-                          <div ref={quillRef} />
-                        </div>
-                      </Form.Group>
+                    <Col md="12">
+                      <label>
+                        <b>Content</b>
+                      </label>
+                      <div
+                        style={{
+                          width: '100%',
+                        }}
+                      >
+                        <div ref={quillRef} />
+                      </div>
                     </Col>
                   </Row>
                 </Form>

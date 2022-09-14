@@ -180,17 +180,17 @@ function Postdetail() {
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Col md="12">
-            <Card>
-              <Card.Header style={header}>
-                <Card.Title as="h4" style={{ color: '#ffffff' }}>
-                  Post {postId ? 'Edit' : 'New'}{' '}
-                  {category == 'TALK' ? 'Talk' : 'Q&A'}
-                </Card.Title>
-              </Card.Header>
-              <Card.Body style={{ height: '100%' }}>
+      <Card>
+        <Card.Header style={header}>
+          <Card.Title as="h4" style={{ color: '#ffffff' }}>
+            Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'}
+          </Card.Title>
+        </Card.Header>
+
+        <Card.Body style={{ height: '100%' }}>
+          <Container fluid>
+            <Row>
+              <Col md="12">
                 <Form>
                   <Row>
                     <Col md="12">
@@ -230,63 +230,60 @@ function Postdetail() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col md="12" style={{ height: '300px' }}>
-                      <Form.Group>
-                        <label>
-                          <b>Content</b>
-                        </label>
-                        <br />
-                        <div
-                          dangerouslySetInnerHTML={{ __html: content }}
-                        ></div>
-                      </Form.Group>
+                    <Col md="12">
+                      <label>
+                        <b>Content</b>
+                      </label>
+                      <div></div>
+                      <br />
+                      <div dangerouslySetInnerHTML={{ __html: content }}></div>
                     </Col>
                   </Row>
                 </Form>
-              </Card.Body>
-              <Card.Footer style={footer}>
-                <Button
-                  className="pull-right"
-                  type="button"
-                  variant="primary"
-                  className="btn-fill"
-                  style={{ float: 'right' }}
-                  onClick={handleList}
-                >
-                  List
-                </Button>
-                {loading ? (
-                  <Button
-                    variant="danger"
-                    className="btn-fill"
-                    disabled
-                    style={{ float: 'right' }}
-                  >
-                    <Spinner
-                      as="span"
-                      animation="grow"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    Processing...
-                  </Button>
-                ) : (
-                  <Button
-                    className="pull-right"
-                    type="button"
-                    variant="danger"
-                    style={{ float: 'right', marginRight: '10px' }}
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </Button>
-                )}
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+              </Col>
+            </Row>
+          </Container>
+        </Card.Body>
+        <Card.Footer style={footer}>
+          <Button
+            className="pull-right"
+            type="button"
+            variant="primary"
+            className="btn-fill"
+            style={{ float: 'right' }}
+            onClick={handleList}
+          >
+            List
+          </Button>
+          {loading ? (
+            <Button
+              variant="danger"
+              className="btn-fill"
+              disabled
+              style={{ float: 'right' }}
+            >
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Processing...
+            </Button>
+          ) : (
+            <Button
+              className="pull-right"
+              type="button"
+              variant="danger"
+              style={{ float: 'right', marginRight: '10px' }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+          )}
+        </Card.Footer>
+      </Card>
 
       <Notify ref={notiRef} />
       <Modal show={show} onHide={handleClose}>
@@ -317,22 +314,7 @@ export default Postdetail;
 
 {
   /* <template>
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0" v-if="this.category == 'TALK'">Post Detail Talk</h1>
-                <h1 class="m-0" v-else-if="this.category == 'QA'">Post Detail Q&A</h1>
-            </div>
-            <!-- /.col -->
-           
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+
 
 <!-- Main content -->
 <section class="content">
