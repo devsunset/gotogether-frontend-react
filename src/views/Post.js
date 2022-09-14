@@ -67,7 +67,6 @@ function Post() {
   };
 
   const goPostNew = () => {
-    alert('to-do');
     history.push(
       `/gotogether/postedit?category=` + categorySelect.current.value,
     );
