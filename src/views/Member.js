@@ -48,8 +48,11 @@ function Member() {
 
   const cardheaderrightalign = {
     float: 'right',
-    margin: '10px',
-    width: '370px',
+    marginRight: '0px',
+    marginTop: '10px',
+    marginLeft: '20px',
+    marginBottom: '10px',
+    width: '100%',
   };
 
   const rightalign = {

@@ -44,12 +44,21 @@ function Together() {
 
   const rightalign = {
     float: 'right',
-    margin: '10px',
-    width: '340px',
+    marginRight: '0px',
+    marginTop: '10px',
+    marginLeft: '20px',
+    marginBottom: '10px',
+    width: '100%',
+  };
+
+  const header = {
+    backgroundColor: '#343a40',
+    color: '#ffffff',
   };
 
   const footer = {
-    backgroundColor: 'rgba(0,0,0,.07)',
+    backgroundColor: '#343a40',
+    color: '#ffffff',
     float: 'center',
     padding: '15px',
   };
@@ -182,19 +191,19 @@ function Together() {
         <Row>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
-              <Card.Header>
-                {currentUser && (
-                  <Button
-                    variant="success"
-                    size="sm"
-                    style={{ marginTop: '10px' }}
-                    onClick={goTogetherNew}
-                  >
-                    New
-                  </Button>
-                )}
+              <Card.Header style={header}>
                 <span style={rightalign}>
                   <InputGroup>
+                    {currentUser && (
+                      <Button
+                        variant="success"
+                        size="sm"
+                        style={{ marginRight: '10px' }}
+                        onClick={goTogetherNew}
+                      >
+                        New
+                      </Button>
+                    )}
                     <Form.Control
                       size="sm"
                       type="text"
@@ -219,25 +228,26 @@ function Together() {
                 <Table
                   className="table-hover table-striped borded"
                   variant="dark"
+                  style={{ marginTop: '3px' }}
                 >
                   <thead>
                     <tr>
                       <th className="border-0" width="60%">
                         <b>Together</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>Progress</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>Reply</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>View</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>Nickname</b>
                       </th>
-                      <th className="border-0">
+                      <th className="desktop">
                         <b>Date</b>
                       </th>
                     </tr>

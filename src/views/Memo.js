@@ -54,8 +54,11 @@ function Memo() {
 
   const cardheaderrightalign = {
     float: 'right',
-    margin: '10px',
-    width: '305px',
+    marginRight: '0px',
+    marginTop: '10px',
+    marginLeft: '10px',
+    marginBottom: '10px',
+    width: '100%',
   };
 
   const rightalign = {
@@ -538,35 +541,35 @@ function Memo() {
       )}
       <Card>
         <Card.Header style={header}>
-          {memos.length > 0 && (
-            <span>
-              <InputGroup>
-                <Form.Check className="mb-1 pl-0">
-                  <Form.Check.Label
-                    style={{
-                      paddingLeft: '65px',
-                      paddingRight: '22px',
-                    }}
-                  >
-                    <Form.Check.Input
-                      type="checkbox"
-                      ref={dAllCheckRef}
-                      onChange={handleDeleteCheckAllChange}
-                    ></Form.Check.Input>
-                    <span className="form-check-sign"></span>
-                    <Button variant="danger" size="sm" onClick={setMemoDelete}>
-                      Delete
-                    </Button>
-                  </Form.Check.Label>
-                </Form.Check>
-              </InputGroup>
-            </span>
-          )}
           <span style={cardheaderrightalign}>
+            {memos.length > 0 && (
+              <Form.Check className="mb-1 pl-0">
+                <Form.Check.Label
+                  style={{
+                    paddingLeft: '65px',
+                    paddingRight: '22px',
+                  }}
+                >
+                  <Form.Check.Input
+                    type="checkbox"
+                    ref={dAllCheckRef}
+                    onChange={handleDeleteCheckAllChange}
+                  ></Form.Check.Input>
+                  <span className="form-check-sign"></span>
+                  <Button variant="danger" size="sm" onClick={setMemoDelete}>
+                    Delete
+                  </Button>
+                </Form.Check.Label>
+              </Form.Check>
+            )}
             <InputGroup>
               <Form.Check className="mb-1 pl-0">
                 <Form.Check.Label
-                  style={{ paddingLeft: '0px', paddingRight: '22px' }}
+                  style={{
+                    marginLeft: '65px',
+                    paddingLeft: '0px',
+                    paddingRight: '22px',
+                  }}
                 >
                   <Form.Check.Input
                     type="checkbox"
@@ -578,11 +581,7 @@ function Memo() {
                   <b>Detail Display</b>
                 </Form.Check.Label>
               </Form.Check>
-              <Form.Select
-                style={{ width: '200px' }}
-                ref={memoFlagSelect}
-                onChange={handleMemoFlagChange}
-              >
+              <Form.Select ref={memoFlagSelect} onChange={handleMemoFlagChange}>
                 <option value="R">수신 메모함</option>
                 <option value="S">발신 메모함</option>
               </Form.Select>
