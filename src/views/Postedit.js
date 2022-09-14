@@ -43,7 +43,6 @@ function Postedit() {
   const [postId, setPostId] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -96,10 +95,6 @@ function Postedit() {
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
-  };
-
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
   };
 
   const handleList = () => {
