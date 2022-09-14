@@ -190,7 +190,7 @@ function Postdetail() {
                   {category == 'TALK' ? 'Talk' : 'Q&A'}
                 </Card.Title>
               </Card.Header>
-              <Card.Body>
+              <Card.Body style={{ height: '100%' }}>
                 <Form>
                   <Row>
                     <Col md="12">
@@ -236,7 +236,9 @@ function Postdetail() {
                           <b>Content</b>
                         </label>
                         <br />
-                        {content}
+                        <div
+                          dangerouslySetInnerHTML={{ __html: content }}
+                        ></div>
                       </Form.Group>
                     </Col>
                   </Row>
