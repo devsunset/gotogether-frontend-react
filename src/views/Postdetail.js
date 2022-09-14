@@ -301,6 +301,7 @@ function Postdetail() {
               variant="danger"
               style={{ float: 'right', marginRight: '10px' }}
               onClick={handleSubmit}
+              className="btn-fill"
             >
               Submit
             </Button>

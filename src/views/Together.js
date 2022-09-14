@@ -198,6 +198,7 @@ function Together() {
                       <Button
                         variant="success"
                         size="sm"
+                        className="btn-fill"
                         style={{ marginRight: '10px' }}
                         onClick={goTogetherNew}
                       >

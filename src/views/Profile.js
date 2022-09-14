@@ -411,6 +411,7 @@ function Profile() {
                       variant="danger"
                       style={{ float: 'right' }}
                       onClick={handleSubmit}
+                      className="btn-fill"
                     >
                       Submit
                     </Button>

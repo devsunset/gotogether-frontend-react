@@ -556,7 +556,12 @@ function Memo() {
                     onChange={handleDeleteCheckAllChange}
                   ></Form.Check.Input>
                   <span className="form-check-sign"></span>
-                  <Button variant="danger" size="sm" onClick={setMemoDelete}>
+                  <Button
+                    className="btn-fill"
+                    variant="danger"
+                    size="sm"
+                    onClick={setMemoDelete}
+                  >
                     Delete
                   </Button>
                 </Form.Check.Label>
