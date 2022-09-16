@@ -21,6 +21,7 @@ function Postdetail() {
   const history = useHistory();
   const queryParams = new URLSearchParams(window.location.search);
   const categorySelect = useRef();
+  const comment = useRef();
 
   const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -43,6 +44,9 @@ function Postdetail() {
   const [hit, setHit] = useState(0);
   const [commentCount, setCommentCount] = useState(0);
   const [commentList, setCommentList] = useState([]);
+
+  const [commentId, setCommentId] = useState(0);
+  const [commentContent, setCommentContent] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -182,6 +186,36 @@ function Postdetail() {
     handleShow();
   };
 
+  const handleDeleteComment = (id) => {
+    setCommentId(id);
+    setActionFlag('deleteComment');
+    handleShow();
+  };
+
+  const handleCommentChange = (e) => {
+    setCommentContent(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (commentContent.trim() == '') {
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>Comment 내용을 입력해 주세요</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
+      comment.current.focus();
+      return;
+    }
+    setActionFlag('setComment');
+    handleShow();
+  };
+
   const handleShow = () => {
     setShow(true);
   };
@@ -196,6 +230,10 @@ function Postdetail() {
       deletePost();
     } else if (actionFlag == 'changeCatogory') {
       changeCatogory();
+    } else if (actionFlag == 'deleteComment') {
+      deleteComment();
+    } else if (actionFlag == 'setComment') {
+      setComment();
     }
   };
 
@@ -234,6 +272,57 @@ function Postdetail() {
         }
       },
       (error) => {
+        notiRef.current.notificationAlert(failOption);
+        console.log(
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString(),
+        );
+      },
+    );
+  };
+
+  const deleteComment = () => {
+    PostService.deletePostComment(commentId).then(
+      (response) => {
+        if (response.data.result == 'S') {
+          getPostCommentList();
+          notiRef.current.notificationAlert(successOption);
+        } else {
+          notiRef.current.notificationAlert(failOption);
+        }
+      },
+      (error) => {
+        notiRef.current.notificationAlert(failOption);
+        console.log(
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString(),
+        );
+      },
+    );
+  };
+
+  const setComment = () => {
+    PostService.setPostComment({
+      postId: postId,
+      content: comment,
+    }).then(
+      (response) => {
+        setComment('');
+        if (response.data.result == 'S') {
+          getPostCommentList();
+          notiRef.current.notificationAlert(successOption);
+        } else {
+          notiRef.current.notificationAlert(failOption);
+        }
+      },
+      (error) => {
+        setComment('');
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -390,16 +479,22 @@ function Postdetail() {
         commentList.map((comment, idx) => (
           <Card key={comment.postCommentId}>
             <Card.Header style={header}>
-              {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
               <span style={{ float: 'left' }}>
                 <i className="nc-icon nc-single-02" /> {comment.nickname}
                 <br />
                 <i className="nc-icon nc-time-alarm" /> {comment.createdDate}
               </span>
               <span style={{ float: 'right' }}>
-                <Button variant="warning" size="sm" className="btn-fill">
-                  X
-                </Button>
+                {(comment.username == username || roles == 'ROLE_ADMIN') && (
+                  <Button
+                    variant="warning"
+                    size="sm"
+                    className="btn-fill"
+                    onClick={(e) => handleDeleteComment(comment.postCommentId)}
+                  >
+                    X
+                  </Button>
+                )}
               </span>
             </Card.Header>
             <Card.Body>
@@ -415,6 +510,31 @@ function Postdetail() {
           </Card>
         ))}
 
+      <Card>
+        <Card.Header style={header}>Reply</Card.Header>
+        <Card.Body>
+          <Form.Control
+            cols="80"
+            defaultValue=""
+            placeholder="Comment를 남겨 보세요."
+            rows="4"
+            as="textarea"
+            onChange={handleCommentChange}
+            ref={comment}
+          ></Form.Control>
+          <Button
+            className="pull-right"
+            type="button"
+            variant="danger"
+            style={{ float: 'right', margin: '10px' }}
+            onClick={handleSubmit}
+            className="btn-fill"
+          >
+            Submit
+          </Button>
+        </Card.Body>
+      </Card>
+
       <Notify ref={notiRef} />
 
       <Modal show={show} onHide={handleClose}>
@@ -427,6 +547,9 @@ function Postdetail() {
           <hr />
           {actionFlag == 'deletePost' && '삭제 하시겠습니까 ?'}
           {actionFlag == 'changeCatogory' && 'Category를 변경 하시겠습니까 ?'}
+          {actionFlag == 'deleteComment' && '댓글을 삭제 하시겠습니까 ?'}
+          {actionFlag == 'setComment' && '저장 하시겠습니까 ?'}
+
           <hr />
         </Modal.Body>
         <Modal.Footer>
@@ -443,134 +566,3 @@ function Postdetail() {
 }
 
 export default Postdetail;
-
-{
-  /* 
-
-                        <!-- ////////////////////////////////////////////////// -->
-                            <div class="col-12"  :key="index" v-for="(comment,index) in postComments">
-                                <div class="card">
-                                <div class="card-header">
-                                <h3 class="card-title"><i class="nav-icon fas fa-user"></i> &nbsp;{{comment.nickname}}<br/><i class="nav-icon fas fa-edit"></i>&nbsp;{{comment.modifiedDate}}</h3>
-                                <div class="card-tools">
-                                <button  v-if="userid == comment.username || roles == 'ROLE_ADMIN'"  type="button" class="btn btn-tool" data-card-widget="remove" title="Remove" @click="deleteComment(comment.postCommentId)">
-                                <i class="fas fa-times"></i>
-                                </button>
-                                </div>
-                                </div>
-                                <div class="card-body">
-                                    <div style="white-space:pre-wrap;word-break:break-all">{{comment.content}}</div>
-                                </div>
-                                </div>
-                            </div>
-                    <!-- ////////////////////////////////////////////////// -->
-
-                    <div v-if="currentUser" class="card card-success" style="margin:15px">
-                            <div class="card-header">
-                            <h3 class="card-title">Reply</h3>
-                            </div>
-                            <div class="card-body">
-                                    <textarea rows="5" class="form-control"  placeholder="Comment를 남겨 보세요." maxlength="1000" v-model="comment" ref="comment"></textarea>
-                                    <br>
-                                    <div style="float:right"><button  type="submit" class="btn btn-danger" style="margin-left: 15px;" @click="setComment">Submit</button></div>
-                            </div>
-                    </div>
-
-
-                    <div v-else-if="!currentUser" class="callout callout-info" style="margin:10px">
-                    <h5><i class="fas fa-info"></i> Notice</h5>
-                        <p style="text-align:center">로그인을 하시면 댓글 작성이 가능합니다.</p>
-                    </div>
-
-
-
-
-export default {
-
-
-
-            getPostCommentList(){
-                PostService.getPostCommentList(this.$route.query.postId).then(
-                    (response) => {
-                        if(response.data.result == 'S'){
-                             this.postComments = response.data.data; 
-                             this.comment_count= this.postComments.length;
-                        }else{
-                             this.postComments = [];
-                             this.comment_count= 0;
-                             this.$toast.error(`Fail.`);
-                        }
-                    },
-                    (error) => {
-                         this.comment_count= 0;
-                        this.postComments = [] ;
-                        this.$toast.error(`Fail.`);
-                        console.log(
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.messagde) ||
-                        error.message ||
-                        error.toString());
-                    }
-               );
-            },
-            deleteComment(postCommentId) {
-                    this.$confirm("삭제 하시겠습니까?").then(() => {
-                            PostService.deletePostComment(postCommentId).then(
-                                (response) => {
-                                    if(response.data.result == 'S'){
-                                        this.getPostCommentList();
-                                        this.$toast.success(`Success.`);
-                                    }else{
-                                        this.$toast.error(`Fail.`);
-                                    }
-                                },
-                                (error) => {
-                                    this.$toast.error(`Fail.`);
-                                    console.log(
-                                    (error.response &&
-                                        error.response.data &&
-                                        error.response.data.message) ||
-                                    error.message ||
-                                    error.toString());
-                                }
-                        );
-                    
-                 }).catch((e) => e !== undefined ?  this.$toast.error(`Fail. ->`+e) : console.log('no selected =>'+e));
-            },
-            setComment() {
-                 if( this.comment.trim() == ''){
-                    this.$toast.warning(`Comment 내용을 입력해 주세요.`);
-                    this.$refs.comment.focus();
-                    return;
-                }
-
-                    this.$confirm("저장 하시겠습니까?").then(() => {
-                            PostService.setPostComment({postId : this.$route.query.postId, content : this.comment}).then(
-                                (response) => {
-                                    this.comment = '';
-                                    if(response.data.result == 'S'){
-                                        this.getPostCommentList();
-                                        this.$toast.success(`Success.`);
-                                    }else{
-                                        this.$toast.error(`Fail.`);
-                                    }
-                                },
-                                (error) => {
-                                    this.comment = '';
-                                    this.$toast.error(`Fail.`);
-                                    console.log(
-                                    (error.response &&
-                                        error.response.data &&
-                                        error.response.data.message) ||
-                                    error.message ||
-                                    error.toString());
-                                }
-                        );
-                    
-                  }).catch((e) => e !== undefined ?  this.$toast.error(`Fail. ->`+e) : console.log('no selected =>'+e));
-            },
-        },
-};
-</script> */
-}

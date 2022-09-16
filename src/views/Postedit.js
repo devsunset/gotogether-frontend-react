@@ -216,7 +216,7 @@ function Postedit() {
       PostService.putPost(postId, {
         category: category,
         title: title,
-        content: quill.root.innerHTML.replace(/"/gi, "'"),
+        content: quill.root.innerHTML,
       }).then(
         (response) => {
           setLoading(false);
@@ -245,7 +245,7 @@ function Postedit() {
       PostService.setPost({
         category: category,
         title: title,
-        content: quill.root.innerHTML.replace(/"/gi, "'"),
+        content: quill.root.innerHTML,
       }).then(
         (response) => {
           setLoading(false);
