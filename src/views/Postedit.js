@@ -149,15 +149,11 @@ function Postedit() {
         },
         (error) => {
           notiRef.current.notificationAlert(failOption);
-          console.log(
-            (error.response && error.response.data) ||
-              error.message ||
-              error.toString(),
-          );
+          console.log(error.response || error.message || error.toString());
         },
       );
     }
-  }, []);
+  }, [quill]);
 
   React.useEffect(() => {
     if (quill) {

@@ -89,6 +89,16 @@ function Postdetail() {
     history.push(`/gotogether/post?category=` + categorySelect.current.value);
   };
 
+  const handleEdit = () => {
+    sessionStorage.setItem('post_back', 'Y');
+    history.push(
+      `/gotogether/postedit?category=` +
+        categorySelect.current.value +
+        '&postId=' +
+        queryParams.get('postId'),
+    );
+  };
+
   const handleSubmit = () => {
     handleShow();
   };
@@ -278,6 +288,17 @@ function Postdetail() {
           >
             List
           </Button>
+          <Button
+            className="pull-right"
+            type="button"
+            variant="success"
+            className="btn-fill"
+            style={{ float: 'right', marginRight: '10px' }}
+            onClick={handleEdit}
+          >
+            Edit
+          </Button>
+
           {loading ? (
             <Button
               variant="danger"
@@ -303,9 +324,19 @@ function Postdetail() {
               onClick={handleSubmit}
               className="btn-fill"
             >
-              Submit
+              Delete
             </Button>
           )}
+          <Button
+            className="pull-right"
+            type="button"
+            variant="warning"
+            className="btn-fill"
+            style={{ float: 'right', marginRight: '10px' }}
+            onClick={handleList}
+          >
+            C
+          </Button>
         </Card.Footer>
       </Card>
 
