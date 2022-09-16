@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
-import Spinner from 'react-bootstrap/Spinner';
 import { Redirect, useHistory } from 'react-router-dom';
+
+import { Spinner } from 'react-spinners-css';
 
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
@@ -274,6 +275,17 @@ function Postedit() {
 
   return (
     <>
+      {loading && (
+        <Spinner
+          style={{
+            position: 'fixed',
+            top: '40%',
+            left: '60%',
+            zIndex: '9999999',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
       <Container fluid>
         <Row>
           <Col md="12">
@@ -350,34 +362,16 @@ function Postedit() {
                 >
                   List
                 </Button>
-                {loading ? (
-                  <Button
-                    variant="danger"
-                    className="btn-fill"
-                    disabled
-                    style={{ float: 'right' }}
-                  >
-                    <Spinner
-                      as="span"
-                      animation="grow"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    Processing...
-                  </Button>
-                ) : (
-                  <Button
-                    className="pull-right"
-                    type="button"
-                    variant="danger"
-                    style={{ float: 'right', marginRight: '10px' }}
-                    onClick={handleSubmit}
-                    className="btn-fill"
-                  >
-                    Submit
-                  </Button>
-                )}
+                <Button
+                  className="pull-right"
+                  type="button"
+                  variant="danger"
+                  style={{ float: 'right', marginRight: '10px' }}
+                  onClick={handleSubmit}
+                  className="btn-fill"
+                >
+                  Submit
+                </Button>
               </Card.Footer>
             </Card>
           </Col>

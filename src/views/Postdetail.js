@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
-import Spinner from 'react-bootstrap/Spinner';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import {
@@ -13,6 +12,8 @@ import {
   Col,
   Modal,
 } from 'react-bootstrap';
+
+import { Spinner } from 'react-spinners-css';
 
 import PostService from '../services/post.service';
 
@@ -222,6 +223,17 @@ function Postdetail() {
 
   return (
     <>
+      {loading && (
+        <Spinner
+          style={{
+            position: 'fixed',
+            top: '40%',
+            left: '60%',
+            zIndex: '9999999',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
       <Card>
         <Card.Header style={header}>
           <Card.Title as="h4" style={{ color: '#ffffff' }}>
@@ -352,6 +364,7 @@ function Postdetail() {
       </Card>
 
       <Notify ref={notiRef} />
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title style={{ height: '0px' }}>
