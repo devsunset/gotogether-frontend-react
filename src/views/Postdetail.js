@@ -99,7 +99,30 @@ function Postdetail() {
     );
   };
 
-  const handleSubmit = () => {
+  const handleChangeCatogory = () => {
+    PostService.changePostCategory(queryParams.get('postId')).then(
+      (response) => {
+        if (response.data.result == 'S') {
+          notiRef.current.notificationAlert(successOption);
+          history.push(`/gotogether/post?category=` + response.data.data);
+        } else {
+          notiRef.current.notificationAlert(failOption);
+        }
+      },
+      (error) => {
+        notiRef.current.notificationAlert(failOption);
+        console.log(
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString(),
+        );
+      },
+    );
+  };
+
+  const handleDelete = () => {
     handleShow();
   };
 
@@ -288,55 +311,43 @@ function Postdetail() {
           >
             List
           </Button>
-          <Button
-            className="pull-right"
-            type="button"
-            variant="success"
-            className="btn-fill"
-            style={{ float: 'right', marginRight: '10px' }}
-            onClick={handleEdit}
-          >
-            Edit
-          </Button>
 
-          {loading ? (
+          {(writerUsername == username || roles == 'ROLE_ADMIN') && (
             <Button
-              variant="danger"
+              className="pull-right"
+              type="button"
+              variant="success"
               className="btn-fill"
-              disabled
-              style={{ float: 'right' }}
+              style={{ float: 'right', marginRight: '10px' }}
+              onClick={handleEdit}
             >
-              <Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              Processing...
+              Edit
             </Button>
-          ) : (
+          )}
+          {(writerUsername == username || roles == 'ROLE_ADMIN') && (
             <Button
               className="pull-right"
               type="button"
               variant="danger"
               style={{ float: 'right', marginRight: '10px' }}
-              onClick={handleSubmit}
+              onClick={handleDelete}
               className="btn-fill"
             >
               Delete
             </Button>
           )}
-          <Button
-            className="pull-right"
-            type="button"
-            variant="warning"
-            className="btn-fill"
-            style={{ float: 'right', marginRight: '10px' }}
-            onClick={handleList}
-          >
-            C
-          </Button>
+          {roles == 'ROLE_ADMIN' && (
+            <Button
+              className="pull-right"
+              type="button"
+              variant="warning"
+              className="btn-fill"
+              style={{ float: 'right', marginRight: '10px' }}
+              onClick={handleChangeCatogory}
+            >
+              C
+            </Button>
+          )}
         </Card.Footer>
       </Card>
 
@@ -372,15 +383,6 @@ export default Postdetail;
 
 
 
-                        <div class="float-right">
-                        <button v-if="roles == 'ROLE_ADMIN'" type="submit" class="btn btn-warning" @click="setUpdate">C</button>    
-                        <button v-if="userid == writerUsername || roles == 'ROLE_ADMIN'" type="submit" class="btn btn-danger" style="margin-left: 15px;" @click="setDelete">Delete</button>
-                        <button v-if="userid == writerUsername || roles == 'ROLE_ADMIN'" type="submit" class="btn btn-primary" style="margin-left: 15px;" @click="goEdit">Edit</button>
-                        <button type="submit" class="btn btn-info" style="margin-left: 15px;" @click="goPost">List</button>
-                        </div>
-                        </div>
-
-                        </div>
                         <!-- ////////////////////////////////////////////////// -->
                             <div class="col-12"  :key="index" v-for="(comment,index) in postComments">
                                 <div class="card">
@@ -419,56 +421,10 @@ export default Postdetail;
 
 </template>
 
-<script>
-import PostService from "../services/post.service";
 
 export default {
-  name: "postdetail",
-        data() {
-            return {
-                category : 'TALK',
-                title : '',
-                content : '',
-                hit : 0,
-                comment_count: 0,
-                comment : '' , 
-                writerNickname : "",
-                writerUsername : "",
-                modifiedDate : "",
-                postComments : [],
-            };
-        },
-        created() {
-            this.getPostCommentList();
-        },
-        computed: {
-            currentUser() {
-                return this.$store.state.auth.user;
-            }
-        },
-        mounted(){
-            if(this.currentUser){
-                const user = JSON.parse(localStorage.getItem('user'));
-                 this.userid = user.username;
-                 this.nickname = user.nickname;
-                 this.email = user.email;
-                 this.roles= user.roles[0];
-            }
-        },
-          methods: {
-            goPost() {
-                sessionStorage.setItem('post_back', 'Y');
-                this.$router.push({
-                    name: "Post",
-                    query: { category: this.category },
-                });
-            },
-            goEdit() {
-                this.$router.push({
-                    name: "PostEdit",
-                    query: { category: this.category, postId: this.$route.query.postId },
-                });
-            },
+
+
              setDelete() {
                     this.$confirm("삭제 하시겠습니까?").then(() => {
                             PostService.deletePost(this.$route.query.postId).then(
