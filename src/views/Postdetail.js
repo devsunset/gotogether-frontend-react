@@ -45,6 +45,7 @@ function Postdetail() {
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [actionFlag, setActionFlag] = useState('');
   const notiRef = useRef();
 
   const header = {
@@ -169,19 +170,6 @@ function Postdetail() {
   }, []);
 
   const handleShow = () => {
-    notiRef.current.notificationAlert({
-      place: 'br',
-      message: (
-        <div>
-          <div>내용을 입력해 주세요.</div>
-        </div>
-      ),
-      type: 'warning',
-      icon: 'now-ui-icons ui-1_bell-53',
-      autoDismiss: 2,
-    });
-    return;
-
     setShow(true);
   };
 
@@ -192,23 +180,16 @@ function Postdetail() {
   const handleYesClose = () => {
     setShow(false);
     setLoading(true);
-    PostService.putPost(postId, {
-      category: category,
-      title: title,
-    }).then(
+    PostService.deletePost(queryParams.get('postId')).then(
       (response) => {
-        setLoading(false);
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
-          history.push(
-            `/gotogether/post?category=` + categorySelect.current.value,
-          );
+          history.push(`/gotogether/post?category=` + category);
         } else {
           notiRef.current.notificationAlert(failOption);
         }
       },
       (error) => {
-        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -440,58 +421,10 @@ export default {
 
              setDelete() {
                     this.$confirm("삭제 하시겠습니까?").then(() => {
-                            PostService.deletePost(this.$route.query.postId).then(
-                                (response) => {
-                                    if(response.data.result == 'S'){
-                                        this.$toast.success(`Success.`);
-                                        this.$router.push({
-                                            name: "Post",
-                                            query: { category: this.category },
-                                        });
-                                    }else{
-                                            this.$toast.error(`Fail.`);
-                                    }
-                                },
-                                (error) => {
-                                    this.$toast.error(`Fail.`);
-                                    console.log(
-                                    (error.response &&
-                                        error.response.data &&
-                                        error.response.data.message) ||
-                                    error.message ||
-                                    error.toString());
-                                }
-                        );
-                    
+                        
                   }).catch((e) => e !== undefined ?  this.$toast.error(`Fail. ->`+e) : console.log('no selected =>'+e));
             },
-             setUpdate() {
-                    this.$confirm("Category를 변경 하시겠습니까?").then(() => {
-                            PostService.changePostCategory(this.$route.query.postId).then(
-                                (response) => {
-                                    if(response.data.result == 'S'){
-                                        this.$toast.success(`Success.`);
-                                        this.$router.push({
-                                            name: "Post",
-                                            query: { category: response.data.data },
-                                        });
-                                    }else{
-                                            this.$toast.error(`Fail.`);
-                                    }
-                                },
-                                (error) => {
-                                    this.$toast.error(`Fail.`);
-                                    console.log(
-                                    (error.response &&
-                                        error.response.data &&
-                                        error.response.data.message) ||
-                                    error.message ||
-                                    error.toString());
-                                }
-                        );
-                    
-                  }).catch((e) => e !== undefined ?  this.$toast.error(`Fail. ->`+e) : console.log('no selected =>'+e));
-            },
+       
             getPostCommentList(){
                 PostService.getPostCommentList(this.$route.query.postId).then(
                     (response) => {
