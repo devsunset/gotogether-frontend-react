@@ -42,6 +42,7 @@ function Postdetail() {
   const [modifiedDate, setModifiedDate] = useState('');
   const [hit, setHit] = useState(0);
   const [commentCount, setCommentCount] = useState(0);
+  const [commentList, setCommentList] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -139,8 +140,37 @@ function Postdetail() {
           );
         },
       );
+
+      getPostCommentList();
     }
   }, []);
+
+  const getPostCommentList = () => {
+    PostService.getPostCommentList(queryParams.get('postId')).then(
+      (response) => {
+        if (response.data.result == 'S') {
+          setCommentList(response.data.data);
+          setCommentCount(response.data.data.length);
+        } else {
+          setCommentList([]);
+          setCommentCount(0);
+          notiRef.current.notificationAlert(failOption);
+        }
+      },
+      (error) => {
+        setCommentList([]);
+        setCommentCount(0);
+        notiRef.current.notificationAlert(failOption);
+        console.log(
+          (error.response &&
+            error.response.data &&
+            error.response.data.messagde) ||
+            error.message ||
+            error.toString(),
+        );
+      },
+    );
+  };
 
   const handleDelete = () => {
     setActionFlag('deletePost');
@@ -231,19 +261,17 @@ function Postdetail() {
       )}
       <Card>
         <Card.Header style={header}>
-          <Card.Title as="h4" style={{ color: '#ffffff' }}>
-            {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
-            <span style={{ float: 'left' }}>
-              <i className="nc-icon nc-single-02" /> {writerNickname}
-              <br />
-              <i className="nc-icon nc-time-alarm" /> {modifiedDate}
-            </span>
-            <span style={{ float: 'right' }}>
-              <i className="nc-icon nc-zoom-split" /> {hit}
-              <br />
-              <i className="nc-icon nc-chat-round" /> {commentCount}
-            </span>
-          </Card.Title>
+          {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
+          <span style={{ float: 'left' }}>
+            <i className="nc-icon nc-single-02" /> {writerNickname}
+            <br />
+            <i className="nc-icon nc-time-alarm" /> {modifiedDate}
+          </span>
+          <span style={{ float: 'right' }}>
+            <i className="nc-icon nc-zoom-split" /> {hit}
+            <br />
+            <i className="nc-icon nc-chat-round" /> {commentCount}
+          </span>
         </Card.Header>
 
         <Card.Body style={{ height: '100%' }}>
@@ -358,31 +386,34 @@ function Postdetail() {
         </Card.Footer>
       </Card>
 
-      <Card>
-        <Card.Header style={header}>
-          {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
-          <span style={{ float: 'left' }}>
-            <i className="nc-icon nc-single-02" /> {writerNickname}
-            <br />
-            <i className="nc-icon nc-time-alarm" /> {modifiedDate}
-          </span>
-          <span style={{ float: 'right' }}>
-            <Button variant="warning" size="sm" className="btn-fill">
-              X
-            </Button>
-          </span>
-        </Card.Header>
-        <Card.Body>
-          <div
-            style={{
-              whiteSpace: 'pre-wrap',
-              wordBreak: 'break-all',
-            }}
-          >
-            aaa
-          </div>
-        </Card.Body>
-      </Card>
+      {commentList &&
+        commentList.map((comment, idx) => (
+          <Card key={comment.postCommentId}>
+            <Card.Header style={header}>
+              {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
+              <span style={{ float: 'left' }}>
+                <i className="nc-icon nc-single-02" /> {comment.nickname}
+                <br />
+                <i className="nc-icon nc-time-alarm" /> {comment.createdDate}
+              </span>
+              <span style={{ float: 'right' }}>
+                <Button variant="warning" size="sm" className="btn-fill">
+                  X
+                </Button>
+              </span>
+            </Card.Header>
+            <Card.Body>
+              <div
+                style={{
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-all',
+                }}
+              >
+                {comment.content}
+              </div>
+            </Card.Body>
+          </Card>
+        ))}
 
       <Notify ref={notiRef} />
 
