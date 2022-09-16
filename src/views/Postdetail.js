@@ -4,6 +4,7 @@ import Notify from 'react-notification-alert';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import {
+  Alert,
   Button,
   Card,
   Form,
@@ -24,11 +25,6 @@ function Postdetail() {
   const comment = useRef();
 
   const { user: currentUser } = useSelector((state) => state.auth);
-
-  if (!currentUser) {
-    // return <Redirect to="/gotogether/home" />;
-    history.push(`/gotogether/home`);
-  }
 
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
@@ -310,10 +306,10 @@ function Postdetail() {
   const setComment = () => {
     PostService.setPostComment({
       postId: postId,
-      content: comment,
+      content: commentContent,
     }).then(
       (response) => {
-        setComment('');
+        comment.current.value = '';
         if (response.data.result == 'S') {
           getPostCommentList();
           notiRef.current.notificationAlert(successOption);
@@ -322,7 +318,7 @@ function Postdetail() {
         }
       },
       (error) => {
-        setComment('');
+        comment.current.value = '';
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -510,30 +506,37 @@ function Postdetail() {
           </Card>
         ))}
 
-      <Card>
-        <Card.Header style={header}>Reply</Card.Header>
-        <Card.Body>
-          <Form.Control
-            cols="80"
-            defaultValue=""
-            placeholder="Comment를 남겨 보세요."
-            rows="4"
-            as="textarea"
-            onChange={handleCommentChange}
-            ref={comment}
-          ></Form.Control>
-          <Button
-            className="pull-right"
-            type="button"
-            variant="danger"
-            style={{ float: 'right', margin: '10px' }}
-            onClick={handleSubmit}
-            className="btn-fill"
-          >
-            Submit
-          </Button>
-        </Card.Body>
-      </Card>
+      {currentUser ? (
+        <Card>
+          <Card.Header style={header}>Reply</Card.Header>
+          <Card.Body>
+            <Form.Control
+              cols="80"
+              defaultValue=""
+              placeholder="Comment를 남겨 보세요."
+              rows="4"
+              as="textarea"
+              onChange={handleCommentChange}
+              ref={comment}
+            ></Form.Control>
+            <Button
+              className="pull-right"
+              type="button"
+              variant="danger"
+              style={{ float: 'right', margin: '10px' }}
+              onClick={handleSubmit}
+              className="btn-fill"
+            >
+              Submit
+            </Button>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Alert className="alert-with-icon" variant="primary">
+          <span data-notify="icon" className="nc-icon nc-bell-55"></span>
+          <span>로그인을 하시면 댓글 작성이 가능합니다.</span>
+        </Alert>
+      )}
 
       <Notify ref={notiRef} />
 
