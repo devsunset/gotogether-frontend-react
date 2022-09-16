@@ -358,6 +358,32 @@ function Postdetail() {
         </Card.Footer>
       </Card>
 
+      <Card>
+        <Card.Header style={header}>
+          {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
+          <span style={{ float: 'left' }}>
+            <i className="nc-icon nc-single-02" /> {writerNickname}
+            <br />
+            <i className="nc-icon nc-time-alarm" /> {modifiedDate}
+          </span>
+          <span style={{ float: 'right' }}>
+            <Button variant="warning" size="sm" className="btn-fill">
+              X
+            </Button>
+          </span>
+        </Card.Header>
+        <Card.Body>
+          <div
+            style={{
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-all',
+            }}
+          >
+            aaa
+          </div>
+        </Card.Body>
+      </Card>
+
       <Notify ref={notiRef} />
 
       <Modal show={show} onHide={handleClose}>
@@ -388,9 +414,7 @@ function Postdetail() {
 export default Postdetail;
 
 {
-  /* <template>
-
-
+  /* 
 
                         <!-- ////////////////////////////////////////////////// -->
                             <div class="col-12"  :key="index" v-for="(comment,index) in postComments">
@@ -428,7 +452,6 @@ export default Postdetail;
                     </div>
 
 
-</template>
 
 
 export default {
