@@ -101,33 +101,6 @@ function Postdetail() {
     );
   };
 
-  const handleChangeCatogory = () => {
-    PostService.changePostCategory(queryParams.get('postId')).then(
-      (response) => {
-        if (response.data.result == 'S') {
-          notiRef.current.notificationAlert(successOption);
-          history.push(`/gotogether/post?category=` + response.data.data);
-        } else {
-          notiRef.current.notificationAlert(failOption);
-        }
-      },
-      (error) => {
-        notiRef.current.notificationAlert(failOption);
-        console.log(
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-            error.message ||
-            error.toString(),
-        );
-      },
-    );
-  };
-
-  const handleDelete = () => {
-    handleShow();
-  };
-
   useEffect(() => {
     if (currentUser) {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -169,6 +142,16 @@ function Postdetail() {
     }
   }, []);
 
+  const handleDelete = () => {
+    setActionFlag('deletePost');
+    handleShow();
+  };
+
+  const handleChangeCatogory = () => {
+    setActionFlag('changeCatogory');
+    handleShow();
+  };
+
   const handleShow = () => {
     setShow(true);
   };
@@ -179,12 +162,43 @@ function Postdetail() {
 
   const handleYesClose = () => {
     setShow(false);
+    if (actionFlag == 'deletePost') {
+      deletePost();
+    } else if (actionFlag == 'changeCatogory') {
+      changeCatogory();
+    }
+  };
+
+  const deletePost = () => {
     setLoading(true);
     PostService.deletePost(queryParams.get('postId')).then(
       (response) => {
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
           history.push(`/gotogether/post?category=` + category);
+        } else {
+          notiRef.current.notificationAlert(failOption);
+        }
+      },
+      (error) => {
+        notiRef.current.notificationAlert(failOption);
+        console.log(
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString(),
+        );
+      },
+    );
+  };
+
+  const changeCatogory = () => {
+    PostService.changePostCategory(queryParams.get('postId')).then(
+      (response) => {
+        if (response.data.result == 'S') {
+          notiRef.current.notificationAlert(successOption);
+          history.push(`/gotogether/post?category=` + response.data.data);
         } else {
           notiRef.current.notificationAlert(failOption);
         }
@@ -354,7 +368,8 @@ function Postdetail() {
         </Modal.Header>
         <Modal.Body style={{ textAlign: 'center' }}>
           <hr />
-          저장 하시겠습니까 ?
+          {actionFlag == 'deletePost' && '삭제 하시겠습니까 ?'}
+          {actionFlag == 'changeCatogory' && 'Category를 변경 하시겠습니까 ?'}
           <hr />
         </Modal.Body>
         <Modal.Footer>
@@ -419,12 +434,7 @@ export default Postdetail;
 export default {
 
 
-             setDelete() {
-                    this.$confirm("삭제 하시겠습니까?").then(() => {
-                        
-                  }).catch((e) => e !== undefined ?  this.$toast.error(`Fail. ->`+e) : console.log('no selected =>'+e));
-            },
-       
+
             getPostCommentList(){
                 PostService.getPostCommentList(this.$route.query.postId).then(
                     (response) => {
