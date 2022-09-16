@@ -255,8 +255,10 @@ function Postdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -270,6 +272,7 @@ function Postdetail() {
   };
 
   const changeCatogory = () => {
+    setLoading(true);
     PostService.changePostCategory(queryParams.get('postId')).then(
       (response) => {
         if (response.data.result == 'S') {
@@ -278,8 +281,10 @@ function Postdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -293,6 +298,7 @@ function Postdetail() {
   };
 
   const deleteComment = () => {
+    setLoading(true);
     PostService.deletePostComment(commentId).then(
       (response) => {
         if (response.data.result == 'S') {
@@ -301,8 +307,10 @@ function Postdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -316,6 +324,7 @@ function Postdetail() {
   };
 
   const setComment = () => {
+    setLoading(true);
     PostService.setPostComment({
       postId: postId,
       content: commentContent,
@@ -328,9 +337,11 @@ function Postdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
         comment.current.value = '';
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&

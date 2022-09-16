@@ -257,8 +257,10 @@ function Togetherdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -272,6 +274,7 @@ function Togetherdetail() {
   };
 
   const changeCatogory = () => {
+    setLoading(true);
     TogetherService.changeTogetherCategory(queryParams.get('togetherId')).then(
       (response) => {
         if (response.data.result == 'S') {
@@ -280,8 +283,10 @@ function Togetherdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -295,6 +300,7 @@ function Togetherdetail() {
   };
 
   const deleteComment = () => {
+    setLoading(true);
     TogetherService.deleteTogetherComment(commentId).then(
       (response) => {
         if (response.data.result == 'S') {
@@ -303,8 +309,10 @@ function Togetherdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
+        setLoading(false);
         notiRef.current.notificationAlert(failOption);
         console.log(
           (error.response &&
@@ -318,6 +326,7 @@ function Togetherdetail() {
   };
 
   const setComment = () => {
+    setLoading(true);
     TogetherService.setTogetherComment({
       togetherId: togetherId,
       content: commentContent,
@@ -330,8 +339,10 @@ function Togetherdetail() {
         } else {
           notiRef.current.notificationAlert(failOption);
         }
+        setLoading(false);
       },
       (error) => {
+        setLoading(false);
         comment.current.value = '';
         notiRef.current.notificationAlert(failOption);
         console.log(
