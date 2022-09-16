@@ -55,6 +55,18 @@ function Postdetail() {
     padding: '15px',
   };
 
+  const headerCommentList = {
+    backgroundColor: '  #4091e2',
+    color: '#ffffff',
+    padding: '15px',
+  };
+
+  const headerComment = {
+    backgroundColor: '#28a745',
+    color: '#ffffff',
+    padding: '15px',
+  };
+
   const footer = {
     backgroundColor: '#343a40',
     color: '#ffffff',
@@ -474,7 +486,7 @@ function Postdetail() {
       {commentList &&
         commentList.map((comment, idx) => (
           <Card key={comment.postCommentId}>
-            <Card.Header style={header}>
+            <Card.Header style={headerCommentList}>
               <span style={{ float: 'left' }}>
                 <i className="nc-icon nc-single-02" /> {comment.nickname}
                 <br />
@@ -508,7 +520,7 @@ function Postdetail() {
 
       {currentUser ? (
         <Card>
-          <Card.Header style={header}>Reply</Card.Header>
+          <Card.Header style={headerComment}>Reply</Card.Header>
           <Card.Body>
             <Form.Control
               cols="80"
