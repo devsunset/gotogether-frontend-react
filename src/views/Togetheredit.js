@@ -18,7 +18,7 @@ import {
   Modal,
 } from 'react-bootstrap';
 
-import PostService from '../services/post.service';
+import TogetherService from '../services/together.service';
 
 function Togetheredit() {
   const { quill, quillRef } = useQuill();
@@ -41,7 +41,7 @@ function Togetheredit() {
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
 
-  const [postId, setPostId] = useState('');
+  const [togetherId, setTogetherId] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
 
@@ -90,17 +90,19 @@ function Togetheredit() {
     autoDismiss: 2,
   };
 
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-  };
-
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
 
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
   const handleList = () => {
-    sessionStorage.setItem('post_back', 'Y');
-    history.push(`/gotogether/post?category=` + categorySelect.current.value);
+    sessionStorage.setItem('together_back', 'Y');
+    history.push(
+      `/gotogether/together?category=` + categorySelect.current.value,
+    );
   };
 
   const handleSubmit = () => {
@@ -115,32 +117,18 @@ function Togetheredit() {
       setRoles(user.roles[0]);
     }
 
-    let tmp = queryParams.get('category');
-    if (tmp === null || tmp === undefined) {
-      setCategory('TALK');
-      categorySelect.current.value = 'TALK';
-    } else {
-      if (!(tmp == 'TALK' || tmp == 'QA')) {
-        setCategory('TALK');
-        categorySelect.current.value = 'TALK';
-      } else {
-        setCategory(tmp);
-        categorySelect.current.value = tmp;
-      }
-    }
-
-    setPostId(queryParams.get('postId'));
+    setTogetherId(queryParams.get('togetherId'));
 
     if (
-      queryParams.get('postId') !== undefined &&
-      queryParams.get('postId') != '' &&
-      queryParams.get('postId') != null
+      queryParams.get('togetherId') !== undefined &&
+      queryParams.get('togetherId') != '' &&
+      queryParams.get('togetherId') != null
     ) {
-      PostService.getPost(queryParams.get('postId')).then(
+      TogetherService.getTogether(queryParams.get('togetherId')).then(
         (response) => {
           if (response.data.result == 'S') {
-            setCategory(response.data.data.category);
             setTitle(response.data.data.title);
+            setCategory(response.data.data.category);
             if (quill) {
               quill.clipboard.dangerouslyPasteHTML(response.data.data.content);
             }
@@ -212,8 +200,8 @@ function Togetheredit() {
     // console.log(quill.root.innerHTML); // Get innerHTML using quill
 
     setLoading(true);
-    if (postId) {
-      PostService.putPost(postId, {
+    if (togetherId) {
+      TogetherService.putTogether(togetherId, {
         category: category,
         title: title,
         content: quill.root.innerHTML,
@@ -222,9 +210,7 @@ function Togetheredit() {
           setLoading(false);
           if (response.data.result == 'S') {
             notiRef.current.notificationAlert(successOption);
-            history.push(
-              `/gotogether/post?category=` + categorySelect.current.value,
-            );
+            history.push("/gotogether/together'");
           } else {
             notiRef.current.notificationAlert(failOption);
           }
@@ -242,7 +228,7 @@ function Togetheredit() {
         },
       );
     } else {
-      PostService.setPost({
+      TogetherService.setTogether({
         category: category,
         title: title,
         content: quill.root.innerHTML,
@@ -251,9 +237,7 @@ function Togetheredit() {
           setLoading(false);
           if (response.data.result == 'S') {
             notiRef.current.notificationAlert(successOption);
-            history.push(
-              `/gotogether/post?category=` + categorySelect.current.value,
-            );
+            history.push("/gotogether/together'");
           } else {
             notiRef.current.notificationAlert(failOption);
           }
@@ -292,8 +276,7 @@ function Togetheredit() {
             <Card>
               <Card.Header style={header}>
                 <Card.Title as="h4" style={{ color: '#ffffff' }}>
-                  Post {postId ? 'Edit' : 'New'}{' '}
-                  {category == 'TALK' ? 'Talk' : 'Q&A'}
+                  Together {togetherId ? 'Edit' : 'New'}
                 </Card.Title>
               </Card.Header>
               <Card.Body>
@@ -302,7 +285,22 @@ function Togetheredit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>Category</b>
+                          <b>제목</b>
+                        </label>
+                        <Form.Control
+                          placeholder="Together 제목을 입력 하세요"
+                          defaultValue={title}
+                          onChange={handleTitleChange}
+                          type="text"
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>
+                          <b>목적</b>
                         </label>
                         <br />
                         <Form.Select
@@ -313,8 +311,15 @@ function Togetheredit() {
                           disabled
                           onChange={handleCategoryChange}
                         >
-                          <option value="TALK">Talk</option>
-                          <option value="QA">Q&A</option>
+                          <option value="STUDY">함께 공부해요</option>
+                          <option value="PORTFOLIO">포트폴리오 구축</option>
+                          <option value="HACKATHON">해커톤 참가</option>
+                          <option value="CONTEST">공모전 참가</option>
+                          <option value="TOY_PROJECT">
+                            토이 프로젝트 구축
+                          </option>
+                          <option value="PROJECT">프로젝트 구축</option>
+                          <option value="ETC">기타</option>
                         </Form.Select>
                       </Form.Group>
                     </Col>
@@ -323,10 +328,67 @@ function Togetheredit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>Title</b>
+                          <b>최대 모집 인원</b>
+                        </label>
+                        <br />
+                        <Form.Select
+                          aria-label="select category"
+                          variant="warning"
+                          ref={categorySelect}
+                          style={{ width: '100%' }}
+                          disabled
+                          onChange={handleCategoryChange}
+                        >
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>
+                          <b>현재 참여 인원</b>
+                        </label>
+                        <br />
+                        <Form.Select
+                          aria-label="select category"
+                          variant="warning"
+                          ref={categorySelect}
+                          style={{ width: '100%' }}
+                          disabled
+                          onChange={handleCategoryChange}
+                        >
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>
+                          <b> Kakao Open Chat Link </b>
                         </label>
                         <Form.Control
-                          placeholder="Title"
+                          placeholder=" Kakao Open Chat Link (옵션)"
                           defaultValue={title}
                           onChange={handleTitleChange}
                           type="text"
@@ -337,7 +399,7 @@ function Togetheredit() {
                   <Row>
                     <Col md="12">
                       <label>
-                        <b>Content</b>
+                        <b>상세 설명</b>
                       </label>
                       <div
                         style={{

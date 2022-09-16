@@ -16,7 +16,7 @@ import {
 
 import { Spinner } from 'react-spinners-css';
 
-import PostService from '../services/post.service';
+import TogetherService from '../services/together.service';
 
 function Togetherdetail() {
   const history = useHistory();
@@ -30,7 +30,7 @@ function Togetherdetail() {
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
 
-  const [postId, setPostId] = useState('');
+  const [togetherId, setTogetherId] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -100,17 +100,19 @@ function Togetherdetail() {
   };
 
   const handleList = () => {
-    sessionStorage.setItem('post_back', 'Y');
-    history.push(`/gotogether/post?category=` + categorySelect.current.value);
+    sessionStorage.setItem('together_back', 'Y');
+    history.push(
+      `/gotogether/together?category=` + categorySelect.current.value,
+    );
   };
 
   const handleEdit = () => {
-    sessionStorage.setItem('post_back', 'Y');
+    sessionStorage.setItem('together_back', 'Y');
     history.push(
-      `/gotogether/postedit?category=` +
+      `/gotogether/togetheredit?category=` +
         categorySelect.current.value +
-        '&postId=' +
-        queryParams.get('postId'),
+        '&togetherId=' +
+        queryParams.get('togetherId'),
     );
   };
 
@@ -122,14 +124,14 @@ function Togetherdetail() {
       setRoles(user.roles[0]);
     }
 
-    setPostId(queryParams.get('postId'));
+    setTogetherId(queryParams.get('togetherId'));
 
     if (
-      queryParams.get('postId') !== undefined &&
-      queryParams.get('postId') != '' &&
-      queryParams.get('postId') != null
+      queryParams.get('togetherId') !== undefined &&
+      queryParams.get('togetherId') != '' &&
+      queryParams.get('togetherId') != null
     ) {
-      PostService.getPost(queryParams.get('postId')).then(
+      TogetherService.getTogether(queryParams.get('togetherId')).then(
         (response) => {
           if (response.data.result == 'S') {
             setCategory(response.data.data.category);
@@ -153,12 +155,12 @@ function Togetherdetail() {
         },
       );
 
-      getPostCommentList();
+      getTogetherCommentList();
     }
   }, []);
 
-  const getPostCommentList = () => {
-    PostService.getPostCommentList(queryParams.get('postId')).then(
+  const getTogetherCommentList = () => {
+    TogetherService.getTogetherCommentList(queryParams.get('togetherId')).then(
       (response) => {
         if (response.data.result == 'S') {
           setCommentList(response.data.data);
@@ -185,7 +187,7 @@ function Togetherdetail() {
   };
 
   const handleDelete = () => {
-    setActionFlag('deletePost');
+    setActionFlag('deleteTogether');
     handleShow();
   };
 
@@ -234,8 +236,8 @@ function Togetherdetail() {
 
   const handleYesClose = () => {
     setShow(false);
-    if (actionFlag == 'deletePost') {
-      deletePost();
+    if (actionFlag == 'deleteTogether') {
+      deleteTogether();
     } else if (actionFlag == 'changeCatogory') {
       changeCatogory();
     } else if (actionFlag == 'deleteComment') {
@@ -245,13 +247,13 @@ function Togetherdetail() {
     }
   };
 
-  const deletePost = () => {
+  const deleteTogether = () => {
     setLoading(true);
-    PostService.deletePost(queryParams.get('postId')).then(
+    TogetherService.deleteTogether(queryParams.get('togetherId')).then(
       (response) => {
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
-          history.push(`/gotogether/post?category=` + category);
+          history.push(`/gotogether/together?category=` + category);
         } else {
           notiRef.current.notificationAlert(failOption);
         }
@@ -270,11 +272,11 @@ function Togetherdetail() {
   };
 
   const changeCatogory = () => {
-    PostService.changePostCategory(queryParams.get('postId')).then(
+    TogetherService.changeTogetherCategory(queryParams.get('togetherId')).then(
       (response) => {
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
-          history.push(`/gotogether/post?category=` + response.data.data);
+          history.push(`/gotogether/together?category=` + response.data.data);
         } else {
           notiRef.current.notificationAlert(failOption);
         }
@@ -293,10 +295,10 @@ function Togetherdetail() {
   };
 
   const deleteComment = () => {
-    PostService.deletePostComment(commentId).then(
+    TogetherService.deleteTogetherComment(commentId).then(
       (response) => {
         if (response.data.result == 'S') {
-          getPostCommentList();
+          getTogetherCommentList();
           notiRef.current.notificationAlert(successOption);
         } else {
           notiRef.current.notificationAlert(failOption);
@@ -316,14 +318,14 @@ function Togetherdetail() {
   };
 
   const setComment = () => {
-    PostService.setPostComment({
-      postId: postId,
+    TogetherService.setTogetherComment({
+      togetherId: togetherId,
       content: commentContent,
     }).then(
       (response) => {
         comment.current.value = '';
         if (response.data.result == 'S') {
-          getPostCommentList();
+          getTogetherCommentList();
           notiRef.current.notificationAlert(successOption);
         } else {
           notiRef.current.notificationAlert(failOption);
@@ -358,7 +360,7 @@ function Togetherdetail() {
       )}
       <Card>
         <Card.Header style={header}>
-          {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
+          {/* Together {togetherId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
           <span style={{ float: 'left' }}>
             <i className="nc-icon nc-single-02" /> {writerNickname}
             <br />
@@ -485,7 +487,7 @@ function Togetherdetail() {
 
       {commentList &&
         commentList.map((comment, idx) => (
-          <Card key={comment.postCommentId}>
+          <Card key={comment.togetherCommentId}>
             <Card.Header style={headerCommentList}>
               <span style={{ float: 'left' }}>
                 <i className="nc-icon nc-single-02" /> {comment.nickname}
@@ -498,7 +500,9 @@ function Togetherdetail() {
                     variant="warning"
                     size="sm"
                     className="btn-fill"
-                    onClick={(e) => handleDeleteComment(comment.postCommentId)}
+                    onClick={(e) =>
+                      handleDeleteComment(comment.togetherCommentId)
+                    }
                   >
                     X
                   </Button>
@@ -560,7 +564,7 @@ function Togetherdetail() {
         </Modal.Header>
         <Modal.Body style={{ textAlign: 'center' }}>
           <hr />
-          {actionFlag == 'deletePost' && '삭제 하시겠습니까 ?'}
+          {actionFlag == 'deleteTogether' && '삭제 하시겠습니까 ?'}
           {actionFlag == 'changeCatogory' && 'Category를 변경 하시겠습니까 ?'}
           {actionFlag == 'deleteComment' && '댓글을 삭제 하시겠습니까 ?'}
           {actionFlag == 'setComment' && '저장 하시겠습니까 ?'}

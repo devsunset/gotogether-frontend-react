@@ -64,7 +64,6 @@ function Together() {
   };
 
   const goTogetherNew = () => {
-    alert('to-do');
     history.push(`/gotogether/togetheredit`);
   };
 
@@ -90,10 +89,9 @@ function Together() {
   }, []);
 
   const goTogetherDetail = (togetherId) => {
-    alert('to-do');
     sessionStorage.setItem('together_page', pageArg);
     sessionStorage.setItem('together_keyword', keyword);
-    history.push(`/gotogether/togetherdetial?togetherId=` + togetherId);
+    history.push(`/gotogether/togetherdetail?togetherId=` + togetherId);
   };
 
   const getTogetherList = (flag) => {
