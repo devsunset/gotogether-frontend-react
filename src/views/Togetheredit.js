@@ -9,6 +9,7 @@ import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
 
 import {
+  Table,
   Button,
   Card,
   Form,
@@ -28,7 +29,6 @@ function Togetheredit() {
 
   const history = useHistory();
   const queryParams = new URLSearchParams(window.location.search);
-  const categorySelect = useRef();
 
   const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -42,8 +42,18 @@ function Togetheredit() {
   const [roles, setRoles] = useState('');
 
   const [togetherId, setTogetherId] = useState('');
-  const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('STUDY');
+  const [maxMember, setMaxMember] = useState(4);
+  const [currentMember, setCurrentMember] = useState(1);
+  const [openKakaoChat, setOpenKakaoChat] = useState('');
+  const [skills, setSkills] = useState([]);
+  const [involveType, setInvolveType] = useState(' ONOFFLINE');
+
+  const categorySelect = useRef();
+  const maxMemberSelect = useRef();
+  const currentMemberSelect = useRef();
+  const involveTypeSelect = useRef();
 
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -51,6 +61,9 @@ function Togetheredit() {
 
   const quillElement = useRef(null); // Quill을 적용할 DivElement를 설정
   const quillInstance = useRef(null); // Quill 인스턴스를 설정
+
+  const itemInput = useRef();
+  const levelSelect = useRef();
 
   const header = {
     backgroundColor: '#343a40',
@@ -98,11 +111,51 @@ function Togetheredit() {
     setCategory(e.target.value);
   };
 
+  const handleMaxMemberChange = (e) => {
+    setMaxMember(e.target.value);
+  };
+
+  const handleCurrentMemberChange = (e) => {
+    setCurrentMember(e.target.value);
+  };
+
+  const handleOpenKakaoChatChange = (e) => {
+    setOpenKakaoChat(e.target.value);
+  };
+
+  const handleInvolveTypeChange = (e) => {
+    setInvolveType(e.target.value);
+  };
+
+  const handleAddClick = () => {
+    if (itemInput.current.value.trim() == '') {
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>Skill을 입력해 주세요.</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
+      itemInput.current.focus();
+      return;
+    }
+
+    setSkills([
+      ...skills,
+      { item: itemInput.current.value, level: levelSelect.current.value },
+    ]);
+
+    itemInput.current.value = '';
+    levelSelect.current.value = 'INTEREST';
+  };
+
   const handleList = () => {
     sessionStorage.setItem('together_back', 'Y');
-    history.push(
-      `/gotogether/together?category=` + categorySelect.current.value,
-    );
+    history.push('/gotogether/together');
   };
 
   const handleSubmit = () => {
@@ -285,12 +338,19 @@ function Togetheredit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>제목</b>
+                          <b>
+                            <i
+                              className="nc-icon nc-atom"
+                              style={{ marginRight: '5px' }}
+                            />
+                            제목
+                          </b>
                         </label>
                         <Form.Control
                           placeholder="Together 제목을 입력 하세요"
                           defaultValue={title}
                           onChange={handleTitleChange}
+                          maxlength="120"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -300,7 +360,13 @@ function Togetheredit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>목적</b>
+                          <b>
+                            <i
+                              className="nc-icon nc-atom"
+                              style={{ marginRight: '5px' }}
+                            />
+                            목적
+                          </b>
                         </label>
                         <br />
                         <Form.Select
@@ -327,16 +393,22 @@ function Togetheredit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>최대 모집 인원</b>
+                          <b>
+                            <i
+                              className="nc-icon nc-atom"
+                              style={{ marginRight: '5px' }}
+                            />
+                            최대 모집 인원
+                          </b>
                         </label>
                         <br />
                         <Form.Select
                           aria-label="select category"
                           variant="warning"
-                          ref={categorySelect}
+                          ref={maxMemberSelect}
                           style={{ width: '100%' }}
-                          defaultValue={4}
-                          onChange={handleCategoryChange}
+                          defaultValue={maxMember}
+                          onChange={handleMaxMemberChange}
                         >
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -355,15 +427,22 @@ function Togetheredit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>현재 참여 인원</b>
+                          <b>
+                            <i
+                              className="nc-icon nc-atom"
+                              style={{ marginRight: '5px' }}
+                            />
+                            현재 참여 인원
+                          </b>
                         </label>
                         <br />
                         <Form.Select
                           aria-label="select category"
                           variant="warning"
-                          ref={categorySelect}
+                          ref={currentMemberSelect}
                           style={{ width: '100%' }}
-                          onChange={handleCategoryChange}
+                          defaltValue={currentMember}
+                          onChange={handleCurrentMemberChange}
                         >
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -383,12 +462,19 @@ function Togetheredit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b> Kakao Open Chat Link </b>
+                          <b>
+                            <i
+                              className="nc-icon nc-atom"
+                              style={{ marginRight: '5px' }}
+                            />
+                            Kakao Open Chat Link{' '}
+                          </b>
                         </label>
                         <Form.Control
                           placeholder=" Kakao Open Chat Link (옵션)"
-                          defaultValue={title}
-                          onChange={handleTitleChange}
+                          defaultValue={openKakaoChat}
+                          onChange={handleOpenKakaoChatChange}
+                          maxlength="120"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -397,7 +483,13 @@ function Togetheredit() {
                   <Row>
                     <Col md="12">
                       <label>
-                        <b>상세 설명</b>
+                        <b>
+                          <i
+                            className="nc-icon nc-atom"
+                            style={{ marginRight: '5px' }}
+                          />
+                          상세 설명
+                        </b>
                       </label>
                       <div
                         style={{
@@ -407,6 +499,135 @@ function Togetheredit() {
                       >
                         <div ref={quillRef} />
                       </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <label>
+                        <b>
+                          <i
+                            className="nc-icon nc-atom"
+                            style={{ marginRight: '5px' }}
+                          />
+                          Skill
+                        </b>
+                      </label>
+                      <br />
+                      <Table
+                        className="table-hover table-striped borded"
+                        variant="dark"
+                      >
+                        <thead>
+                          <tr>
+                            <th className="border-0">
+                              <b>SKILL</b>
+                            </th>
+                            <th className="border-0">
+                              <b>LEVEL</b>
+                            </th>
+                            <th className="border-0"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {skills &&
+                            skills.map((data, index) => (
+                              <tr key={index}>
+                                <td>{data.item}</td>
+                                <td>
+                                  {data.level == 'BASIC' && (
+                                    <Badge bg="success" text="white" size="lg">
+                                      기본학습
+                                    </Badge>
+                                  )}
+                                  {data.level == 'JOB' && (
+                                    <Badge bg="danger" text="white" size="lg">
+                                      업무사용
+                                    </Badge>
+                                  )}
+                                  {data.level == 'INTEREST' && (
+                                    <Badge bg="warning" text="white" size="lg">
+                                      관심있음
+                                    </Badge>
+                                  )}
+                                  {data.level == 'TOY_PROJECT' && (
+                                    <Badge bg="primary" text="white" size="lg">
+                                      Toy Pjt.
+                                    </Badge>
+                                  )}
+                                </td>
+                                <td>
+                                  <Button
+                                    variant="primary"
+                                    className="btn-fill"
+                                    onClick={(e) => handleDeleteClick(index)}
+                                  >
+                                    -
+                                  </Button>
+                                </td>
+                              </tr>
+                            ))}
+                          <tr>
+                            <td>
+                              <Form.Control
+                                defaultValue=""
+                                placeholder="Skill 입력"
+                                type="text"
+                                ref={itemInput}
+                              ></Form.Control>
+                            </td>
+                            <td>
+                              <Form.Select
+                                aria-label="select level"
+                                variant="warning"
+                                ref={levelSelect}
+                                defaultValue="INTEREST"
+                              >
+                                <option value="BASIC">기본 학습</option>
+                                <option value="JOB">업무 사용</option>
+                                <option value="INTEREST">관심 있음</option>
+                                <option value="TOY_PROJECT">Toy Pjt.</option>
+                              </Form.Select>
+                            </td>
+                            <td>
+                              <Button
+                                variant="warning"
+                                className="btn-fill"
+                                onClick={(e) => handleAddClick()}
+                              >
+                                +
+                              </Button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>
+                          <b>
+                            <i
+                              className="nc-icon nc-atom"
+                              style={{ marginRight: '5px' }}
+                            />
+                            참여방식
+                          </b>
+                        </label>
+                        <br />
+                        <Form.Select
+                          aria-label="select category"
+                          variant="warning"
+                          ref={involveTypeSelect}
+                          style={{ width: '100%' }}
+                          defaltValue={involveType}
+                          onChange={handleInvolveTypeChange}
+                        >
+                          <option value="ONOFFLINE">ON/OFF LINE </option>
+                          <option value="OFFLINE">OFF LINE </option>
+                          <option value="ONLINE">ON LINE </option>
+                        </Form.Select>
+                      </Form.Group>
                     </Col>
                   </Row>
                 </Form>
@@ -467,33 +688,12 @@ export default Togetheredit;
 
 {
   /* <template>
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Together Edit</h1>
-            </div>
-            <!-- /.col -->
-           
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         <div>
                        <!-- ////////////////////////////////////////////////// -->
                         <div class="card card-primary card-outline">
-                        <div class="card-header">
-                        <h3 class="card-title" v-if="this.$route.query.togetherId">Edit Together</h3>
-                         <h3 class="card-title" v-else>New Together</h3>
-                        </div>
                         <div class="card-body">
                         <div class="form-group">
                          <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 제목 
@@ -594,8 +794,6 @@ export default Togetheredit;
 </template>
 
 <script>
-import TogetherService from "../services/together.service";
-
 export default {
   name: "togetheredit",
         data() {

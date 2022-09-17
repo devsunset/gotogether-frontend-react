@@ -329,6 +329,7 @@ function Postedit() {
                           placeholder="Title"
                           defaultValue={title}
                           onChange={handleTitleChange}
+                          maxlength="120"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
