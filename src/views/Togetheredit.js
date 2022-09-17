@@ -957,64 +957,7 @@ export default {
                             // Default Location (서울 시청)
                             var defaultlatitude = 37.56683319828021;
                             var defaultlongitude = 126.97857302284947;
-                            // Get Geolocation 
-                            // this.$getLocation()
-                            // .then((coordinates) => {
-                            //     console.log(coordinates);
-                            //     defaultlatitude = coordinates.lat;
-                            //     defaultlongitude = coordinates.lng;
-                            //     var options = {
-                            //         center: new kakao.maps.LatLng(defaultlatitude, defaultlongitude), 
-                            //         level: 9
-                            //     };
-                                 
-                            //     if(this.$route.query.togetherId == undefined || this.$route.query.togetherId =="" || this.latitude == undefined || this.latitude ==""){
-                            //         options = {
-                            //             center: new kakao.maps.LatLng(defaultlatitude, defaultlongitude), 
-                            //             level: 9
-                            //         };
-                            //         this.latitude = defaultlatitude;
-                            //         this.longitude = defaultlongitude;
-                            //     }else{
-                            //         options = {
-                            //             center: new kakao.maps.LatLng(this.latitude, this.longitude), 
-                            //             level: 4
-                            //         };
-                            //     }
-                            //     var map = new kakao.maps.Map(container, options); 
-                            //     // 마커가 표시될 위치입니다 
-                            //     var markerPosition;
-                            //     if(this.$route.query.togetherId == undefined || this.$route.query.togetherId =="" || this.latitude == undefined || this.latitude ==""){
-                            //             markerPosition  = map.getCenter();  
-                            //     }else{
-                            //             markerPosition  = new kakao.maps.LatLng(this.latitude, this.longitude); 
-                            //     }
-                            //     // 지도를 클릭한 위치에 표출할 마커입니다
-                            //     var marker = new kakao.maps.Marker({ 
-                            //         // 지도 중심좌표에 마커를 생성합니다 
-                            //         position : markerPosition
-                            //     }); 
-                            //     // 지도에 마커를 표시합니다
-                            //     marker.setMap(map);
-                            //     // 지도에 클릭 이벤트를 등록합니다
-                            //     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-                            //     var self = this;
-                            //     kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-                            //         // 클릭한 위도, 경도 정보를 가져옵니다 
-                            //         var latlng = mouseEvent.latLng; 
-                            //         // 마커 위치를 클릭한 위치로 옮깁니다
-                            //         marker.setPosition(latlng);
-                                    
-                            //         var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-                            //         message += '경도는 ' + latlng.getLng() + ' 입니다';
-                            //         console.log(message)
-                            //         self.latitude =  latlng.getLat();
-                            //         self.longitude =  latlng.getLng();
-                            //     });
-                                
-                            // })
-                            // .catch((error) => {
-                            //     console.log(error);
+                          
                                 var options = {
                                     center: new kakao.maps.LatLng(defaultlatitude, defaultlongitude), 
                                     level: 9
@@ -1062,7 +1005,6 @@ export default {
                                     self.latitude =  latlng.getLat();
                                     self.longitude =  latlng.getLng();
                                 });
-                            // });
             }
         },
 };
