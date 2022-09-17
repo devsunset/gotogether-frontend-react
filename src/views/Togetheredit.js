@@ -50,6 +50,8 @@ function Togetheredit() {
   const [openKakaoChat, setOpenKakaoChat] = useState('');
   const [skills, setSkills] = useState([]);
   const [involveType, setInvolveType] = useState(' ONOFFLINE');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
 
   const categorySelect = useRef();
   const maxMemberSelect = useRef();
@@ -706,26 +708,8 @@ export default Togetheredit;
 {
   /* 
 <script>
-import TogetherService from "../services/together.service";
 export default {
   name: "togetheredit",
-        data() {
-            return {
-                title : '',
-                category : 'STUDY',
-                content : '',
-                involveType : 'ONOFFLINE',
-                openKakaoChat : '',
-                latitude : '',
-                longitude : '', 
-                maxMember : 4, 
-                currentMember : 1, 
-                skill : '', 
-                items : [ ] ,
-                togethers : [ ], 
-                keyword : "",
-            };
-        },
         created() {
             if(this.$route.query.togetherId !== undefined && this.$route.query.togetherId !=""){
                  TogetherService.getTogether(this.$route.query.togetherId).then(
