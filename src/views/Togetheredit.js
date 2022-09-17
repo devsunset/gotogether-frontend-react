@@ -308,7 +308,6 @@ function Togetheredit() {
                           variant="warning"
                           ref={categorySelect}
                           style={{ width: '100%' }}
-                          disabled
                           onChange={handleCategoryChange}
                         >
                           <option value="STUDY">함께 공부해요</option>
@@ -336,7 +335,7 @@ function Togetheredit() {
                           variant="warning"
                           ref={categorySelect}
                           style={{ width: '100%' }}
-                          disabled
+                          defaultValue={4}
                           onChange={handleCategoryChange}
                         >
                           <option value="2">2</option>
@@ -364,7 +363,6 @@ function Togetheredit() {
                           variant="warning"
                           ref={categorySelect}
                           style={{ width: '100%' }}
-                          disabled
                           onChange={handleCategoryChange}
                         >
                           <option value="1">1</option>
