@@ -637,6 +637,16 @@ function Togetheredit() {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <Row>
+                    <Col md="12">
+                      ( 모임장소를 클릭 하여 선택해 보세요 )
+                      <div
+                        id="map"
+                        className="map"
+                        style={{ marginTop: '20px', height: '300px' }}
+                      ></div>
+                    </Col>
+                  </Row>
                 </Form>
               </Card.Body>
               <Card.Footer style={footer}>
@@ -694,104 +704,9 @@ function Togetheredit() {
 export default Togetheredit;
 
 {
-  /* <template>
-                       <!-- ////////////////////////////////////////////////// -->
-                        <div class="card card-primary card-outline">
-                        <div class="card-body">
-                        <div class="form-group">
-                         <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 제목 
-                        <input class="form-control" placeholder="Together 제목을 입력 하세요" v-model="title" ref="title" maxLength="120">
-                        </div>
-                        <div class="form-group">
-                        <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 목적
-                                <select class="form-control" v-model="category"> 
-                                      <option value="STUDY">함께 공부해요</option>
-                                      <option value="PORTFOLIO">포트폴리오 구축</option> 
-                                      <option value="HACKATHON">해커톤 참가</option> 
-                                      <option value="CONTEST">공모전 참가</option> 
-                                      <option value="TOY_PROJECT">토이 프로젝트 구축</option> 
-                                      <option value="PROJECT">프로젝트 구축</option> 
-                                      <option value="ETC">기타</option> 
-                                  </select>
-                        </div>
-                         <div class="form-group">
-                             <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp;최대 모집 인원
-                            <select class="form-control" v-model="maxMember"> 
-                                <option :value="data+1"  :key="index" v-for="(data,index) in 9">{{data+1}}</option>
-                            </select>
-                        </div>
-                         <div class="form-group">
-                             <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp;현재 참여 인원
-                            <select class="form-control" v-model="currentMember"> 
-                                <option :value="data"  :key="index" v-for="(data,index) in 10">{{data}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; Kakao Open Chat Link
-                        <input class="form-control" placeholder="Open Kakao Chat Link를  입력 하세요 (옵션)" v-model="openKakaoChat" ref="openKakaoChat" maxLength="120">
-                        </div>
-                        <div class="form-group"> 
-                             <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 상세 설명
-                            <QuillEditor theme="snow" toolbar="full"  content-type="html" v-model:content="content" ref="myEditor"/> 
-                        </div>
-                        <div class="form-group"> 
-                            <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; Skill
-                                            <div class="card">
-                                            <div class="card-header">
-                                            <h3 class="card-title">필요한 Skill 항목을 추가해 보세요.</h3>
-                                            </div>
-                                            <div class="card-body p-0">
-                                            <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                            <th>Item</th>
-                                            <th>Level</th>
-                                            <th style="width: 40px"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr :key="index" v-for="(item,index) in items">
-                                                    <td><input type="text" name="skill_item" class="form-control" @change='checkvalue' placeholder="skill을 입력해주세요" v-model="item.item" maxLength="100"></td>
-                                                    <td>
-                                                         <select class="form-control" v-model="item.level" name="skill_level"> 
-                                                            <option value="INTEREST">관심 있음</option>
-                                                            <option value="BASIC">기본 학습</option>
-                                                            <option value="TOY_PROJECT">Toy Pjt.</option> 
-                                                            <option value="JOB">업무 사용</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><button type="button" @click="setMinusSkill(index)" class="btn btn-block btn-success btn-sm" v-if="index != items.length - 1">-</button><button type="button" @click="setAddSkill()" class="btn btn-block btn-warning btn-sm" v-if="index == items.length - 1">+</button></td>
-                                                </tr>
-                                            </tbody>
-                                            </table>
-                                            </div>
-                                        </div>
-                                 </div>
-                        <div class="form-group">
-                            <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 참여 방식
-                                <select class="form-control" v-model="involveType"> 
-                                    <option value="ONOFFLINE">ON/OFF LINE </option> 
-                                    <option value="OFFLINE">OFF LINE </option> 
-                                    <option value="ONLINE">ON LINE </option>
-                                </select> 
-                        </div>
-                        <div class="form-group"  v-show="involveType !='ONLINE'">
-                                 ( 모임장소를 클릭 하여 선택해 보세요 )
-                               <div id="map" class="map" style="margin-top:20px;height:300px"></div>
-                        </div>
-                        </div>
-
-                        <div class="card-footer">
-                        <div class="float-right">
-                        <button type="submit" class="btn btn-danger" style="margin-left: 45px;" @click="setTogether">Submit</button>
-                        <button type="submit" class="btn btn-info" style="margin-left: 15px;" @click="goTogether">List</button>
-                        </div>
-                        </div>
-                        </div>
-                        <!-- ////////////////////////////////////////////////// -->
-</template>
-
+  /* 
 <script>
+import TogetherService from "../services/together.service";
 export default {
   name: "togetheredit",
         data() {
@@ -826,12 +741,10 @@ export default {
                                     this.longitude = response.data.data.longitude;
                                     this.maxMember = response.data.data.maxMember;
                                     this.currentMember  = response.data.data.currentMember ;
-
                                     window.kakao && window.kakao.maps
                                     ? this.initMap()
                                     : this.addKakaoMapScript();
                                     window.addEventListener('resize', this.handleResize);
-
                                     if(response.data.data.skill === undefined || response.data.data.skill == null || response.data.data.skill === ""){
                                         this.items = [
                                             {"item" : "", "level" : "INTEREST"}
@@ -888,7 +801,6 @@ export default {
                  this.email = user.email;
                  this.roles= user.roles[0];
             }
-
             if(this.$route.query.togetherId == undefined || this.$route.query.togetherId ==""){
                     window.kakao && window.kakao.maps
                     ? this.initMap()
@@ -909,12 +821,10 @@ export default {
                     this.$refs.title.focus();
                     return;
                 }
-
                 if(this.$refs.myEditor.getText().trim()== ''){
                     this.$toast.warning(`내용을 입력해 주세요.`);
                     return;
                 }
-
                 var skillitem = "";
                 this.items.forEach(function(d){
                     let tmp = d.item.trim().replace(/\|/g,'').replace(/\^/g,'');
@@ -922,27 +832,22 @@ export default {
                         skillitem +=tmp+'^'+d.level+"|";
                     } 
                 })
-
                 if(skillitem !=''){
                     skillitem  = skillitem.substring(0,skillitem.length -1);
                 }
                 this.skill = skillitem;
-
                 if( this.skill.trim() == ''){
                     this.$toast.warning(`필요한 Skill 항목을 입력해 주세요.`);
                     return;
                 }
-
                 if(this.involveType !='ONLINE'){
                     if(this.latitude == undefined || this.latitude == ''){
                          this.$toast.warning('모임 장소를 지도에서 클릭해 선택해 주세요.');
                          return;
                     }
                 }
-
                 this.$confirm("저장 하시겠습니까?").then(() => {
                     var reqData = {}
-
                      if(this.involveType =='ONLINE'){
                          reqData = {
                             title : this.title,
@@ -970,8 +875,6 @@ export default {
                             skill : this.skill, 
                         }
                      }
-
-
                     if(this.$route.query.togetherId){
                             TogetherService.putTogether(this.$route.query.togetherId,reqData).then(
                                 (response) => {
@@ -1051,24 +954,20 @@ export default {
                             } catch (err) { 
                                 container.style.height = 300+'px'; 
                             }
-
                             // Default Location (서울 시청)
                             var defaultlatitude = 37.56683319828021;
                             var defaultlongitude = 126.97857302284947;
-
                             // Get Geolocation 
                             // this.$getLocation()
                             // .then((coordinates) => {
                             //     console.log(coordinates);
                             //     defaultlatitude = coordinates.lat;
                             //     defaultlongitude = coordinates.lng;
-
                             //     var options = {
                             //         center: new kakao.maps.LatLng(defaultlatitude, defaultlongitude), 
                             //         level: 9
                             //     };
                                  
-
                             //     if(this.$route.query.togetherId == undefined || this.$route.query.togetherId =="" || this.latitude == undefined || this.latitude ==""){
                             //         options = {
                             //             center: new kakao.maps.LatLng(defaultlatitude, defaultlongitude), 
@@ -1082,9 +981,7 @@ export default {
                             //             level: 4
                             //         };
                             //     }
-
                             //     var map = new kakao.maps.Map(container, options); 
-
                             //     // 마커가 표시될 위치입니다 
                             //     var markerPosition;
                             //     if(this.$route.query.togetherId == undefined || this.$route.query.togetherId =="" || this.latitude == undefined || this.latitude ==""){
@@ -1092,21 +989,16 @@ export default {
                             //     }else{
                             //             markerPosition  = new kakao.maps.LatLng(this.latitude, this.longitude); 
                             //     }
-
                             //     // 지도를 클릭한 위치에 표출할 마커입니다
                             //     var marker = new kakao.maps.Marker({ 
                             //         // 지도 중심좌표에 마커를 생성합니다 
                             //         position : markerPosition
                             //     }); 
-
                             //     // 지도에 마커를 표시합니다
                             //     marker.setMap(map);
-
                             //     // 지도에 클릭 이벤트를 등록합니다
                             //     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-
                             //     var self = this;
-
                             //     kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
                             //         // 클릭한 위도, 경도 정보를 가져옵니다 
                             //         var latlng = mouseEvent.latLng; 
@@ -1116,7 +1008,6 @@ export default {
                             //         var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
                             //         message += '경도는 ' + latlng.getLng() + ' 입니다';
                             //         console.log(message)
-
                             //         self.latitude =  latlng.getLat();
                             //         self.longitude =  latlng.getLng();
                             //     });
@@ -1128,7 +1019,6 @@ export default {
                                     center: new kakao.maps.LatLng(defaultlatitude, defaultlongitude), 
                                     level: 9
                                 };
-
                                 if(this.$route.query.togetherId == undefined || this.$route.query.togetherId =="" || this.latitude == undefined || this.latitude ==""){
                                     options = {
                                         center: new kakao.maps.LatLng(defaultlatitude, defaultlongitude), 
@@ -1142,9 +1032,7 @@ export default {
                                         level: 4
                                     };
                                 }
-
                                 var map = new kakao.maps.Map(container, options); 
-
                                 // 마커가 표시될 위치입니다 
                                 var markerPosition;
                                 if(this.$route.query.togetherId == undefined || this.$route.query.togetherId =="" || this.latitude == undefined || this.latitude ==""){
@@ -1152,21 +1040,16 @@ export default {
                                 }else{
                                         markerPosition  = new kakao.maps.LatLng(this.latitude, this.longitude); 
                                 }
-
                                 // 지도를 클릭한 위치에 표출할 마커입니다
                                 var marker = new kakao.maps.Marker({ 
                                     // 지도 중심좌표에 마커를 생성합니다 
                                     position : markerPosition
                                 }); 
-
                                 // 지도에 마커를 표시합니다
                                 marker.setMap(map);
-
                                 // 지도에 클릭 이벤트를 등록합니다
                                 // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-
                                 var self = this;
-
                                 kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
                                     // 클릭한 위도, 경도 정보를 가져옵니다 
                                     var latlng = mouseEvent.latLng; 
@@ -1176,15 +1059,12 @@ export default {
                                     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
                                     message += '경도는 ' + latlng.getLng() + ' 입니다';
                                     console.log(message);
-
                                     self.latitude =  latlng.getLat();
                                     self.longitude =  latlng.getLng();
                                 });
                             // });
-
             }
         },
 };
-</script>
-</style> */
+</script> */
 }
