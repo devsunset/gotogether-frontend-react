@@ -17,6 +17,7 @@ import {
   Row,
   Col,
   Modal,
+  Badge,
 } from 'react-bootstrap';
 
 import TogetherService from '../services/together.service';
@@ -151,6 +152,12 @@ function Togetheredit() {
 
     itemInput.current.value = '';
     levelSelect.current.value = 'INTEREST';
+  };
+
+  const handleDeleteClick = (idx) => {
+    var array = [...skills];
+    console.log(array.splice(idx, 1));
+    setSkills(array);
   };
 
   const handleList = () => {
@@ -350,7 +357,7 @@ function Togetheredit() {
                           placeholder="Together 제목을 입력 하세요"
                           defaultValue={title}
                           onChange={handleTitleChange}
-                          maxlength="120"
+                          maxLength="120"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -441,7 +448,7 @@ function Togetheredit() {
                           variant="warning"
                           ref={currentMemberSelect}
                           style={{ width: '100%' }}
-                          defaltValue={currentMember}
+                          defaultValue={currentMember}
                           onChange={handleCurrentMemberChange}
                         >
                           <option value="1">1</option>
@@ -474,7 +481,7 @@ function Togetheredit() {
                           placeholder=" Kakao Open Chat Link (옵션)"
                           defaultValue={openKakaoChat}
                           onChange={handleOpenKakaoChatChange}
-                          maxlength="120"
+                          maxLength="120"
                           type="text"
                         ></Form.Control>
                       </Form.Group>
@@ -620,7 +627,7 @@ function Togetheredit() {
                           variant="warning"
                           ref={involveTypeSelect}
                           style={{ width: '100%' }}
-                          defaltValue={involveType}
+                          defaultValue={involveType}
                           onChange={handleInvolveTypeChange}
                         >
                           <option value="ONOFFLINE">ON/OFF LINE </option>
@@ -688,16 +695,12 @@ export default Togetheredit;
 
 {
   /* <template>
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <div>
                        <!-- ////////////////////////////////////////////////// -->
                         <div class="card card-primary card-outline">
                         <div class="card-body">
                         <div class="form-group">
                          <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 제목 
-                        <input class="form-control" placeholder="Together 제목을 입력 하세요" v-model="title" ref="title" maxlength="120">
+                        <input class="form-control" placeholder="Together 제목을 입력 하세요" v-model="title" ref="title" maxLength="120">
                         </div>
                         <div class="form-group">
                         <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 목적
@@ -725,7 +728,7 @@ export default Togetheredit;
                         </div>
                         <div class="form-group">
                             <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; Kakao Open Chat Link
-                        <input class="form-control" placeholder="Open Kakao Chat Link를  입력 하세요 (옵션)" v-model="openKakaoChat" ref="openKakaoChat" maxlength="120">
+                        <input class="form-control" placeholder="Open Kakao Chat Link를  입력 하세요 (옵션)" v-model="openKakaoChat" ref="openKakaoChat" maxLength="120">
                         </div>
                         <div class="form-group"> 
                              <i class="nav-icon far fa-plus-square"></i>&nbsp;&nbsp;&nbsp; 상세 설명
@@ -748,7 +751,7 @@ export default Togetheredit;
                                             </thead>
                                             <tbody>
                                                 <tr :key="index" v-for="(item,index) in items">
-                                                    <td><input type="text" name="skill_item" class="form-control" @change='checkvalue' placeholder="skill을 입력해주세요" v-model="item.item" maxlength="100"></td>
+                                                    <td><input type="text" name="skill_item" class="form-control" @change='checkvalue' placeholder="skill을 입력해주세요" v-model="item.item" maxLength="100"></td>
                                                     <td>
                                                          <select class="form-control" v-model="item.level" name="skill_level"> 
                                                             <option value="INTEREST">관심 있음</option>
@@ -786,11 +789,6 @@ export default Togetheredit;
                         </div>
                         </div>
                         <!-- ////////////////////////////////////////////////// -->
-        </div>
-    </div>
-    <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
 </template>
 
 <script>
@@ -1188,18 +1186,5 @@ export default {
         },
 };
 </script>
-
-<style>
-.ql-editor{
-    min-height:200px;
-}
-
-.ql-script{
-   display: none  !important;
-}
-
-.ql-clean{
-      display: none  !important;
-}
 </style> */
 }
