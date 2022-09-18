@@ -34,6 +34,8 @@ function Header() {
 
   useBus('@@ui/NOTIFITION_REFRESH', () => getNotifition(), []);
 
+  useBus('@@ui/AUTH_CHECK_LOGOUT', () => logOut(), []);
+
   const getNotifition = () => {
     MemoService.getNewReceiveMemo().then(
       (response) => {

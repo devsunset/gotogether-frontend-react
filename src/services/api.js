@@ -1,11 +1,12 @@
 import axios from 'axios';
 import TokenService from './token.service';
+import { dispatch } from 'use-bus';
 
 const instance = axios.create({
   //PROD
-  baseURL: 'http://193.123.252.22:8282/api',
+  // baseURL: 'http://193.123.252.22:8282/api',
   //DEV
-  // baseURL: "http://localhost:8081/api",
+  baseURL: 'http://localhost:8081/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -42,7 +43,7 @@ instance.interceptors.response.use(
       ) {
         try {
           if (TokenService.getLocalRefreshToken() === undefined) {
-            dispatch(logout());
+            dispatch('@@ui/AUTH_CHECK_LOGOUT');
             TokenService.removeUser();
             alert('로그인 정보가 유효하지 않습니다.');
             return;
@@ -57,8 +58,12 @@ instance.interceptors.response.use(
 
           return instance(originalConfig);
         } catch (_error) {
-          if (_error.message == 'Request failed with status code 403') {
-            dispatch(logout());
+          if (
+            _error.message == 'Request failed with status code 403' ||
+            _error.message == 'Refresh token was expired.'
+          ) {
+            alert('xxxx');
+            dispatch('@@ui/AUTH_CHECK_LOGOUT');
             TokenService.removeUser();
             alert('로그인 정보가 만료되었습니다 다시 로그인해 주세요.');
           }

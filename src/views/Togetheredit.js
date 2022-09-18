@@ -251,40 +251,45 @@ function Togetheredit() {
   }, [quill]);
 
   const mapscript = (argLatitude, argLongtitude) => {
-    let container = document.getElementById('map');
-    let options = {
-      center: new kakao.maps.LatLng(argLatitude, argLongtitude),
-      level: 4,
-    };
+    try {
+      let container = document.getElementById('map');
+      let options = {
+        center: new kakao.maps.LatLng(argLatitude, argLongtitude),
+        level: 4,
+      };
 
-    //map
-    const map = new kakao.maps.Map(container, options);
+      //map
+      const map = new kakao.maps.Map(container, options);
 
-    //마커가 표시 될 위치
-    let markerPosition = new kakao.maps.LatLng(argLatitude, argLongtitude);
+      //마커가 표시 될 위치
+      let markerPosition = new kakao.maps.LatLng(argLatitude, argLongtitude);
 
-    // 마커를 생성
-    let marker = new kakao.maps.Marker({
-      position: markerPosition,
-    });
+      // 마커를 생성
+      let marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
 
-    // 마커를 지도 위에 표시
-    marker.setMap(map);
+      // 마커를 지도 위에 표시
+      marker.setMap(map);
 
-    kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-      // 클릭한 위도, 경도 정보를 가져옵니다
-      var latlng = mouseEvent.latLng;
+      kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+        // 클릭한 위도, 경도 정보를 가져옵니다
+        var latlng = mouseEvent.latLng;
 
-      // 마커 위치를 클릭한 위치로 옮깁니다
-      marker.setPosition(latlng);
+        // 마커 위치를 클릭한 위치로 옮깁니다
+        marker.setPosition(latlng);
 
-      var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-      message += '경도는 ' + latlng.getLng() + ' 입니다';
-      console.log(message);
+        var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+        message += '경도는 ' + latlng.getLng() + ' 입니다';
+        console.log(message);
 
-      setLatitude(latlng.getLat());
-      setLongitude(latlng.getLng());
-    });
+        setLatitude(latlng.getLat());
+        setLongitude(latlng.getLng());
+      });
+    } catch (e) {
+      alert(e);
+      //  mapscript(argLatitude, argLongtitude);
+    }
   };
 
   React.useEffect(() => {
