@@ -182,7 +182,7 @@ function Togetheredit() {
       queryParams.get('togetherId') != '' &&
       queryParams.get('togetherId') != null
     ) {
-      TogetherService.getTogether(this.$route.query.togetherId).then(
+      TogetherService.getTogether(queryParams.get('togetherId')).then(
         (response) => {
           if (response.data.result == 'S') {
             setTitle(response.data.data.title);

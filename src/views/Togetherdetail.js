@@ -116,9 +116,7 @@ function Togetherdetail() {
 
   const handleEdit = () => {
     sessionStorage.setItem('together_back', 'Y');
-    history.push(
-      '/gotogether/togetheredit?togetherId=' + queryParams.get('togetherId'),
-    );
+    history.push('/gotogether/togetheredit?togetherId=' + togetherId);
   };
 
   useEffect(() => {
