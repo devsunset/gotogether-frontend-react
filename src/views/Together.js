@@ -222,7 +222,11 @@ function Together() {
                       size="sm"
                       onClick={(e) => getTogetherList('INIT')}
                     >
-                      <i className="nc-icon nc-zoom-split" />
+                      {/* <i className="nc-icon nc-zoom-split" /> */}
+                      <i
+                        className="fas fa-search"
+                        style={{ color: '#ffffff' }}
+                      />
                     </Button>
                     <p />
                   </InputGroup>

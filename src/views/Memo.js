@@ -631,10 +631,19 @@ function Memo() {
                               ref={(el) => (dCheckRefs.current[idx] = el)}
                             ></Form.Check.Input>
                             <span className="form-check-sign"></span>
-                            <i
+                            {/* <i
                               className="nc-icon nc-email-85"
                               style={{ marginTop: '5px', marginRight: '5px' }}
+                            /> */}
+                            <i
+                              className="nav-icon fas fa-envelope"
+                              style={{
+                                color: '#ffffff',
+                                marginTop: '5px',
+                                marginRight: '5px',
+                              }}
                             />
+
                             {memoFlag == 'R' && memo.readflag === 'N' && (
                               <Badge
                                 bg="danger"
@@ -697,8 +706,12 @@ function Memo() {
                               <tr>
                                 <td>
                                   <b>
+                                    {/* <i
+                                        className="nc-icon nc-email-85"
+                                        style={{ marginTop: '5px' }}
+                                      /> */}
                                     <i
-                                      className="nc-icon nc-email-85"
+                                      class="nav-icon fas fa-envelope"
                                       style={{ marginTop: '5px' }}
                                     />
                                     &nbsp;{' '}

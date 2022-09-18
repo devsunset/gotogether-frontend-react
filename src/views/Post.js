@@ -257,7 +257,11 @@ function Post() {
                       size="sm"
                       onClick={(e) => getPostList('INIT')}
                     >
-                      <i className="nc-icon nc-zoom-split" />
+                      {/* <i className="nc-icon nc-zoom-split" /> */}
+                      <i
+                        className="fas fa-search"
+                        style={{ color: '#ffffff' }}
+                      />
                     </Button>
                     <p />
                   </InputGroup>

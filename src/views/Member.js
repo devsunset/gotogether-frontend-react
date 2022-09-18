@@ -337,7 +337,8 @@ function Member() {
                 size="sm"
                 onClick={(e) => getUserInfoList('INIT')}
               >
-                <i className="nc-icon nc-zoom-split" />
+                {/* <i className="nc-icon nc-zoom-split" /> */}
+                <i className="fas fa-search" style={{ color: '#ffffff' }} />
               </Button>
               <p />
             </InputGroup>
@@ -363,7 +364,12 @@ function Member() {
                         style={cardbgcolor}
                         onClick={(e) => onVisible(idx)}
                       >
-                        <i className="nc-icon nc-single-02" /> {member.nickname}
+                        {/* <i className="nc-icon nc-single-02" />{' '} */}
+                        <i
+                          className="nav-icon fas fa-user"
+                          style={{ color: '#ffffff' }}
+                        />{' '}
+                        {member.nickname}
                         <span style={rightalign}>
                           {member.modifiedDate.substring(2, 10)}
                         </span>
@@ -481,8 +487,12 @@ function Member() {
                                 <tr>
                                   <td>
                                     <b>
-                                      <i
+                                      {/* <i
                                         className="nc-icon nc-email-85"
+                                        style={{ marginTop: '5px' }}
+                                      /> */}
+                                      <i
+                                        class="nav-icon fas fa-envelope"
                                         style={{ marginTop: '5px' }}
                                       />
                                       &nbsp; 메모전송
