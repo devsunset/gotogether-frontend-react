@@ -122,8 +122,14 @@ function Member() {
           setMembers(response.data.data.content);
 
           setPaginationConfig({
-            totalPages: response.data.data.totalPages,
-            currentPage: response.data.data.number + 1,
+            totalPages:
+              response.data.data.totalPages == 0
+                ? 1
+                : response.data.data.totalPages,
+            currentPage:
+              response.data.data.number == 0
+                ? 0
+                : response.data.data.number + 1,
             showMax: 5,
             size: 'sm',
             threeDots: true,
