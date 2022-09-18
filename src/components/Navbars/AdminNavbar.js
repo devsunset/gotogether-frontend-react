@@ -2,12 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Container, Nav, Dropdown, Button } from 'react-bootstrap';
-import useBus from 'use-bus';
 
 import { logout } from '../../slices/auth';
-
 import EventBus from '../../common/EventBus';
-
+import useBus from 'use-bus';
 import routes from 'routes.js';
 
 import MemoService from '../../services/memo.service';

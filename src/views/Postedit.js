@@ -2,12 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
 import { useHistory } from 'react-router-dom';
-
 import { Spinner } from 'react-spinners-css';
-
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
-
 import {
   Button,
   Card,

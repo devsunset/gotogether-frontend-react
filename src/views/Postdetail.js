@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
-import { Redirect, useHistory } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
+import { Spinner } from 'react-spinners-css';
 import {
   Alert,
   Button,
@@ -13,8 +13,6 @@ import {
   Col,
   Modal,
 } from 'react-bootstrap';
-
-import { Spinner } from 'react-spinners-css';
 
 import PostService from '../services/post.service';
 

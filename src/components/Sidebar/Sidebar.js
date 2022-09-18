@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import { Nav } from 'react-bootstrap';
-
-import logo from 'assets/img/devsunset.jpg';
 
 function Sidebar({ color, image, routes }) {
   const { user: currentUser } = useSelector((state) => state.auth);

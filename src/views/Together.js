@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import Pagination from 'react-bootstrap-4-pagination';
+import { Spinner } from 'react-spinners-css';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import {
   Card,
   Table,
@@ -12,9 +14,6 @@ import {
   Form,
   InputGroup,
 } from 'react-bootstrap';
-import Pagination from 'react-bootstrap-4-pagination';
-import { Spinner } from 'react-spinners-css';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import TogetherService from '../services/together.service';
 

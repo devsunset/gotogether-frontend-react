@@ -5,7 +5,7 @@ const instance = axios.create({
   //PROD
   baseURL: 'http://193.123.252.22:8282/api',
   //DEV
-  // baseURL: "http://localhost:8080/api",
+  // baseURL: "http://localhost:8081/api",
   headers: {
     'Content-Type': 'application/json',
   },

@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-spinners-css';
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
-
 import {
   Table,
   Button,
@@ -333,12 +332,14 @@ function Togetheredit() {
       temp = temp.substring(0, temp.length - 1);
     }
 
+    setLoading(true);
+
     var reqData = {};
     if (involveType == 'ONLINE') {
       reqData = {
         title: title,
         category: category,
-        content: this.content,
+        content: quill.root.innerHTML,
         involveType: involveType,
         openKakaoChat: openKakaoChat,
         latitude: '',
@@ -351,7 +352,7 @@ function Togetheredit() {
       reqData = {
         title: title,
         category: category,
-        content: this.content,
+        content: quill.root.innerHTML,
         involveType: involveType,
         openKakaoChat: openKakaoChat,
         latitude: latitude,
@@ -365,16 +366,16 @@ function Togetheredit() {
       TogetherService.putTogether(togetherId, reqData).then(
         (response) => {
           if (response.data.result == 'S') {
-            this.$toast.success(`Success.`);
-            this.$router.push({
-              name: 'Together',
-            });
+            notiRef.current.notificationAlert(successOption);
+            history.push('/gotogether/together');
           } else {
-            this.$toast.error(`Fail.`);
+            notiRef.current.notificationAlert(failOption);
           }
+          setLoading(false);
         },
         (error) => {
-          this.$toast.error(`Fail.`);
+          setLoading(false);
+          notiRef.current.notificationAlert(failOption);
           console.log(
             (error.response &&
               error.response.data &&
@@ -388,16 +389,16 @@ function Togetheredit() {
       TogetherService.setTogether(reqData).then(
         (response) => {
           if (response.data.result == 'S') {
-            this.$toast.success(`Success.`);
-            this.$router.push({
-              name: 'Together',
-            });
+            notiRef.current.notificationAlert(successOption);
+            history.push('/gotogether/together');
           } else {
-            this.$toast.error(`Fail.`);
+            notiRef.current.notificationAlert(failOption);
           }
+          setLoading(false);
         },
         (error) => {
-          this.$toast.error(`Fail.`);
+          setLoading(false);
+          notiRef.current.notificationAlert(failOption);
           console.log(
             (error.response &&
               error.response.data &&
