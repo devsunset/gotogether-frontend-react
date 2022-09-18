@@ -144,13 +144,21 @@ function Togetherdetail() {
             setWriterNickname(response.data.data.nickname);
             setWriterUsername(response.data.data.username);
             setModifiedDate(response.data.data.modifiedDate);
-            setInvolveType(response.data.data.involveType);
             setOpenKakaoChat(response.data.data.openKakaoChat);
-            setLatitude(response.data.data.latitude);
-            setLongitude(response.data.data.longitude);
             setMaxMember(response.data.data.maxMember);
             setCurrentMember(response.data.data.currentMember);
             setSkills(response.data.data.skill);
+
+            setInvolveType(response.data.data.involveType);
+            setLatitude(response.data.data.latitude);
+            setLongitude(response.data.data.longitude);
+
+            if (response.data.data.involveType !== 'ONLINE') {
+              mapscript(
+                response.data.data.latitude,
+                response.data.data.longitude,
+              );
+            }
           } else {
             notiRef.current.notificationAlert(failOption);
           }
@@ -168,6 +176,28 @@ function Togetherdetail() {
       getTogetherCommentList();
     }
   }, []);
+
+  const mapscript = (argLatitude, argLongtitude) => {
+    let container = document.getElementById('map');
+    let options = {
+      center: new kakao.maps.LatLng(argLatitude, argLongtitude),
+      level: 4,
+    };
+
+    //map
+    const map = new kakao.maps.Map(container, options);
+
+    //마커가 표시 될 위치
+    let markerPosition = new kakao.maps.LatLng(argLatitude, argLongtitude);
+
+    // 마커를 생성
+    let marker = new kakao.maps.Marker({
+      position: markerPosition,
+    });
+
+    // 마커를 지도 위에 표시
+    marker.setMap(map);
+  };
 
   const getTogetherCommentList = () => {
     TogetherService.getTogetherCommentList(queryParams.get('togetherId')).then(
@@ -614,15 +644,19 @@ function Togetherdetail() {
                   </Form.Group>
                 </Col>
               </Row>
-              <Row>
-                <Col md="12">
-                  <div
-                    id="map"
-                    className="map"
-                    style={{ marginTop: '20px', height: '300px' }}
-                  ></div>
-                </Col>
-              </Row>
+              {involveType !== 'ONLINE' && (
+                <Row>
+                  <Col md="12">
+                    <div
+                      id="map"
+                      style={{
+                        width: '100%',
+                        height: '70vh',
+                      }}
+                    ></div>
+                  </Col>
+                </Row>
+              )}
             </Form>
           </Container>
         </Card.Body>
