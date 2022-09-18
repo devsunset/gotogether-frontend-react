@@ -731,16 +731,20 @@ function Togetheredit() {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col md="12">
-                      ( 모임장소를 클릭 하여 선택해 보세요 )
-                      <div
-                        id="map"
-                        className="map"
-                        style={{ marginTop: '20px', height: '300px' }}
-                      ></div>
-                    </Col>
-                  </Row>
+                  {involveType !== 'ONLINE' && (
+                    <Row>
+                      <Col md="12">
+                        ( 모임장소를 클릭 하여 선택해 보세요 )
+                        <div
+                          id="map"
+                          style={{
+                            width: '100%',
+                            height: '70vh',
+                          }}
+                        ></div>
+                      </Col>
+                    </Row>
+                  )}
                 </Form>
               </Card.Body>
               <Card.Footer style={footer}>
