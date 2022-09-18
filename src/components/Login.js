@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, NavLink } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
@@ -8,6 +8,8 @@ import { login } from '../slices/auth';
 import { clearMessage } from '../slices/message';
 
 const Login = (props) => {
+  const history = useHistory();
+
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -44,7 +46,8 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/gotogether/home" />;
+    history.push(`/gotogether/home`);
+    return;
   }
 
   return (

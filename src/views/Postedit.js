@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { Spinner } from 'react-spinners-css';
 
@@ -33,7 +33,6 @@ function Postedit() {
   const { user: currentUser } = useSelector((state) => state.auth);
 
   if (!currentUser) {
-    // return <Redirect to="/gotogether/home" />;
     history.push(`/gotogether/home`);
   }
 
@@ -49,8 +48,8 @@ function Postedit() {
   const [show, setShow] = useState(false);
   const notiRef = useRef();
 
-  const quillElement = useRef(null); // Quill을 적용할 DivElement를 설정
-  const quillInstance = useRef(null); // Quill 인스턴스를 설정
+  const quillElement = useRef(null);
+  const quillInstance = useRef(null);
 
   const header = {
     backgroundColor: '#343a40',
@@ -207,9 +206,6 @@ function Postedit() {
 
   const handleYesClose = () => {
     setShow(false);
-
-    // console.log(quill.getText()); // Get text only
-    // console.log(quill.root.innerHTML); // Get innerHTML using quill
 
     setLoading(true);
     if (postId) {

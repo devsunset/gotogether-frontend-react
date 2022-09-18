@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
-import { Redirect, useHistory } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
 import { Spinner } from 'react-spinners-css';
-
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
 
@@ -34,7 +32,6 @@ function Togetheredit() {
   const { user: currentUser } = useSelector((state) => state.auth);
 
   if (!currentUser) {
-    // return <Redirect to="/gotogether/home" />;
     history.push(`/gotogether/home`);
   }
 
@@ -62,8 +59,8 @@ function Togetheredit() {
   const [show, setShow] = useState(false);
   const notiRef = useRef();
 
-  const quillElement = useRef(null); // Quill을 적용할 DivElement를 설정
-  const quillInstance = useRef(null); // Quill 인스턴스를 설정
+  const quillElement = useRef(null);
+  const quillInstance = useRef(null);
 
   const itemInput = useRef();
   const levelSelect = useRef();
@@ -270,27 +267,49 @@ function Togetheredit() {
       return;
     }
 
-    // var skillitem = "";
-    // this.items.forEach(function(d){
-    //     let tmp = d.item.trim().replace(/\|/g,'').replace(/\^/g,'');
-    //     if(tmp !='' ){
-    //         skillitem +=tmp+'^'+d.level+"|";
-    //     }
-    // })
-    // if(skillitem !=''){
-    //     skillitem  = skillitem.substring(0,skillitem.length -1);
-    // }
-    // this.skill = skillitem;
-    // if( this.skill.trim() == ''){
-    //     this.$toast.warning(`필요한 Skill 항목을 입력해 주세요.`);
-    //     return;
-    // }
-    // if(this.involveType !='ONLINE'){
-    //     if(this.latitude == undefined || this.latitude == ''){
-    //         this.$toast.warning('모임 장소를 지도에서 클릭해 선택해 주세요.');
-    //         return;
-    //     }
-    // }
+    let temp = '';
+    skills.forEach(function (d) {
+      let tmp = d.item.trim().replace(/\|/g, '').replace(/\^/g, '');
+      if (tmp != '') {
+        temp += tmp + '^' + d.level + '|';
+      }
+    });
+
+    if (temp != '') {
+      temp = temp.substring(0, temp.length - 1);
+    }
+
+    if (temp == '') {
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>Skill을 입력해 주세요.</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
+      return;
+    }
+
+    if (involveType != 'ONLINE') {
+      if (latitude == undefined || latitude == '' || latitude == null) {
+        notiRef.current.notificationAlert({
+          place: 'br',
+          message: (
+            <div>
+              <div>모임 장소를 지도에서 클릭해 선택해 주세요.</div>
+            </div>
+          ),
+          type: 'warning',
+          icon: 'now-ui-icons ui-1_bell-53',
+          autoDismiss: 2,
+        });
+        return;
+      }
+    }
 
     setShow(true);
   };
@@ -302,84 +321,93 @@ function Togetheredit() {
   const handleYesClose = () => {
     setShow(false);
 
-    // console.log(quill.getText()); // Get text only
-    // console.log(quill.root.innerHTML); // Get innerHTML using quill
+    let temp = '';
+    skills.forEach(function (d) {
+      let tmp = d.item.trim().replace(/\|/g, '').replace(/\^/g, '');
+      if (tmp != '') {
+        temp += tmp + '^' + d.level + '|';
+      }
+    });
 
-    // var reqData = {};
-    // if (this.involveType == 'ONLINE') {
-    //   reqData = {
-    //     title: this.title,
-    //     category: this.category,
-    //     content: this.content,
-    //     involveType: this.involveType,
-    //     openKakaoChat: this.openKakaoChat,
-    //     latitude: '',
-    //     longitude: '',
-    //     maxMember: this.maxMember,
-    //     currentMember: this.currentMember,
-    //     skill: this.skill,
-    //   };
-    // } else {
-    //   reqData = {
-    //     title: this.title,
-    //     category: this.category,
-    //     content: this.content,
-    //     involveType: this.involveType,
-    //     openKakaoChat: this.openKakaoChat,
-    //     latitude: this.latitude,
-    //     longitude: this.longitude,
-    //     maxMember: this.maxMember,
-    //     currentMember: this.currentMember,
-    //     skill: this.skill,
-    //   };
-    // }
-    // if (this.$route.query.togetherId) {
-    //   TogetherService.putTogether(this.$route.query.togetherId, reqData).then(
-    //     (response) => {
-    //       if (response.data.result == 'S') {
-    //         this.$toast.success(`Success.`);
-    //         this.$router.push({
-    //           name: 'Together',
-    //         });
-    //       } else {
-    //         this.$toast.error(`Fail.`);
-    //       }
-    //     },
-    //     (error) => {
-    //       this.$toast.error(`Fail.`);
-    //       console.log(
-    //         (error.response &&
-    //           error.response.data &&
-    //           error.response.data.message) ||
-    //           error.message ||
-    //           error.toString(),
-    //       );
-    //     },
-    //   );
-    // } else {
-    //   TogetherService.setTogether(reqData).then(
-    //     (response) => {
-    //       if (response.data.result == 'S') {
-    //         this.$toast.success(`Success.`);
-    //         this.$router.push({
-    //           name: 'Together',
-    //         });
-    //       } else {
-    //         this.$toast.error(`Fail.`);
-    //       }
-    //     },
-    //     (error) => {
-    //       this.$toast.error(`Fail.`);
-    //       console.log(
-    //         (error.response &&
-    //           error.response.data &&
-    //           error.response.data.message) ||
-    //           error.message ||
-    //           error.toString(),
-    //       );
-    //     },
-    //   );
-    // }
+    if (temp != '') {
+      temp = temp.substring(0, temp.length - 1);
+    }
+
+    var reqData = {};
+    if (involveType == 'ONLINE') {
+      reqData = {
+        title: title,
+        category: category,
+        content: this.content,
+        involveType: involveType,
+        openKakaoChat: openKakaoChat,
+        latitude: '',
+        longitude: '',
+        maxMember: maxMember,
+        currentMember: currentMember,
+        skill: temp,
+      };
+    } else {
+      reqData = {
+        title: title,
+        category: category,
+        content: this.content,
+        involveType: involveType,
+        openKakaoChat: openKakaoChat,
+        latitude: latitude,
+        longitude: longitude,
+        maxMember: maxMember,
+        currentMember: currentMember,
+        skill: temp,
+      };
+    }
+    if (togetherId) {
+      TogetherService.putTogether(togetherId, reqData).then(
+        (response) => {
+          if (response.data.result == 'S') {
+            this.$toast.success(`Success.`);
+            this.$router.push({
+              name: 'Together',
+            });
+          } else {
+            this.$toast.error(`Fail.`);
+          }
+        },
+        (error) => {
+          this.$toast.error(`Fail.`);
+          console.log(
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+              error.message ||
+              error.toString(),
+          );
+        },
+      );
+    } else {
+      TogetherService.setTogether(reqData).then(
+        (response) => {
+          if (response.data.result == 'S') {
+            this.$toast.success(`Success.`);
+            this.$router.push({
+              name: 'Together',
+            });
+          } else {
+            this.$toast.error(`Fail.`);
+          }
+        },
+        (error) => {
+          this.$toast.error(`Fail.`);
+          console.log(
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+              error.message ||
+              error.toString(),
+          );
+        },
+      );
+    }
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Notify from 'react-notification-alert';
 import Spinner from 'react-bootstrap/Spinner';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   Button,
@@ -23,7 +23,6 @@ function Profile() {
   const { user: currentUser } = useSelector((state) => state.auth);
 
   if (!currentUser) {
-    // return <Redirect to="/gotogether/home" />;
     history.push(`/gotogether/home`);
   }
 
