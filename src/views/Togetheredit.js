@@ -45,7 +45,7 @@ function Togetheredit() {
   const [currentMember, setCurrentMember] = useState(1);
   const [openKakaoChat, setOpenKakaoChat] = useState('');
   const [skills, setSkills] = useState([]);
-  const [involveType, setInvolveType] = useState(' ONOFFLINE');
+  const [involveType, setInvolveType] = useState('ONOFFLINE');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
@@ -287,8 +287,18 @@ function Togetheredit() {
         setLongitude(latlng.getLng());
       });
     } catch (e) {
-      alert(e);
-      //  mapscript(argLatitude, argLongtitude);
+      console.log(e);
+      notiRef.current.notificationAlert({
+        place: 'br',
+        message: (
+          <div>
+            <div>카카오맵 초기화 처리 관련 에러 발생</div>
+          </div>
+        ),
+        type: 'warning',
+        icon: 'now-ui-icons ui-1_bell-53',
+        autoDismiss: 2,
+      });
     }
   };
 
@@ -792,27 +802,28 @@ function Togetheredit() {
                           defaultValue={involveType}
                           onChange={handleInvolveTypeChange}
                         >
-                          <option value="ONOFFLINE">ON/OFF LINE </option>
-                          <option value="OFFLINE">OFF LINE </option>
-                          <option value="ONLINE">ON LINE </option>
+                          <option value="ONOFFLINE">ON/OFF LINE</option>
+                          <option value="OFFLINE">OFF LINE</option>
+                          <option value="ONLINE">ON LINE</option>
                         </Form.Select>
                       </Form.Group>
                     </Col>
                   </Row>
-                  {involveType !== 'ONLINE' && (
-                    <Row>
-                      <Col md="12">
-                        ( 모임장소를 클릭 하여 선택해 보세요 )
-                        <div
-                          id="map"
-                          style={{
-                            width: '100%',
-                            height: '70vh',
-                          }}
-                        ></div>
-                      </Col>
-                    </Row>
-                  )}
+
+                  <Row>
+                    <Col md="12">
+                      {involveType == 'ONLINE'
+                        ? '( ONLINE 선택 하신 경우 하위 지도 정보는 SKIP 처리 됩니다. )'
+                        : '( 모임장소를 클릭 하여 선택해 보세요 )'}
+                      <div
+                        id="map"
+                        style={{
+                          width: '100%',
+                          height: '70vh',
+                        }}
+                      ></div>
+                    </Col>
+                  </Row>
                 </Form>
               </Card.Body>
               <Card.Footer style={footer}>

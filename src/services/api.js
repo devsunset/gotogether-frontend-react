@@ -62,10 +62,9 @@ instance.interceptors.response.use(
             _error.message == 'Request failed with status code 403' ||
             _error.message == 'Refresh token was expired.'
           ) {
-            alert('xxxx');
             dispatch('@@ui/AUTH_CHECK_LOGOUT');
             TokenService.removeUser();
-            alert('로그인 정보가 만료되었습니다 다시 로그인해 주세요.');
+            // alert('로그인 정보가 만료되었습니다 다시 로그인해 주세요.');
           }
           return Promise.reject(_error);
         }

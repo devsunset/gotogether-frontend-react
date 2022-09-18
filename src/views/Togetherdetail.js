@@ -35,7 +35,7 @@ function Togetherdetail() {
   const [currentMember, setCurrentMember] = useState(1);
   const [openKakaoChat, setOpenKakaoChat] = useState('');
   const [skills, setSkills] = useState('');
-  const [involveType, setInvolveType] = useState(' ONOFFLINE');
+  const [involveType, setInvolveType] = useState('ONOFFLINE');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
