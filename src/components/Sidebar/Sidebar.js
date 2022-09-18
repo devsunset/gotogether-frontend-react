@@ -19,11 +19,7 @@ function Sidebar({ color, image, routes }) {
       />
       <div className="sidebar-wrapper">
         <div className="logo d-flex align-items-center justify-content-start">
-          <NavLink
-            to={'/gotogether/home'}
-            className="nav-link"
-            activeClassName="active"
-          >
+          <NavLink to={'/'} className="nav-link" activeClassName="active">
             <span className="logo-img">
               <img src={require('assets/img/devsunset.jpg')} /> &nbsp; Go
               Together
@@ -33,7 +29,7 @@ function Sidebar({ color, image, routes }) {
         <Nav>
           {routes.map((prop, key) => {
             if (prop.invisible) return null;
-            if (prop.path == '/memo' || prop.path == '/profile') {
+            if (prop.path == 'memo' || prop.path == 'profile') {
               if (!currentUser) {
                 return null;
               }

@@ -1,3 +1,3 @@
-# gotogether-frontend-react (진행중)
+# gotogether-frontend-react
 
 gotogether-frontend - frontend go together (react)

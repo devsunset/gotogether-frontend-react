@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Alert,
   Card,
@@ -21,6 +22,8 @@ import { dispatch } from 'use-bus';
 import MemoService from '../services/memo.service';
 
 function Memo() {
+  const history = useHistory();
+
   const { user: currentUser } = useSelector((state) => state.auth);
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
@@ -92,6 +95,10 @@ function Memo() {
       setUsername(user.username);
       setNickname(user.nickname);
       setRoles(user.roles[0]);
+    }
+
+    if (!currentUser) {
+      history.push(`/`);
     }
 
     getMemoList('INIT');

@@ -25,7 +25,9 @@ function Header() {
       logOut();
     });
 
-    getNotifition();
+    if (currentUser) {
+      getNotifition();
+    }
 
     return () => {
       EventBus.remove('logout');
@@ -39,7 +41,11 @@ function Header() {
   const getNotifition = () => {
     MemoService.getNewReceiveMemo().then(
       (response) => {
-        setMemo(response.data.data.MEMO);
+        if (response) {
+          setMemo(response.data.data.MEMO);
+        } else {
+          setMemo(0);
+        }
       },
       (error) => {
         const _content =
@@ -71,7 +77,7 @@ function Header() {
         return routes[i].name;
       }
     }
-    return 'Brand';
+    return 'Home';
   };
   return (
     <Navbar bg="light" expand="lg">
@@ -115,7 +121,7 @@ function Header() {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <NavLink
-                      to={'/gotogether/memo'}
+                      to={'/memo'}
                       className="nav-link"
                       activeClassName="active"
                     >
@@ -129,7 +135,7 @@ function Header() {
             {currentUser ? (
               <Nav.Item>
                 <NavLink
-                  to={'/gotogether/login'}
+                  to={'/login'}
                   className="nav-link"
                   activeClassName="active"
                   onClick={logOut}
@@ -140,7 +146,7 @@ function Header() {
             ) : (
               <Nav.Item>
                 <NavLink
-                  to={'/gotogether/login'}
+                  to={'/login'}
                   className="nav-link"
                   activeClassName="active"
                 >

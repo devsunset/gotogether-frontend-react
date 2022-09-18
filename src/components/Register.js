@@ -171,7 +171,7 @@ const Register = () => {
           <div className="text-center mt-4 font-weight-light">
             Already have an account?{' '}
             <NavLink
-              to={'/gotogether/login'}
+              to={'/login'}
               className="nav-link"
               activeClassName="active"
             >

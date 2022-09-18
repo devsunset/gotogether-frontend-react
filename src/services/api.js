@@ -4,9 +4,9 @@ import { dispatch } from 'use-bus';
 
 const instance = axios.create({
   //PROD
-  // baseURL: 'http://193.123.252.22:8282/api',
+  baseURL: 'http://193.123.252.22:8282/api',
   //DEV
-  baseURL: 'http://localhost:8081/api',
+  // baseURL: 'http://localhost:8081/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -45,7 +45,7 @@ instance.interceptors.response.use(
           if (TokenService.getLocalRefreshToken() === undefined) {
             dispatch('@@ui/AUTH_CHECK_LOGOUT');
             TokenService.removeUser();
-            alert('로그인 정보가 유효하지 않습니다.');
+            // alert('로그인 정보가 유효하지 않습니다.');
             return;
           }
 

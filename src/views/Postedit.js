@@ -29,10 +29,6 @@ function Postedit() {
 
   const { user: currentUser } = useSelector((state) => state.auth);
 
-  if (!currentUser) {
-    history.push(`/gotogether/home`);
-  }
-
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
@@ -96,7 +92,7 @@ function Postedit() {
 
   const handleList = () => {
     sessionStorage.setItem('post_back', 'Y');
-    history.push(`/gotogether/post?category=` + categorySelect.current.value);
+    history.push(`/post?category=` + categorySelect.current.value);
   };
 
   const handleSubmit = () => {
@@ -109,6 +105,10 @@ function Postedit() {
       setUsername(user.username);
       setNickname(user.nickname);
       setRoles(user.roles[0]);
+    }
+
+    if (!currentUser) {
+      history.push(`/`);
     }
 
     let tmp = queryParams.get('category');
@@ -215,9 +215,7 @@ function Postedit() {
           setLoading(false);
           if (response.data.result == 'S') {
             notiRef.current.notificationAlert(successOption);
-            history.push(
-              `/gotogether/post?category=` + categorySelect.current.value,
-            );
+            history.push(`/post?category=` + categorySelect.current.value);
           } else {
             notiRef.current.notificationAlert(failOption);
           }
@@ -244,9 +242,7 @@ function Postedit() {
           setLoading(false);
           if (response.data.result == 'S') {
             notiRef.current.notificationAlert(successOption);
-            history.push(
-              `/gotogether/post?category=` + categorySelect.current.value,
-            );
+            history.push(`/post?category=` + categorySelect.current.value);
           } else {
             notiRef.current.notificationAlert(failOption);
           }

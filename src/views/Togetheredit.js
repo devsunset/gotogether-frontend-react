@@ -30,10 +30,6 @@ function Togetheredit() {
 
   const { user: currentUser } = useSelector((state) => state.auth);
 
-  if (!currentUser) {
-    history.push(`/gotogether/home`);
-  }
-
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
@@ -172,7 +168,7 @@ function Togetheredit() {
 
   const handleList = () => {
     sessionStorage.setItem('together_back', 'Y');
-    history.push('/gotogether/together');
+    history.push('/together');
   };
 
   const handleSubmit = () => {
@@ -185,6 +181,10 @@ function Togetheredit() {
       setUsername(user.username);
       setNickname(user.nickname);
       setRoles(user.roles[0]);
+    }
+
+    if (!currentUser) {
+      history.push(`/`);
     }
 
     setTogetherId(queryParams.get('togetherId'));
@@ -445,7 +445,7 @@ function Togetheredit() {
         (response) => {
           if (response.data.result == 'S') {
             notiRef.current.notificationAlert(successOption);
-            history.push('/gotogether/together');
+            history.push('/together');
           } else {
             notiRef.current.notificationAlert(failOption);
           }
@@ -468,7 +468,7 @@ function Togetheredit() {
         (response) => {
           if (response.data.result == 'S') {
             notiRef.current.notificationAlert(successOption);
-            history.push('/gotogether/together');
+            history.push('/together');
           } else {
             notiRef.current.notificationAlert(failOption);
           }

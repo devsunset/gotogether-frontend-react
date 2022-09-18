@@ -36,7 +36,7 @@ function Home() {
   }, []);
 
   const handleClick = (id) => {
-    history.push(`/gotogether/together`);
+    history.push(`/together`);
   };
   return (
     <>
@@ -57,7 +57,7 @@ function Home() {
                         <b>Together</b>
                       </p>
                       <NavLink
-                        to={'/gotogether/together'}
+                        to={'/together'}
                         className="nav-link"
                         activeClassName="active"
                       >
@@ -70,7 +70,7 @@ function Home() {
               <Card.Footer>
                 <hr></hr>
                 <NavLink
-                  to={'/gotogether/together'}
+                  to={'/together'}
                   className="nav-link"
                   activeClassName="active"
                 >
@@ -97,7 +97,7 @@ function Home() {
                         <b>Member</b>
                       </p>
                       <NavLink
-                        to={'/gotogether/member'}
+                        to={'/member'}
                         className="nav-link"
                         activeClassName="active"
                       >
@@ -110,7 +110,7 @@ function Home() {
               <Card.Footer>
                 <hr></hr>
                 <NavLink
-                  to={'/gotogether/member'}
+                  to={'/member'}
                   className="nav-link"
                   activeClassName="active"
                 >
@@ -137,7 +137,7 @@ function Home() {
                         <b>Talk</b>
                       </p>
                       <NavLink
-                        to={'/gotogether/post?category=TALK'}
+                        to={'/post?category=TALK'}
                         className="nav-link"
                         activeClassName="active"
                       >
@@ -150,7 +150,7 @@ function Home() {
               <Card.Footer>
                 <hr></hr>
                 <NavLink
-                  to={'/gotogether/post?category=TALK'}
+                  to={'/post?category=TALK'}
                   className="nav-link"
                   activeClassName="active"
                 >
@@ -177,7 +177,7 @@ function Home() {
                         <b>Q&A</b>
                       </p>
                       <NavLink
-                        to={'/gotogether/post?category=QA'}
+                        to={'/post?category=QA'}
                         className="nav-link"
                         activeClassName="active"
                       >
@@ -190,7 +190,7 @@ function Home() {
               <Card.Footer>
                 <hr></hr>
                 <NavLink
-                  to={'/gotogether/post?category=QA'}
+                  to={'/post?category=QA'}
                   className="nav-link"
                   activeClassName="active"
                 >

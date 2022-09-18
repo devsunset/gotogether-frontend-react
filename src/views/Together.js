@@ -64,7 +64,7 @@ function Together() {
   };
 
   const goTogetherNew = () => {
-    history.push(`/gotogether/togetheredit`);
+    history.push(`/togetheredit`);
   };
 
   const handleKeywordChange = (e) => {
@@ -91,7 +91,7 @@ function Together() {
   const goTogetherDetail = (togetherId) => {
     sessionStorage.setItem('together_page', pageArg);
     sessionStorage.setItem('together_keyword', keyword);
-    history.push(`/gotogether/togetherdetail?togetherId=` + togetherId);
+    history.push(`/togetherdetail?togetherId=` + togetherId);
   };
 
   const getTogetherList = (flag) => {

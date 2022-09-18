@@ -111,12 +111,12 @@ function Togetherdetail() {
 
   const handleList = () => {
     sessionStorage.setItem('together_back', 'Y');
-    history.push('/gotogether/together');
+    history.push('/together');
   };
 
   const handleEdit = () => {
     sessionStorage.setItem('together_back', 'Y');
-    history.push('/gotogether/togetheredit?togetherId=' + togetherId);
+    history.push('/togetheredit?togetherId=' + togetherId);
   };
 
   useEffect(() => {
@@ -286,7 +286,7 @@ function Togetherdetail() {
       (response) => {
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
-          history.push(`/gotogether/together?category=` + category);
+          history.push(`/together?category=` + category);
         } else {
           notiRef.current.notificationAlert(failOption);
         }

@@ -46,7 +46,7 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
-    history.push(`/gotogether/home`);
+    history.push(`/`);
     return;
   }
 
@@ -108,7 +108,7 @@ const Login = (props) => {
           <div className="text-center mt-4 font-weight-light">
             Don't have an account?{' '}
             <NavLink
-              to={'/gotogether/register'}
+              to={'/register'}
               className="nav-link"
               activeClassName="active"
             >

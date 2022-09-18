@@ -66,9 +66,7 @@ function Post() {
   };
 
   const goPostNew = () => {
-    history.push(
-      `/gotogether/postedit?category=` + categorySelect.current.value,
-    );
+    history.push(`/postedit?category=` + categorySelect.current.value);
   };
 
   const handleCategoryChange = (e) => {
@@ -115,7 +113,7 @@ function Post() {
     sessionStorage.setItem('post_page', pageArg);
     sessionStorage.setItem('post_category', category);
     sessionStorage.setItem('post_keyword', keyword);
-    history.push(`/gotogether/postdetail?postId=` + postId);
+    history.push(`/postdetail?postId=` + postId);
   };
 
   const getPostList = (flag) => {

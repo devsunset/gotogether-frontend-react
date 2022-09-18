@@ -99,13 +99,13 @@ function Postdetail() {
 
   const handleList = () => {
     sessionStorage.setItem('post_back', 'Y');
-    history.push(`/gotogether/post?category=` + categorySelect.current.value);
+    history.push(`/post?category=` + categorySelect.current.value);
   };
 
   const handleEdit = () => {
     sessionStorage.setItem('post_back', 'Y');
     history.push(
-      `/gotogether/postedit?category=` +
+      `/postedit?category=` +
         categorySelect.current.value +
         '&postId=' +
         queryParams.get('postId'),
@@ -249,7 +249,7 @@ function Postdetail() {
       (response) => {
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
-          history.push(`/gotogether/post?category=` + category);
+          history.push(`/post?category=` + category);
         } else {
           notiRef.current.notificationAlert(failOption);
         }
@@ -275,7 +275,7 @@ function Postdetail() {
       (response) => {
         if (response.data.result == 'S') {
           notiRef.current.notificationAlert(successOption);
-          history.push(`/gotogether/post?category=` + response.data.data);
+          history.push(`/post?category=` + response.data.data);
         } else {
           notiRef.current.notificationAlert(failOption);
         }

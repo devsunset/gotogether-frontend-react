@@ -21,10 +21,6 @@ function Profile() {
   const history = useHistory();
   const { user: currentUser } = useSelector((state) => state.auth);
 
-  if (!currentUser) {
-    history.push(`/gotogether/home`);
-  }
-
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
   const [roles, setRoles] = useState('');
@@ -101,6 +97,10 @@ function Profile() {
       setUsername(user.username);
       setNickname(user.nickname);
       setRoles(user.roles[0]);
+    }
+
+    if (!currentUser) {
+      history.push(`/`);
     }
 
     UserService.getUserInfo().then(

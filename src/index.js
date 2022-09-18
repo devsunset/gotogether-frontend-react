@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './store';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AdminLayout from 'layouts/Admin.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,11 +20,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route
-          path="/gotogether"
-          render={(props) => <AdminLayout {...props} />}
-        />
-        <Redirect from="/" to="/gotogether/home" />
+        <Route path="/" render={(props) => <AdminLayout {...props} />} />
       </Switch>
     </BrowserRouter>
   </Provider>,
