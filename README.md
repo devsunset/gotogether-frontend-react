@@ -5,6 +5,8 @@ gotogether-frontend - frontend go together (react)
 http://gotogether.cf
 
 
+-------------------------------------------------------
+
 
 apache spa 모듈 배포시 Refresh시 404 해결 처리 법
 
@@ -25,11 +27,14 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule . /index.html [L]
 
 
-2. httpd.conf 파일 수정
-  1)주석 해제 
+2.httpd.conf 파일 수정
+
+  i)주석 해제 
+  
   #LoadModule rewrite_module modules/mod_rewrite.so
 
-  2) Directory 설정 부분 하단 내용 수정
+  ii) Directory 설정 부분 하단 내용 수정
+  
   AllowOverride None -> AllowOverride All
 
-3. apache 재시작
+3.apache 재시작
