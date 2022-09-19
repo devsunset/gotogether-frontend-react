@@ -369,14 +369,14 @@ function Postdetail() {
         <Card.Header style={header}>
           {/* Post {postId ? 'Edit' : 'New'} {category == 'TALK' ? 'Talk' : 'Q&A'} */}
           <span style={{ float: 'left' }}>
-            <i className="nc-icon nc-single-02" /> {writerNickname}
+          <i className="nav-icon fas fa-user" style={{color:"#ffffff"}} /> {writerNickname}
             <br />
-            <i className="nc-icon nc-time-alarm" /> {modifiedDate}
+            <i className="nav-icon fas fa-edit" style={{color:"#ffffff"}} /> {modifiedDate}
           </span>
           <span style={{ float: 'right' }}>
-            <i className="nc-icon nc-zoom-split" /> {hit}
+            <i className="fas fa-eye fa-fw" style={{color:"#ffffff"}} /> {hit}
             <br />
-            <i className="nc-icon nc-chat-round" /> {commentCount}
+            <i className="fas fa-comment-dots fa-fw" style={{color:"#ffffff"}} /> {commentCount}
           </span>
         </Card.Header>
 
@@ -389,7 +389,7 @@ function Postdetail() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>Category</b>
+                          <b><i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />Category</b>
                         </label>
                         <br />
                         <Form.Select
@@ -410,7 +410,7 @@ function Postdetail() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>Title</b>
+                          <b><i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />Title</b>
                         </label>
 
                         <Form.Control

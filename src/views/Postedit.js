@@ -291,7 +291,7 @@ function Postedit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>Category</b>
+                          <b><i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />Category</b>
                         </label>
                         <br />
                         <Form.Select
@@ -312,7 +312,7 @@ function Postedit() {
                     <Col md="12">
                       <Form.Group>
                         <label>
-                          <b>Title</b>
+                          <b><i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />Title</b>
                         </label>
                         <Form.Control
                           placeholder="Title"

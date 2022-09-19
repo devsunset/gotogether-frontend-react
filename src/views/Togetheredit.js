@@ -518,10 +518,7 @@ function Togetheredit() {
                       <Form.Group>
                         <label>
                           <b>
-                            <i
-                              className="nc-icon nc-atom"
-                              style={{ marginRight: '5px' }}
-                            />
+                            <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                             제목
                           </b>
                         </label>
@@ -540,10 +537,7 @@ function Togetheredit() {
                       <Form.Group>
                         <label>
                           <b>
-                            <i
-                              className="nc-icon nc-atom"
-                              style={{ marginRight: '5px' }}
-                            />
+                            <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                             목적
                           </b>
                         </label>
@@ -573,10 +567,7 @@ function Togetheredit() {
                       <Form.Group>
                         <label>
                           <b>
-                            <i
-                              className="nc-icon nc-atom"
-                              style={{ marginRight: '5px' }}
-                            />
+                           <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                             최대 모집 인원
                           </b>
                         </label>
@@ -607,10 +598,7 @@ function Togetheredit() {
                       <Form.Group>
                         <label>
                           <b>
-                            <i
-                              className="nc-icon nc-atom"
-                              style={{ marginRight: '5px' }}
-                            />
+                            <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                             현재 참여 인원
                           </b>
                         </label>
@@ -642,10 +630,7 @@ function Togetheredit() {
                       <Form.Group>
                         <label>
                           <b>
-                            <i
-                              className="nc-icon nc-atom"
-                              style={{ marginRight: '5px' }}
-                            />
+                            <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                             Kakao Open Chat Link{' '}
                           </b>
                         </label>
@@ -663,10 +648,7 @@ function Togetheredit() {
                     <Col md="12">
                       <label>
                         <b>
-                          <i
-                            className="nc-icon nc-atom"
-                            style={{ marginRight: '5px' }}
-                          />
+                          <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                           상세 설명
                         </b>
                       </label>
@@ -684,10 +666,7 @@ function Togetheredit() {
                     <Col md="12">
                       <label>
                         <b>
-                          <i
-                            className="nc-icon nc-atom"
-                            style={{ marginRight: '5px' }}
-                          />
+                          <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                           Skill
                         </b>
                       </label>
@@ -786,10 +765,7 @@ function Togetheredit() {
                       <Form.Group>
                         <label>
                           <b>
-                            <i
-                              className="nc-icon nc-atom"
-                              style={{ marginRight: '5px' }}
-                            />
+                            <i className="nav-icon far fa-plus-square" style={{ marginRight: '5px' }} />
                             참여방식
                           </b>
                         </label>
