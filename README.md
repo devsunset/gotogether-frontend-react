@@ -11,11 +11,17 @@ apache spa 모듈 배포시 Refresh시 404 해결 처리 법
 1.htdocs (www root 경로 하위에 .htaccess파일 작성)
 
 RewriteEngine On
+
 RewriteBase /
+
 RewriteRule ^index.html$ - [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
+
 RewriteCond %{REQUEST_FILENAME} !-d
+
 RewriteCond %{REQUEST_FILENAME} !-l
+
 RewriteRule . /index.html [L]
 
 
