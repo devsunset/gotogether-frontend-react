@@ -36,7 +36,9 @@ function Home() {
   }, []);
 
   const handleClick = (id) => {
-    history.push(`/together`);
+    sessionStorage.setItem('together_page', '');
+    sessionStorage.setItem('together_keyword', '');
+    history.push(`/togetherdetail?togetherId=` + id);
   };
   return (
     <>
