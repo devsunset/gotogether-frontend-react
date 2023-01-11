@@ -4,6 +4,7 @@ gotogether-frontend - frontend go together (react)
 
 http://gotogether.cf
 
+http://152.70.91.9:4000/
 
 -------------------------------------------------------
 
