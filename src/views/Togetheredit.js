@@ -548,6 +548,7 @@ function Togetheredit() {
                           ref={categorySelect}
                           style={{ width: '100%' }}
                           onChange={handleCategoryChange}
+                          value={category}
                         >
                           <option value="STUDY">함께 공부해요</option>
                           <option value="PORTFOLIO">포트폴리오 구축</option>
@@ -578,6 +579,7 @@ function Togetheredit() {
                           ref={maxMemberSelect}
                           style={{ width: '100%' }}
                           defaultValue={maxMember}
+                          value={maxMember}
                           onChange={handleMaxMemberChange}
                         >
                           <option value="2">2</option>
@@ -609,6 +611,7 @@ function Togetheredit() {
                           ref={currentMemberSelect}
                           style={{ width: '100%' }}
                           defaultValue={currentMember}
+                          value={currentMember}
                           onChange={handleCurrentMemberChange}
                         >
                           <option value="1">1</option>

@@ -136,7 +136,7 @@ function Togetherdetail() {
     ) {
       TogetherService.getTogether(queryParams.get('togetherId')).then(
         (response) => {
-          if (response.data.result == 'S') {
+          if (response.data.result == 'S') {            
             setCategory(response.data.data.category);
             setTitle(response.data.data.title);
             setContent(response.data.data.content);
@@ -427,6 +427,7 @@ function Togetherdetail() {
                       variant="warning"
                       ref={categorySelect}
                       style={{ width: '100%' }}
+                      value={category}
                       disabled
                     >
                       <option value="STUDY">함께 공부해요</option>
@@ -456,6 +457,7 @@ function Togetherdetail() {
                       ref={maxMemberSelect}
                       style={{ width: '100%' }}
                       defaultValue={maxMember}
+                      value={maxMember}
                       disabled
                     >
                       <option value="2">2</option>
@@ -487,6 +489,7 @@ function Togetherdetail() {
                       ref={currentMemberSelect}
                       style={{ width: '100%' }}
                       defaultValue={currentMember}
+                      value={currentMember}
                       disabled
                     >
                       <option value="1">1</option>
