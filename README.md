@@ -2,7 +2,10 @@
 
 gotogether-frontend - frontend go together (react)
 
-http://152.70.91.9
+
+https://gotogether-react.web.app  - service running  (firebase web hosting)
+
+http://152.70.91.9 - service stop (http nginx)
 
 -------------------------------------------------------
 
